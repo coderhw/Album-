@@ -50,6 +50,7 @@
 		12F4AECE1E7A2DD90034333E /* XPPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F4AECD1E7A2DD90034333E /* XPPhotoModel.m */; };
 		12F4AED21E7A79230034333E /* XPAlbumDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F4AED11E7A79230034333E /* XPAlbumDetailCell.m */; };
 		12FA26901E76A47D0000A643 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 12FA26921E76A47D0000A643 /* Localizable.strings */; };
+		205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */; };
 		4ACD21B9B3E2750FAF0C1AF6 /* libPods-PhotoSecurity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB161BA3F61719AAE63C0CFE /* libPods-PhotoSecurity.a */; };
 		548055CD1E6701750040143A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 548055CB1E6701750040143A /* Main.storyboard */; };
 		548055CF1E6701750040143A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548055CE1E6701750040143A /* Assets.xcassets */; };
@@ -140,6 +141,8 @@
 		12F4AED11E7A79230034333E /* XPAlbumDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPAlbumDetailCell.m; sourceTree = "<group>"; };
 		12FA26911E76A47D0000A643 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		12FA26931E76A4800000A643 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSetPasswordViewController.h; sourceTree = "<group>"; };
+		205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSetPasswordViewController.m; sourceTree = "<group>"; };
 		2087EFE77D97F50083653865 /* Pods-PhotoSecurity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSecurity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSecurity/Pods-PhotoSecurity.debug.xcconfig"; sourceTree = "<group>"; };
 		548055BF1E6701750040143A /* PhotoSecurity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSecurity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		548055CC1E6701750040143A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -496,6 +499,8 @@
 				548055E81E6705F80040143A /* XPHomeViewController.m */,
 				123F8E261E6947DD005379D2 /* XPSetPasswordViewController.h */,
 				123F8E271E6947DD005379D2 /* XPSetPasswordViewController.m */,
+				205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */,
+				205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */,
 				129C3CDC1E6D14E600A52448 /* XPUnlockViewController.h */,
 				129C3CDD1E6D14E600A52448 /* XPUnlockViewController.m */,
 			);
@@ -651,6 +656,7 @@
 				129C3CDE1E6D14E600A52448 /* XPUnlockViewController.m in Sources */,
 				121DEB3E1E79125200491C97 /* XPSQLiteManager.m in Sources */,
 				1224BB0B1E6E901700CCCD73 /* GHPopupEditView.m in Sources */,
+				205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */,
 				1226BC381E8519830022C882 /* XPFTPViewController.m in Sources */,
 				123F8E281E6947DD005379D2 /* XPSetPasswordViewController.m in Sources */,
 				124529231E80CBDB007222C4 /* XPChangePasswordViewController.m in Sources */,
