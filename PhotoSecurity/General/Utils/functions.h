@@ -13,12 +13,12 @@
 
  @return 相册根目录的绝对路径
  */
-UIKIT_EXTERN NSString* photoRootDirectory();
+UIKIT_EXTERN NSString* photoRootDirectory(void);
 
 /**
  检测相册根目录,如果不存在则创建
  */
-UIKIT_EXTERN void checkPhotoRootDirectory();
+UIKIT_EXTERN void checkPhotoRootDirectory(void);
 
 /**
  对密码进行加密
@@ -42,28 +42,28 @@ UIKIT_EXTERN NSString* randomString(int length);
 
  @return 随机目录
  */
-UIKIT_EXTERN NSString* createRandomAlbumDirectory();
+UIKIT_EXTERN NSString* createRandomAlbumDirectory(void);
 
 /**
  生成唯一标识的字符串(由当前时间加一个5位随机数组成)
  
  @return 唯一标识符
  */
-UIKIT_EXTERN NSString* generateUniquelyIdentifier();
+UIKIT_EXTERN NSString* generateUniquelyIdentifier(void);
 
 /**
  是否开启TouchID功能
 
  @return YES:已启动TouchID, NO:未启用TouchID
  */
-UIKIT_EXTERN BOOL isEnableTouchID();
+UIKIT_EXTERN NSInteger touchIDTypeEnabled(void);
 
 /**
  是否开启TouchID功能
  
  @return YES:已启动TouchID, NO:未启用TouchID
  */
-UIKIT_EXTERN BOOL isTouchIDAccessed();
+UIKIT_EXTERN NSInteger touchIDTypeAccessed(void);
 
 /**
  判断系统版本是否大于等于给定的版本
@@ -109,6 +109,8 @@ FOUNDATION_EXTERN NSString * const XPEncryptionPasswordRandomKey;
 FOUNDATION_EXTERN NSInteger const XPPasswordMinimalLength;
 /// TouchID是否启用
 FOUNDATION_EXTERN NSString * const XPTouchEnableStateKey;
+/// TouchID是否启用
+FOUNDATION_EXTERN NSString * const XPFaceEnableStateKey;
 /// 缩略图目录名称
 FOUNDATION_EXTERN NSString * const XPThumbDirectoryNameKey;
 /// 生成的缩略图的宽高尺寸

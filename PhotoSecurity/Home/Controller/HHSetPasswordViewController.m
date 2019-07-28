@@ -34,6 +34,12 @@
     }else{
         lockView.tipsLabel.hidden = NO;
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    NSLog(@"%s", __func__);
     
 }
 

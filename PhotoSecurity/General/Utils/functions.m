@@ -110,28 +110,68 @@ NSString* generateUniquelyIdentifier()
  
  @return YES:已启动TouchID, NO:未启用TouchID
  */
-BOOL isEnableTouchID()
+NSInteger touchIDTypeEnabled()
 {
-    BOOL state = [[NSUserDefaults standardUserDefaults] boolForKey:XPTouchEnableStateKey];
-    if (!state) return NO;
-    LAContext *context = [[LAContext alloc] init];
-    NSError *error = nil;
-    BOOL isSupport = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
-    return (isSupport && nil == error);
+    NSInteger state = [[[NSUserDefaults standardUserDefaults] valueForKey:XPTouchEnableStateKey] integerValue];
+    return state;
 }
-
 
 /**
  是否支持ouchID功能
  
  @return YES:已启动TouchID, NO:未启用TouchID
  */
-BOOL isTouchIDAccessed()
+NSInteger touchIDTypeAccessed()
 {
-    LAContext *context = [[LAContext alloc] init];
-    NSError *error = nil;
-    BOOL isSupport = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
-    return (isSupport && nil == error);
+    // 检测设备是否支持TouchID或者FaceID
+    if (@available(iOS 8.0, *)) {
+        LAContext *context = [[LAContext alloc] init];
+
+        NSError *authError = nil;
+        BOOL isCanEvaluatePolicy = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError];
+        
+        if (authError) {
+            NSLog(@"检测设备是否支持TouchID或者FaceID失败！\n error : == %@",authError.localizedDescription);
+            return 0;
+        } else {
+            if (isCanEvaluatePolicy) {
+                // 判断设备支持TouchID还是FaceID
+                if (@available(iOS 11.0, *)) {
+                    switch (context.biometryType) {
+                        case LABiometryNone:
+                        {
+                            return 0;
+                        }
+                            break;
+                        case LABiometryTypeTouchID:
+                        {
+                            return 1;
+                        }
+                            break;
+                        case LABiometryTypeFaceID:
+                        {
+                            return 2;
+                        }
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    // Fallback on earlier versions
+                    NSLog(@"iOS 11之前不需要判断 biometryType");
+                    // 因为iPhoneX起始系统版本都已经是iOS11.0，所以iOS11.0系统版本下不需要再去判断是否支持faceID，直接走支持TouchID逻辑即可。
+                    return 2;
+                }
+                
+            } else {
+                return 0;
+            }
+        }
+        
+    } else {
+        // Fallback on earlier versions
+        return 0;
+    }
 }
 
 
@@ -168,6 +208,10 @@ NSString * const XPEncryptionPasswordRandomKey      = @"XPEncryptionPasswordRand
 NSInteger const XPPasswordMinimalLength             = 6;
 /// TouchID是否启用
 NSString * const XPTouchEnableStateKey              = @"XPTouchEnableStateKey";
+
+/// FaceID是否启用
+NSString * const XPFaceEnableStateKey              = @"XPFaceEnableStateKey";
+
 /// 缩略图目录名称
 NSString * const XPThumbDirectoryNameKey            = @"Thumb";
 /// 生成的缩略图的宽高尺寸

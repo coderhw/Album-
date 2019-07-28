@@ -42,7 +42,6 @@
 		124529201E80BF6E007222C4 /* XPSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1245291F1E80BF6E007222C4 /* XPSettingCell.m */; };
 		124529231E80CBDB007222C4 /* XPChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 124529221E80CBDB007222C4 /* XPChangePasswordViewController.m */; };
 		12972AD01E6D08880092D64B /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12972ACF1E6D08880092D64B /* LocalAuthentication.framework */; };
-		129C3CDE1E6D14E600A52448 /* HHUnlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 129C3CDD1E6D14E600A52448 /* HHUnlockViewController.m */; };
 		129C3CE11E6D325100A52448 /* HHPasswordTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 129C3CE01E6D325100A52448 /* HHPasswordTool.m */; };
 		129C3CE41E6D4DFD00A52448 /* HHProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 129C3CE31E6D4DFD00A52448 /* HHProgressHUD.m */; };
 		12F4AED21E7A79230034333E /* XPAlbumDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F4AED11E7A79230034333E /* XPAlbumDetailCell.m */; };
@@ -131,8 +130,6 @@
 		124529211E80CBDB007222C4 /* XPChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPChangePasswordViewController.h; sourceTree = "<group>"; };
 		124529221E80CBDB007222C4 /* XPChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPChangePasswordViewController.m; sourceTree = "<group>"; };
 		12972ACF1E6D08880092D64B /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
-		129C3CDC1E6D14E600A52448 /* HHUnlockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHUnlockViewController.h; sourceTree = "<group>"; };
-		129C3CDD1E6D14E600A52448 /* HHUnlockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHUnlockViewController.m; sourceTree = "<group>"; };
 		129C3CDF1E6D325100A52448 /* HHPasswordTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHPasswordTool.h; sourceTree = "<group>"; };
 		129C3CE01E6D325100A52448 /* HHPasswordTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHPasswordTool.m; sourceTree = "<group>"; };
 		129C3CE21E6D4DFD00A52448 /* HHProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHProgressHUD.h; sourceTree = "<group>"; };
@@ -554,8 +551,6 @@
 				548055E81E6705F80040143A /* HHomeViewController.m */,
 				205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */,
 				205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */,
-				129C3CDC1E6D14E600A52448 /* HHUnlockViewController.h */,
-				129C3CDD1E6D14E600A52448 /* HHUnlockViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -707,7 +702,6 @@
 				20A9689122EB563000A3340F /* PPLockView.m in Sources */,
 				2021A40C22ED49F700F75CD5 /* HHTransitionInteractive.m in Sources */,
 				2021A40F22ED49F700F75CD5 /* WSLAnimationController.m in Sources */,
-				129C3CDE1E6D14E600A52448 /* HHUnlockViewController.m in Sources */,
 				121DEB3E1E79125200491C97 /* HHSQLiteManager.m in Sources */,
 				1224BB0B1E6E901700CCCD73 /* GHPopupEditView.m in Sources */,
 				205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */,

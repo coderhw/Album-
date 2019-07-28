@@ -12,6 +12,7 @@
 
 @interface HHSettingViewController ()
 
+@property (nonatomic, strong) LAContext *context;
 @end
 
 @implementation HHSettingViewController
@@ -21,21 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
-//    // iOS>=10.3 通过摇一摇功能切换App图标
-//    UIApplication *application = [UIApplication sharedApplication];
-//    if (isOperatingSystemAtLeastVersion(10, 3, 0) && [application supportsAlternateIcons]) {
-//        [application setApplicationSupportsShakeToEdit:YES];
-//        UILabel *label = [[UILabel alloc] init];
-//        label.numberOfLines = 0;
-//        label.lineBreakMode = NSLineBreakByCharWrapping;
-//        label.text = [NSString stringWithFormat:@"\n\n\t%@\n", NSLocalizedString(@"We have now provided by shaking random replacement application icon function, shake the phone try it", nil)];
-//        label.textColor = [UIColor colorWithR:226.0 g:69.0 b:75.0];
-//        label.font = [UIFont systemFontOfSize:15.0];
-//        [label sizeToFit];
-//        self.tableView.tableFooterView = label;
-//        // 要使用摇一摇功能,必须将当前控制器设置为第一响应者
-//        [self becomeFirstResponder];
-//    }
+    self.context = [[LAContext alloc] init];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -70,12 +57,17 @@
     XPSettingCell *settingCell = (XPSettingCell *)cell;
     if (0 == indexPath.section) {
         [settingCell.stateSwitch setHidden:NO];
-        [settingCell.stateSwitch setOn:isEnableTouchID()];
+        NSInteger isOn = touchIDTypeEnabled() == 0 ? 0 : 1;
+        [settingCell.stateSwitch setOn:isOn];
         [settingCell.stateSwitch addTarget:self
                                     action:@selector(stateSwitchAction:)
                           forControlEvents:UIControlEventValueChanged];
         
-        [settingCell.titleLabel setText:NSLocalizedString(@"Fingerprints are unlocked", nil)];
+        if(touchIDTypeAccessed() == 1){
+            [settingCell.titleLabel setText:NSLocalizedString(@"Fingerprints are unlocked", nil)];
+        }else if(touchIDTypeAccessed() == 2){
+            [settingCell.titleLabel setText:NSLocalizedString(@"FaceID are unlocked", nil)];
+        }
         
     } else if (1 == indexPath.section) {
         
@@ -115,7 +107,7 @@
 - (void)stateSwitchAction:(UISwitch *)sender {
     
     XPSettingCell *cell = (XPSettingCell *)sender.superview.superview;
-    if (isEnableTouchID()) {
+    if (touchIDTypeEnabled() == 1) {
         // 已开启,则关闭指纹解锁
         UIAlertController *alert = [UIAlertController
                                     alertControllerWithTitle:NSLocalizedString(@"Make sure you want to turn off Touch ID?", nil) message:NSLocalizedString(@"", nil)
@@ -130,32 +122,60 @@
                                                 handler:^(UIAlertAction * _Nonnull action) {
             [cell.stateSwitch setOn:NO];
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setBool:NO forKey:XPTouchEnableStateKey];
+            [userDefaults setValue:@"0" forKey:XPTouchEnableStateKey];
             [userDefaults synchronize];
         }]];
         [self presentViewController:alert animated:YES completion:nil];
         
+    }else if (touchIDTypeEnabled() == 2) {
+        // 已开启,则关毕面容解锁
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:NSLocalizedString(@"Make sure you want to turn off Face ID?", nil) message:NSLocalizedString(@"", nil)
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                                  style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                                      [cell.stateSwitch setOn:YES];
+                                                  }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
+                                                  style:UIAlertActionStyleDestructive
+                                                handler:^(UIAlertAction * _Nonnull action) {
+                                                    [cell.stateSwitch setOn:NO];
+                                                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                    [userDefaults setValue:@"0" forKey:XPTouchEnableStateKey];
+                                                    [userDefaults synchronize];
+                                                }]];
+        [self presentViewController:alert animated:YES completion:nil];
+        
     } else {
         
-        @weakify(self);
-        LAContext *context = [[LAContext alloc] init];
         NSError *error = nil;
-        BOOL isAvailable = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+        BOOL isAvailable = [self.context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
         if (!isAvailable) {
-            [cell.stateSwitch setOn:NO];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [cell.stateSwitch setOn:NO];
+            });
             [HHProgressHUD showFailureHUD:error.localizedDescription toView:self.view];
             return;
         }
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil) reply:^(BOOL success, NSError * _Nullable error) {
-            @strongify(self);
+        
+        __weak typeof(self) weakSelf = self;
+        [_context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                 localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil) reply:^(BOOL success, NSError * _Nullable error) {
+
             if (!success) {
-                [HHProgressHUD showFailureHUD:error.localizedDescription toView:self.view];
+                [HHProgressHUD showFailureHUD:error.localizedDescription toView:weakSelf.view];
                 return;
+            }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [cell.stateSwitch setOn:YES];
+                });
+                
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                NSString *type = [NSString stringWithFormat:@"%ld", (long)touchIDTypeAccessed()];
+                [userDefaults setValue:type forKey:XPTouchEnableStateKey];
+                [userDefaults synchronize];
             }
-            [cell.stateSwitch setOn:YES];
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setBool:YES forKey:XPTouchEnableStateKey];
-            [userDefaults synchronize];
         }];
     }
 }
