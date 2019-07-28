@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <TZImagePickerController.h>
 @class HHAlbumModel;
 
-@interface HHAlbumDetailViewController : UICollectionViewController
+@interface HHAlbumDetailViewController : UICollectionViewController<TZImagePickerControllerDelegate>
 
 @property (nonatomic, strong) HHAlbumModel *album;
 

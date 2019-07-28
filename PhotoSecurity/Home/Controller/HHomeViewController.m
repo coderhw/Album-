@@ -38,12 +38,13 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorColor = [UIColor colorWithHex:@"#f0f0f0"];
     self.navigationController.view.hidden = YES;
-    self.userAlbums = [[HHSQLiteManager sharedSQLiteManager] requestUserAlbums];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    self.userAlbums = [[HHSQLiteManager sharedSQLiteManager] requestUserAlbums];
+
     // 实时更新UI
     [self.tableView reloadData];
 }

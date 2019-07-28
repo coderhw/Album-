@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (nonatomic, strong) XMFTPServer *ftpServer;
+@property (weak, nonatomic) IBOutlet UIButton *startFTPButton;
 
 @end
 
@@ -21,13 +22,11 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.title = NSLocalizedString(@"FTP Service", nil);
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    [self.startFTPButton setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Img_setPassword_bg.png"]]];
 }
 
 - (void)dealloc {

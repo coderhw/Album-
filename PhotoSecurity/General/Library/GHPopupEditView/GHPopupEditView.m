@@ -90,9 +90,11 @@
     self.contentView.transform = CGAffineTransformMakeScale(0.5, 0.5);
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.65 initialSpringVelocity:0.0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.contentView.transform = CGAffineTransformIdentity;
+
     } completion:^(BOOL finished) {
-        [self.textField becomeFirstResponder];
     }];
+    [self.textField becomeFirstResponder];
+
 }
 
 #pragma mark - <UITextFieldDelegate>
@@ -146,9 +148,9 @@
         return;
     }
     if (remainingHeight > contentHeight) {
-        contentFrame.origin.y = (remainingHeight-contentHeight)/2;
+        contentFrame.origin.y = (remainingHeight-contentHeight)/2-20;
     } else {
-        contentFrame.origin.y = 10.0;
+        contentFrame.origin.y = 10.0-20;
     }
     [UIView animateWithDuration:0.25 animations:^{
         self.contentView.frame = contentFrame;
@@ -187,7 +189,7 @@
     _okButton.frame = CGRectMake(CGRectGetMaxX(_cancelButton.frame)+padding, CGRectGetMinY(_cancelButton.frame), CGRectGetWidth(_cancelButton.frame), CGRectGetHeight(_cancelButton.frame));
     
     CGFloat contentHeight = CGRectGetMaxY(_okButton.frame)+padding;
-    CGFloat contentY = (CGRectGetHeight(self.frame)-contentHeight)/2;
+    CGFloat contentY = (CGRectGetHeight(self.frame)-contentHeight)/2-64;
     _contentView.frame = CGRectMake((CGRectGetWidth(self.frame)-contentWidth)/2, contentY, contentWidth, contentHeight);
 }
 
