@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class XPAlbumModel;
-@class XPPhotoModel;
+@class HHAlbumModel;
+@class HHPhotoModel;
 
 @interface XPAlbumDetailCell : UICollectionViewCell
 
-- (void)showImageWithAlbum:(XPAlbumModel *)album photo:(XPPhotoModel *)photo;
+- (void)showImageWithAlbum:(HHAlbumModel *)album photo:(HHPhotoModel *)photo;
 - (void)changeSelectState:(BOOL)select;
 
 @end

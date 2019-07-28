@@ -120,6 +120,22 @@ BOOL isEnableTouchID()
     return (isSupport && nil == error);
 }
 
+
+/**
+ 是否支持ouchID功能
+ 
+ @return YES:已启动TouchID, NO:未启用TouchID
+ */
+BOOL isTouchIDAccessed()
+{
+    LAContext *context = [[LAContext alloc] init];
+    NSError *error = nil;
+    BOOL isSupport = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+    return (isSupport && nil == error);
+}
+
+
+
 /**
  判断系统版本是否大于等于给定的版本
  

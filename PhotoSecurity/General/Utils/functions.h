@@ -59,6 +59,13 @@ UIKIT_EXTERN NSString* generateUniquelyIdentifier();
 UIKIT_EXTERN BOOL isEnableTouchID();
 
 /**
+ 是否开启TouchID功能
+ 
+ @return YES:已启动TouchID, NO:未启用TouchID
+ */
+UIKIT_EXTERN BOOL isTouchIDAccessed();
+
+/**
  判断系统版本是否大于等于给定的版本
  
  @param majorVersion 主版本号

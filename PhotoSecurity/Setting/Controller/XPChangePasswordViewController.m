@@ -42,8 +42,8 @@
         [self.oldPasswordTextFiled shake];
         return;
     }
-    if (![XPPasswordTool verifyPassword:oldPassword]) {
-        [XPProgressHUD showFailureHUD:NSLocalizedString(@"Old password is incorrect", nil) toView:self.view];
+    if (![HHPasswordTool verifyPassword:oldPassword]) {
+        [HHProgressHUD showFailureHUD:NSLocalizedString(@"Old password is incorrect", nil) toView:self.view];
         return;
     }
     NSString *password = [self.passwordTextField.text trim];
@@ -55,16 +55,16 @@
         return [self.confirmPasswordTextField shake];
     }
     if (password.length < XPPasswordMinimalLength) {
-        [XPProgressHUD showFailureHUD:NSLocalizedString(@"Password length is at least 6 characters", nil) toView:self.view];
+        [HHProgressHUD showFailureHUD:NSLocalizedString(@"Password length is at least 6 characters", nil) toView:self.view];
         return;
     }
     if (![password isEqualToString:confirmPassword]) {
-        [XPProgressHUD showFailureHUD:NSLocalizedString(@"The password entered twice is inconsistent", nil) toView:self.view];
+        [HHProgressHUD showFailureHUD:NSLocalizedString(@"The password entered twice is inconsistent", nil) toView:self.view];
         return;
     }
-    [XPPasswordTool storagePassword:password];
+    [HHPasswordTool storagePassword:password];
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    [XPProgressHUD showSuccessHUD:NSLocalizedString(@"Password has been modified successfully", nil) toView:window];
+    [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Password has been modified successfully", nil) toView:window];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

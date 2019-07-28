@@ -225,6 +225,7 @@
     if (nil == _titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:16.0];
+        _titleLabel.textColor = [UIColor colorWithHex:@"#666666"];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _titleLabel;

@@ -7,8 +7,8 @@
 //
 
 #import "XPAlbumDetailCell.h"
-#import "XPAlbumModel.h"
-#import "XPPhotoModel.h"
+#import "HHAlbumModel.h"
+#import "HHPhotoModel.h"
 
 @interface XPAlbumDetailCell ()
 
@@ -34,7 +34,7 @@
     self.filetypeImageView.image = nil;
 }
 
-- (void)showImageWithAlbum:(XPAlbumModel *)album photo:(XPPhotoModel *)photo {
+- (void)showImageWithAlbum:(HHAlbumModel *)album photo:(HHPhotoModel *)photo {
     // 加载并显示缩略图,节省内存
     NSString *path = [NSString stringWithFormat:@"%@/%@/%@/%@", photoRootDirectory(),album.directory,XPThumbDirectoryNameKey,photo.filename];
     self.imageView.image = [[UIImage alloc] initWithContentsOfFile:path];

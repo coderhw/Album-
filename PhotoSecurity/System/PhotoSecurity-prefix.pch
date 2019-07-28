@@ -18,15 +18,12 @@
 #import "NSString+XP.h"
 #import "UIColor+XP.h"
 #import "Image+Snapshot.h"
+#import "HHUtilsDefineHeader.h"
+#import "HHPasswordTool.h"
+#import "HHProgressHUD.h"
+#import "HHSQLiteManager.h"
+#import "HHThemeHeader.h"
 
-#import "XPPasswordTool.h"
-#import "XPProgressHUD.h"
-#import "XPSQLiteManager.h"
-
-
-/////////////////
-////    宏   ////
-/////////////////
 
 /// 处理Block循环引用
 #define weakify(obj)    autoreleasepool{} __weak __typeof(obj) weak##obj = obj;

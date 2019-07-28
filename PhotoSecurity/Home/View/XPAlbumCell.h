@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class XPAlbumModel;
+@class HHAlbumModel;
 
 @interface XPAlbumCell : UITableViewCell
 
-- (void)configureWithAlbum:(XPAlbumModel *)album;
+- (void)configureWithAlbum:(HHAlbumModel *)album;
 
 @end

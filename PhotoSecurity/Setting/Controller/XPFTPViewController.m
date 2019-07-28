@@ -43,7 +43,7 @@
         NSString *ip = [XMFTPHelper localIPAddress];
         if (![ip isIP]) {
             sender.selected = !sender.selected;
-            [XPProgressHUD showFailureHUD:NSLocalizedString(@"FTP server failed to open, please confirm open WIFI and connect WIFI", nil) toView:self.view];
+            [HHProgressHUD showFailureHUD:NSLocalizedString(@"FTP server failed to open, please confirm open WIFI and connect WIFI", nil) toView:self.view];
             return;
         }
         self.textField.text = [NSString stringWithFormat:@"ftp://%@:%d", ip, ftpPort];
