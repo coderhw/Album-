@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HHSetPasswordViewController : UIViewController
 
+@property (nonatomic, assign) BOOL isChangePsd;
+
 @end
 
 NS_ASSUME_NONNULL_END

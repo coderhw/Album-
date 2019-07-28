@@ -11,7 +11,7 @@
 
 @implementation HHProgressHUD
 
-static NSTimeInterval const kXPProgressHUDDismissDelayTimeInterval = 3.0;
+static NSTimeInterval const kXPProgressHUDDismissDelayTimeInterval = 2.0;
 
 + (void)load {
     UIActivityIndicatorView *activityView = [UIActivityIndicatorView appearanceWhenContainedInInstancesOfClasses:@[[MBProgressHUD class]]];

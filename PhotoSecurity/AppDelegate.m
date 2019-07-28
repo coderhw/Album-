@@ -58,17 +58,20 @@
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UIViewController *unlockVc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HHSetPasswordViewController"];
             [rootVc presentViewController:unlockVc animated:NO completion:^{
-                //如果设置了FaceID
-                [weakSelf.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                                 localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil)
-                                           reply:^(BOOL success, NSError * _Nullable error) {
-                                     
-                                     if (!success) {
-                                         return;
-                                     }else{
-                                         [unlockVc dismissViewControllerAnimated:YES completion:nil];
-                                     }
-                                 }];
+                if(touchIDTypeEnabled()){
+                    //如果设置了FaceID
+                    [weakSelf.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                     localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil)
+                                               reply:^(BOOL success, NSError * _Nullable error) {
+                                                   
+                                                   if (!success) {
+                                                       return;
+                                                   }else{
+                                                       [unlockVc dismissViewControllerAnimated:YES completion:nil];
+                                                   }
+                                               }];
+                }
+               
             }];
         }
     }

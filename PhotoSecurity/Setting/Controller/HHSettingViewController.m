@@ -9,6 +9,7 @@
 #import "HHSettingViewController.h"
 #import "XPSettingCell.h"
 #import <LocalAuthentication/LocalAuthentication.h>
+#import "HHSetPasswordViewController.h"
 
 @interface HHSettingViewController ()
 
@@ -85,8 +86,16 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (1 == indexPath.section) {
-        [self performSegueWithIdentifier:@"ChangePasswordSegue" sender:nil];
+        
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        NSString *identifier =  @"HHSetPasswordViewController";
+        HHSetPasswordViewController *vc = (HHSetPasswordViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+        vc.isChangePsd = YES;
+        vc.navigationItem.title = @"修改密码";
+        [self.navigationController pushViewController:vc animated:YES];
+        
     } else if (2 == indexPath.section) {
+        
         [self performSegueWithIdentifier:@"FTPSegue" sender:nil];
     }
 }
@@ -114,27 +123,37 @@
                                     preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
                                                   style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            [cell.stateSwitch setOn:YES];
+                                                      
+                                                      [cell.stateSwitch setOn:YES];
+                                                      NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                      [userDefaults setValue:@"1" forKey:XPTouchEnableStateKey];
+                                                      [userDefaults synchronize];
+
         }]];
         
         [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
                                                   style:UIAlertActionStyleDestructive
                                                 handler:^(UIAlertAction * _Nonnull action) {
-            [cell.stateSwitch setOn:NO];
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setValue:@"0" forKey:XPTouchEnableStateKey];
-            [userDefaults synchronize];
-        }]];
+                                                    
+                                                    [cell.stateSwitch setOn:NO];
+                                                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                    [userDefaults removeObjectForKey:XPTouchEnableStateKey];        }]];
         [self presentViewController:alert animated:YES completion:nil];
         
     }else if (touchIDTypeEnabled() == 2) {
+      
         // 已开启,则关毕面容解锁
         UIAlertController *alert = [UIAlertController
                                     alertControllerWithTitle:NSLocalizedString(@"Make sure you want to turn off Face ID?", nil) message:NSLocalizedString(@"", nil)
                                     preferredStyle:UIAlertControllerStyleAlert];
+        
         [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
                                                   style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                                      NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                                                       [cell.stateSwitch setOn:YES];
+                                                      [userDefaults setValue:@"2" forKey:XPTouchEnableStateKey];
+                                                      [userDefaults synchronize];
+
                                                   }]];
         
         [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
@@ -142,8 +161,7 @@
                                                 handler:^(UIAlertAction * _Nonnull action) {
                                                     [cell.stateSwitch setOn:NO];
                                                     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                                    [userDefaults setValue:@"0" forKey:XPTouchEnableStateKey];
-                                                    [userDefaults synchronize];
+                                                    [userDefaults removeObjectForKey:XPTouchEnableStateKey];
                                                 }]];
         [self presentViewController:alert animated:YES completion:nil];
         
@@ -167,14 +185,15 @@
                 [HHProgressHUD showFailureHUD:error.localizedDescription toView:weakSelf.view];
                 return;
             }else{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [cell.stateSwitch setOn:YES];
-                });
-                
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 NSString *type = [NSString stringWithFormat:@"%ld", (long)touchIDTypeAccessed()];
                 [userDefaults setValue:type forKey:XPTouchEnableStateKey];
                 [userDefaults synchronize];
+                [cell.stateSwitch setOn:YES];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Face ID successed set", nil) toView:weakSelf.view];
+                });
             }
         }];
     }
