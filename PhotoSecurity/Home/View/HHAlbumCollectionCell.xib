@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HHAlbumCollectionCell">
+            <rect key="frame" x="0.0" y="0.0" width="188" height="206"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="188" height="206"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UiN-du-ncR">
+                        <rect key="frame" x="0.0" y="0.0" width="188" height="171"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相册名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3q-bF-CLb">
+                        <rect key="frame" x="2" y="173" width="49.5" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="kWI-K1-GxO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="照片数量" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNk-SF-tNO">
+                        <rect key="frame" x="2" y="190" width="49.5" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="N6o-BQ-9LU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="rNk-SF-tNO" firstAttribute="top" secondItem="F3q-bF-CLb" secondAttribute="bottom" constant="2" id="Dc0-DK-6BM"/>
+                <constraint firstItem="F3q-bF-CLb" firstAttribute="top" secondItem="UiN-du-ncR" secondAttribute="bottom" constant="2" id="Dh7-nP-ELB"/>
+                <constraint firstItem="UiN-du-ncR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="KrB-va-mka"/>
+                <constraint firstAttribute="trailing" secondItem="UiN-du-ncR" secondAttribute="trailing" id="ORx-oK-hn3"/>
+                <constraint firstItem="UiN-du-ncR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Ujw-tK-MGn"/>
+                <constraint firstItem="F3q-bF-CLb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="eO1-1m-gIa"/>
+                <constraint firstAttribute="bottom" secondItem="UiN-du-ncR" secondAttribute="bottom" constant="35" id="jAK-nW-gGY"/>
+                <constraint firstItem="rNk-SF-tNO" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="tpM-3o-iQD"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <size key="customSize" width="188" height="206"/>
+            <connections>
+                <outlet property="albumName" destination="F3q-bF-CLb" id="G0N-hE-Ggd"/>
+                <outlet property="avatorView" destination="UiN-du-ncR" id="9Pk-9q-v70"/>
+                <outlet property="photoCount" destination="rNk-SF-tNO" id="cbG-nI-jbM"/>
+            </connections>
+            <point key="canvasLocation" x="58" y="10"/>
+        </collectionViewCell>
+    </objects>
+</document>

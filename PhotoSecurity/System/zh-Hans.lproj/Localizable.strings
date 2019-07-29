@@ -14,6 +14,7 @@
 "Copying the pictures..." = "正在保存图片...";
 "Whether to delete the selected image from the photo library?" = "是否从系统图库中删除选中的图片？";
 "Delete" = "删除";
+"Album" = "相册";
 "Delete fail." = "删除失败";
 "Album is empty" = "空相册";
 "Please click the button below to add a picture." = "该相册并没有任何图片，请点击下面的按钮添加图片";

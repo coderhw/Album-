@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Allows the user though FaceID Unlock Phone</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -88,6 +86,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Allows the camera to take pictures / record video</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Allows the user though FaceID Unlock Phone</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allows you to record sound using the microphone when recording video</string>
 	<key>NSPhotoLibraryUsageDescription</key>
