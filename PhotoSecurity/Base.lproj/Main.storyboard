@@ -197,30 +197,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-bH-cGE">
-                                <rect key="frame" x="172" y="784" width="70" height="70"/>
+                                <rect key="frame" x="334" y="734" width="64" height="64"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="0Wp-oE-n9v"/>
-                                    <constraint firstAttribute="height" constant="70" id="vJb-xD-e8S"/>
+                                    <constraint firstAttribute="width" constant="64" id="efD-nS-5us"/>
+                                    <constraint firstAttribute="height" constant="64" id="g6V-s8-Pbc"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="add_images"/>
+                                <connections>
+                                    <action selector="addAlbumButtonPressed:" destination="gtl-8a-oxg" eventType="touchUpInside" id="7o3-B7-TUf"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="fNq-Bm-7Br" firstAttribute="top" secondItem="QOB-bH-cGE" secondAttribute="bottom" constant="8" id="CfJ-Gz-UQY"/>
-                            <constraint firstItem="QOB-bH-cGE" firstAttribute="centerX" secondItem="aYC-Ir-Nrj" secondAttribute="centerX" id="fSO-y3-dNr"/>
+                            <constraint firstItem="fNq-Bm-7Br" firstAttribute="top" secondItem="QOB-bH-cGE" secondAttribute="bottom" constant="64" id="ayb-jz-huF"/>
+                            <constraint firstAttribute="trailing" secondItem="QOB-bH-cGE" secondAttribute="trailing" constant="16" id="oHX-jZ-1gU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MwN-jh-HJr"/>
+                    <connections>
+                        <outlet property="addButton" destination="QOB-bH-cGE" id="lUN-Fl-f0B"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hfB-oL-6aP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-72" y="-621"/>
+            <point key="canvasLocation" x="-465" y="-665"/>
         </scene>
         <!--Setting-->
         <scene sceneID="QuI-JB-dhU">
             <objects>
-                <tableViewController id="lv0-Yd-1lL" customClass="HHSettingViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HHSettingViewController" id="lv0-Yd-1lL" customClass="HHSettingViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="8Nk-s8-hKh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -459,11 +465,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add_images" width="60" height="60"/>
+        <image name="add_images" width="64" height="64"/>
         <image name="icon-add" width="20" height="20"/>
-        <image name="icon-edit" width="20" height="20"/>
+        <image name="icon-edit" width="24" height="24"/>
         <image name="icon-selected" width="20" height="20"/>
-        <image name="icon-setting" width="21" height="20"/>
+        <image name="icon-setting" width="24" height="23"/>
         <image name="icon_ftp" width="40" height="32"/>
         <image name="round-logo" width="140" height="140"/>
     </resources>

@@ -16,6 +16,7 @@
 #import <QuartzCore/CALayer.h>
 //
 #import "HHAlbumCollectionViewCell.h"
+#import "HHSettingViewController.h"
 
 static NSString *cellIdentifier = @"gridcellidentifier";
 
@@ -30,6 +31,7 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, strong)NSMutableArray *datasource;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtton;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButton;
+@property (weak, nonatomic) IBOutlet UIButton *addButton;
 
 @end
 
@@ -45,15 +47,21 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     self.view.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
     self.navigationItem.title = NSLocalizedString(@"Album", nil);
     self.collectionView = [[UICollectionView alloc]
-                           initWithFrame:CGRectMake(16, 16, APP_WIDTH-32, APP_HEIGTH-Height_NavBar-78-Height_StatusBar)
+                           initWithFrame:CGRectMake(16, 16, APP_WIDTH-32,
+                                                    APP_HEIGTH-Height_NavBar-16)
                            collectionViewLayout:layout];
     [self.view addSubview:self.collectionView];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"HHAlbumCollectionViewCell" bundle:nil]
           forCellWithReuseIdentifier:cellIdentifier];
-    self.collectionView.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
+    self.collectionView.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];//[UIColor colorWithHex:@"#f0f0f0"];
+    [self.view bringSubviewToFront:self.addButton];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    
+    self.collectionView.emptyDataSetSource = self;
+    self.collectionView.emptyDataSetDelegate = self;
+
     
 }
 
@@ -112,7 +120,7 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     
     NSString *text = NSLocalizedString(@"No albums", nil);
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:14.0f],
-                                 NSForegroundColorAttributeName: [UIColor colorWithHex:@"#666666"]};
+                                 NSForegroundColorAttributeName: [UIColor colorWithHex:@"#333333"]};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
@@ -122,25 +130,25 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
     paragraph.alignment = NSTextAlignmentCenter;
-    NSDictionary *attributes = @{
-                                 NSFontAttributeName:[UIFont fontWithName:kTitleName_PingFang_R size:14.0],
-                                 NSForegroundColorAttributeName: [UIColor lightGrayColor],
-                                 NSParagraphStyleAttributeName: paragraph
-                                 };
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont fontWithName:kTitleName_PingFang_R size:14.0],
+                                 NSForegroundColorAttributeName: [UIColor colorWithHex:@"#999999"],
+                                 NSParagraphStyleAttributeName: paragraph};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     
     NSString *text = NSLocalizedString(@"Create a new album", nil);
-    
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:14.0f],
-                                 NSForegroundColorAttributeName: [UIColor colorWithHex:@"#666666"]};
+                                 NSForegroundColorAttributeName: [UIColor colorWithHex:@"#333333"]};
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
+- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
+    return -100;
+}
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIImage imageNamed:@"home-album"];
+    return [UIImage imageNamed:@"empty_image"];
 }
 
 #pragma mark - <DZNEmptyDataSetDelegate>
@@ -187,22 +195,32 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     [popupView show];
 }
 
-- (void)rightBarButttonPressed {
+- (void)editButtonPressed {
     
 }
 
-- (void)leftBarButttonPressed {
+- (void)settingButtonPressed {
+    
+    UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    HHSettingViewController *settingVC = [mainBoard instantiateViewControllerWithIdentifier:@"HHSettingViewController"];
+    [self.navigationController pushViewController:settingVC animated:YES];
+    
     
 }
+
+- (IBAction)addAlbumButtonPressed:(id)sender {
+    [self showCreateAlbumAlert];
+}
+
 
 - (UIBarButtonItem *)rightBarButton {
     
     if(!_rightBarButton){
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 20)];
-        [button setImage:[UIImage imageNamed:@"edit_image.png"] forState:UIControlStateNormal];
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -45);
-        [button addTarget:self action:@selector(rightBarButttonPressed) forControlEvents:UIControlEventTouchUpInside];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
+        [button setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -40);
+        [button addTarget:self action:@selector(editButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         _rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
     
@@ -212,13 +230,12 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 - (UIBarButtonItem *)leftBarButtton {
     
     if(!_leftBarButtton){
-        
-        UIButton *letButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 32)];
-        [letButton setImage:[UIImage imageNamed:@"edit_image.png"] forState:UIControlStateNormal];
+        UIButton *letButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 32)];
+        [letButton setImage:[UIImage imageNamed:@"icon-setting"] forState:UIControlStateNormal];
         [letButton setTitleColor:RGB(51, 51, 51) forState:UIControlStateNormal];
         letButton.titleLabel.font = kFONT(kTitleName_PingFang_R, 18);
-        letButton.imageEdgeInsets = UIEdgeInsetsMake(0, -45, 0, 0);
-        [letButton addTarget:self action:@selector(leftBarButttonPressed) forControlEvents:UIControlEventTouchUpInside];
+        letButton.imageEdgeInsets = UIEdgeInsetsMake(0, -40, 0, 0);
+        [letButton addTarget:self action:@selector(settingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         _leftBarButtton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
     }
     return _leftBarButtton;
