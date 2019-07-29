@@ -26,10 +26,10 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, strong) NSMutableArray<HHAlbumModel *> *userAlbums;
 /// 是否需要重新排序
 @property (nonatomic, assign, getter=isReSequence)BOOL reSequence;
-
 @property (nonatomic, strong)UICollectionView   *collectionView;
-
 @property (nonatomic, strong)NSMutableArray *datasource;
+@property (nonatomic, strong) UIBarButtonItem *leftBarButtton;
+@property (nonatomic, strong) UIBarButtonItem *rightBarButton;
 
 @end
 
@@ -40,6 +40,8 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
 
+    self.navigationItem.leftBarButtonItem = self.leftBarButtton;
+    self.navigationItem.rightBarButtonItem = self.rightBarButton;
     self.view.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
     self.navigationItem.title = NSLocalizedString(@"Album", nil);
     self.collectionView = [[UICollectionView alloc]
@@ -185,4 +187,42 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     [popupView show];
 }
 
+- (void)rightBarButttonPressed {
+    
+}
+
+- (void)leftBarButttonPressed {
+    
+}
+
+- (UIBarButtonItem *)rightBarButton {
+    
+    if(!_rightBarButton){
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 20)];
+        [button setImage:[UIImage imageNamed:@"edit_image.png"] forState:UIControlStateNormal];
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -45);
+        [button addTarget:self action:@selector(rightBarButttonPressed) forControlEvents:UIControlEventTouchUpInside];
+        _rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    }
+    
+    return _rightBarButton;
+}
+
+- (UIBarButtonItem *)leftBarButtton {
+    
+    if(!_leftBarButtton){
+        
+        UIButton *letButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 32)];
+        [letButton setImage:[UIImage imageNamed:@"edit_image.png"] forState:UIControlStateNormal];
+        [letButton setTitleColor:RGB(51, 51, 51) forState:UIControlStateNormal];
+        letButton.titleLabel.font = kFONT(kTitleName_PingFang_R, 18);
+        letButton.imageEdgeInsets = UIEdgeInsetsMake(0, -45, 0, 0);
+        [letButton addTarget:self action:@selector(leftBarButttonPressed) forControlEvents:UIControlEventTouchUpInside];
+        _leftBarButtton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
+    }
+    return _leftBarButtton;
+}
+
 @end
+
