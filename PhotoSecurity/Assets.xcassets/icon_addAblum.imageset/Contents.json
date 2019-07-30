@@ -6,11 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "add_images.png",
+      "filename" : "icon_addAblum@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icon_addAblum@3x.png",
       "scale" : "3x"
     }
   ],

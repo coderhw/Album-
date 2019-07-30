@@ -215,7 +215,7 @@ NSString * const XPFaceEnableStateKey              = @"XPFaceEnableStateKey";
 /// 缩略图目录名称
 NSString * const XPThumbDirectoryNameKey            = @"Thumb";
 /// 生成的缩略图的宽高尺寸
-CGFloat const XPThumbImageWidthAndHeightKey         = 100.0;
+CGFloat const XPThumbImageWidthAndHeightKey         = 120.0;
 
 
 

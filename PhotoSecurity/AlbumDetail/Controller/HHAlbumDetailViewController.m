@@ -54,6 +54,7 @@ static CGFloat const kCellBorderMargin = 1.0;
     self.title = self.album.name;
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
+    self.collectionView.frame = CGRectMake(0, 1, APP_WIDH, APP_HIGH-1);
     // 加载相册所有图片数据
     HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
     self.photos = [manager requestAllPhotosWithAlbumid:self.album.albumid];

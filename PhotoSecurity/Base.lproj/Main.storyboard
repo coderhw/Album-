@@ -202,7 +202,7 @@
                                     <constraint firstAttribute="width" constant="64" id="efD-nS-5us"/>
                                     <constraint firstAttribute="height" constant="64" id="g6V-s8-Pbc"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="add_images"/>
+                                <state key="normal" backgroundImage="icon_addAblum"/>
                                 <connections>
                                     <action selector="addAlbumButtonPressed:" destination="gtl-8a-oxg" eventType="touchUpInside" id="7o3-B7-TUf"/>
                                 </connections>
@@ -465,11 +465,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add_images" width="64" height="64"/>
         <image name="icon-add" width="20" height="20"/>
         <image name="icon-edit" width="24" height="24"/>
         <image name="icon-selected" width="20" height="20"/>
         <image name="icon-setting" width="24" height="23"/>
+        <image name="icon_addAblum" width="32" height="32"/>
         <image name="icon_ftp" width="40" height="32"/>
         <image name="round-logo" width="140" height="140"/>
     </resources>
