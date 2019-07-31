@@ -196,11 +196,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-bH-cGE">
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-bH-cGE">
                                 <rect key="frame" x="334" y="734" width="64" height="64"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="efD-nS-5us"/>
-                                    <constraint firstAttribute="height" constant="64" id="g6V-s8-Pbc"/>
+                                    <constraint firstAttribute="width" constant="64" id="Y7a-le-7A9"/>
+                                    <constraint firstAttribute="height" constant="64" id="pXY-kC-05E"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="icon_addAblum"/>
                                 <connections>
@@ -210,18 +210,18 @@
                         </subviews>
                         <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="fNq-Bm-7Br" firstAttribute="top" secondItem="QOB-bH-cGE" secondAttribute="bottom" constant="64" id="ayb-jz-huF"/>
-                            <constraint firstAttribute="trailing" secondItem="QOB-bH-cGE" secondAttribute="trailing" constant="16" id="oHX-jZ-1gU"/>
+                            <constraint firstItem="fNq-Bm-7Br" firstAttribute="top" secondItem="QOB-bH-cGE" secondAttribute="bottom" constant="64" id="8RJ-cv-kuT"/>
+                            <constraint firstAttribute="trailing" secondItem="QOB-bH-cGE" secondAttribute="trailing" constant="16" id="zPV-bq-g1G"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MwN-jh-HJr"/>
                     <connections>
-                        <outlet property="addButton" destination="QOB-bH-cGE" id="lUN-Fl-f0B"/>
+                        <outlet property="addButton" destination="QOB-bH-cGE" id="Uqu-Sk-5Vk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hfB-oL-6aP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-465" y="-665"/>
+            <point key="canvasLocation" x="-781" y="-893"/>
         </scene>
         <!--Setting-->
         <scene sceneID="QuI-JB-dhU">
@@ -390,78 +390,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCE-du-gbQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-57" y="913"/>
-        </scene>
-        <!--Unlock View Controller-->
-        <scene sceneID="rMw-mf-OjA">
-            <objects>
-                <viewController storyboardIdentifier="XPUnlockViewController" id="7yJ-wt-XfN" customClass="HHUnlockViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Yvn-un-iGC"/>
-                        <viewControllerLayoutGuide type="bottom" id="Spy-29-pdc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kiK-vj-Kz2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="round-logo" translatesAutoresizingMaskIntoConstraints="NO" id="n1q-kc-Bec">
-                                <rect key="frame" x="137" y="84" width="140" height="140"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="QXf-dh-dws"/>
-                                    <constraint firstAttribute="height" constant="140" id="V94-Jq-4fT"/>
-                                </constraints>
-                            </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please enter your password" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hmx-il-Vov">
-                                <rect key="frame" x="20" y="274" width="374" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="rFu-Bf-3lV"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="7yJ-wt-XfN" id="stk-QN-70B"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7Z-pU-v1d">
-                                <rect key="frame" x="20" y="324" width="374" height="40"/>
-                                <color key="backgroundColor" red="0.22745098039215686" green="0.69411764705882351" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="lb3-r8-3pH"/>
-                                </constraints>
-                                <state key="normal" title="Unlock">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="4"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="unlockButtonAction:" destination="7yJ-wt-XfN" eventType="touchUpInside" id="gJt-yJ-wCn"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="C7Z-pU-v1d" secondAttribute="trailing" constant="20" id="7j8-FI-4TB"/>
-                            <constraint firstItem="n1q-kc-Bec" firstAttribute="centerX" secondItem="kiK-vj-Kz2" secondAttribute="centerX" id="IeS-TH-6Lh"/>
-                            <constraint firstItem="C7Z-pU-v1d" firstAttribute="leading" secondItem="kiK-vj-Kz2" secondAttribute="leading" constant="20" id="Q4q-Eh-KBy"/>
-                            <constraint firstItem="n1q-kc-Bec" firstAttribute="top" secondItem="Yvn-un-iGC" secondAttribute="bottom" constant="40" id="VX5-cH-NvZ"/>
-                            <constraint firstItem="hmx-il-Vov" firstAttribute="top" secondItem="n1q-kc-Bec" secondAttribute="bottom" constant="50" id="ZCL-sz-qyX"/>
-                            <constraint firstItem="hmx-il-Vov" firstAttribute="leading" secondItem="kiK-vj-Kz2" secondAttribute="leading" constant="20" id="mrK-lL-b21"/>
-                            <constraint firstItem="C7Z-pU-v1d" firstAttribute="top" secondItem="hmx-il-Vov" secondAttribute="bottom" constant="20" id="xLp-Wk-mOk"/>
-                            <constraint firstAttribute="trailing" secondItem="hmx-il-Vov" secondAttribute="trailing" constant="20" id="zfB-ys-ZCG"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="w1l-lw-gfx"/>
-                    <connections>
-                        <outlet property="passwordTextField" destination="hmx-il-Vov" id="TMD-NM-F87"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="V0E-HK-C8Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-780" y="913"/>
+            <point key="canvasLocation" x="-571" y="869"/>
         </scene>
     </scenes>
     <resources>
@@ -471,6 +400,5 @@
         <image name="icon-setting" width="24" height="23"/>
         <image name="icon_addAblum" width="32" height="32"/>
         <image name="icon_ftp" width="40" height="32"/>
-        <image name="round-logo" width="140" height="140"/>
     </resources>
 </document>

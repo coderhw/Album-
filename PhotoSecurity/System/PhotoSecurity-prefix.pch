@@ -24,6 +24,7 @@
 #import "HHSQLiteManager.h"
 #import "HHThemeHeader.h"
 #import "HHScreenDefineHeader.h"
+#import "HHBaseViewController.h"
 
 /// 处理Block循环引用
 #define weakify(obj)    autoreleasepool{} __weak __typeof(obj) weak##obj = obj;

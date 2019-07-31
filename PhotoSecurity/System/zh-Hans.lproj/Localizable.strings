@@ -37,6 +37,7 @@
 "Password length is at least 6 characters" = "密码长度不少于6位";
 "You can use the Touch ID to verify the fingerprint quickly to complete the unlock application" = "您可以使用Touch ID快速验证指纹以完成解锁应用";
 "Face ID successed set" = "Face ID设置成功";
+"Touch ID successed set" = "Touch ID设置成功";
 "Delete Album" = "删除相册";
 "Are you sure you want to delete the album? All the pictures under the album will be deleted." = "你确定要删除该相册吗？该相册下的所有图片将会被删除。";
 "The camera is not available" = "该设备没有摄像头";

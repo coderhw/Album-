@@ -17,6 +17,7 @@
 //
 #import "HHAlbumCollectionViewCell.h"
 #import "HHSettingViewController.h"
+#import "HHBlurAlertView.h"
 
 static NSString *cellIdentifier = @"gridcellidentifier";
 
@@ -27,12 +28,13 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, strong) NSMutableArray<HHAlbumModel *> *userAlbums;
 /// 是否需要重新排序
 @property (nonatomic, assign, getter=isReSequence)BOOL reSequence;
-@property (nonatomic, strong)UICollectionView   *collectionView;
-@property (nonatomic, strong)NSMutableArray *datasource;
+@property (nonatomic, strong) UICollectionView   *collectionView;
+@property (nonatomic, strong) NSMutableArray *datasource;
 @property (nonatomic, strong) UIBarButtonItem *leftBarButtton;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButton;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
-
+@property (nonatomic, assign) BOOL isEditing;
+@property (nonatomic, strong) HHBlurAlertView *blurAlertView;
 @end
 
 @implementation HHNewHomeViewController
@@ -46,6 +48,7 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     self.navigationItem.rightBarButtonItem = self.rightBarButton;
     self.view.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
     self.navigationItem.title = NSLocalizedString(@"Album", nil);
+    
     self.collectionView = [[UICollectionView alloc]
                            initWithFrame:CGRectMake(16, 16, APP_WIDTH-32,
                                                     APP_HEIGTH-Height_NavBar-16)
@@ -54,15 +57,16 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"HHAlbumCollectionViewCell" bundle:nil]
           forCellWithReuseIdentifier:cellIdentifier];
-    self.collectionView.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];//[UIColor colorWithHex:@"#f0f0f0"];
-    [self.view bringSubviewToFront:self.addButton];
+    self.collectionView.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
-
+    self.collectionView.showsVerticalScrollIndicator = NO;
+    [self.view bringSubviewToFront:self.addButton];
     
+    self.titleStr = NSLocalizedString(@"Album", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,6 +74,26 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     [super viewWillAppear:animated];
     self.userAlbums = [[HHSQLiteManager sharedSQLiteManager] requestUserAlbums];
     [self.collectionView reloadData];
+    self.navigationController.toolbar.hidden = YES;
+    
+    [[IQKeyboardManager sharedManager] setEnable:NO];
+    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
+    // 打开应用必须先解锁才能使用
+    static dispatch_once_t onceToken;
+    @weakify(self);
+    dispatch_once(&onceToken, ^{
+        @strongify(self);
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        NSString *identifier = @"HHSetPasswordViewController";
+        UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+        [self presentViewController:vc animated:NO completion:nil];
+
+    });
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
 }
 
 - (NSMutableArray *)datasource {
@@ -88,9 +112,53 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     cell.backgroundColor = [UIColor whiteColor];
     cell.layer.cornerRadius = 5.0f;
     cell.layer.masksToBounds = YES;
-    
     HHAlbumModel *album = self.userAlbums[indexPath.row];
-    [cell configCellWithAlbumModel:album];
+
+    if(self.isEditing){
+        [cell configCellWithAlbumModel:album isEdit:YES];
+    }else{
+        [cell configCellWithAlbumModel:album isEdit:NO];
+    }
+    
+    cell.deleblock = ^{
+        //删除相册
+        HHAlbumModel *album = self.userAlbums[indexPath.row];
+        NSString *title = [NSString stringWithFormat:@"%@ \"%@\"", NSLocalizedString(@"Delete", nil),album.name];
+        NSString *message = NSLocalizedString(@"Are you sure you want to delete the album? All the pictures under the album will be deleted.", nil);
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                       message:message
+                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+        @weakify(self);
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Album", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            @strongify(self);
+            HHAlbumModel *album = self.userAlbums[indexPath.row];
+            BOOL success = [[HHSQLiteManager sharedSQLiteManager] deleteAlbumWithAlbum:album];
+            if (!success) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [HHProgressHUD showFailureHUD:NSLocalizedString(@"Delete fail.", nil) toView:self.view];
+                });
+                return;
+            }
+            [self.userAlbums removeObjectAtIndex:indexPath.row];
+//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+
+            if (0 == self.userAlbums.count) {
+                [self.collectionView reloadEmptyDataSet];
+            }
+        }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        
+        if (iPad()) {
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+            alert.popoverPresentationController.sourceView = cell;
+            // 直接cell.bounds会导致弹出框往左偏移不居中
+            alert.popoverPresentationController.sourceRect = CGRectMake(cell.contentView.frame.origin.x, 0.0, cell.bounds.size.width+ABS(cell.contentView.frame.origin.x)*2, cell.bounds.size.height);
+            alert.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        }
+        [self presentViewController:alert animated:YES completion:nil];
+    };
     return cell;
 }
 
@@ -107,7 +175,7 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    return CGSizeMake(APP_WIDTH/4, 160);
+    return CGSizeMake(APP_WIDTH/2-24, 190);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -154,7 +222,7 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 #pragma mark - <DZNEmptyDataSetDelegate>
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self showCreateAlbumAlert];
+    [self addAlbumButtonPressed:nil];
 }
 
 #pragma mark - Actions
@@ -195,23 +263,36 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     [popupView show];
 }
 
-- (void)editButtonPressed {
+- (void)editButtonPressed:(UIButton *)sender {
     
+    sender.selected = !sender.selected;
+    self.isEditing = sender.selected;
+    [self.collectionView reloadData];
 }
 
 - (void)settingButtonPressed {
     
     UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     HHSettingViewController *settingVC = [mainBoard instantiateViewControllerWithIdentifier:@"HHSettingViewController"];
-    [self.navigationController pushViewController:settingVC animated:YES];
-    
-    
+    [self.navigationController pushViewController:settingVC animated:YES];    
 }
 
 - (IBAction)addAlbumButtonPressed:(id)sender {
-    [self showCreateAlbumAlert];
-}
 
+    __weak typeof(self) ws = self;
+    [self.blurAlertView show];
+    self.blurAlertView.alertActionBlock = ^(NSInteger index, NSString *name) {
+        
+        if(index == 1){
+            //创建相册
+            HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
+            HHAlbumModel *album = [manager createAlbumWithName:name];
+            if (nil == album) return;
+            [ws.userAlbums addObject:album];
+            [ws.collectionView reloadData];
+        }
+    };
+}
 
 - (UIBarButtonItem *)rightBarButton {
     
@@ -220,7 +301,7 @@ UICollectionViewDataSource, UICollectionViewDelegate>
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
         [button setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
         button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -40);
-        [button addTarget:self action:@selector(editButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(editButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         _rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
     
@@ -239,6 +320,14 @@ UICollectionViewDataSource, UICollectionViewDelegate>
         _leftBarButtton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
     }
     return _leftBarButtton;
+}
+
+- (HHBlurAlertView *)blurAlertView {
+    
+    if(!_blurAlertView){
+        _blurAlertView = [HHBlurAlertView blurAlertView];
+    }
+    return _blurAlertView;
 }
 
 @end

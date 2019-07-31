@@ -60,15 +60,17 @@
     dispatch_once(&onceToken, ^{
         @strongify(self);
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        NSString *identifier = [HHPasswordTool isSetPassword] ? @"HHSetPasswordViewController" : @"HHSetPasswordViewController";
+        NSString *identifier = @"HHSetPasswordViewController";
         UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
-        [self presentViewController:vc animated:NO completion:^{
-            self.navigationController.view.hidden = NO;
-        }];
+        [self presentViewController:vc animated:NO completion:nil];
+//        [self presentViewController:vc animated:NO completion:^{
+//            self.navigationController.view.hidden = NO;
+//        }];
     });
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
+- (void)viewDidDisappear:
+(BOOL)animated {
   
     [super viewDidDisappear:animated];
     [[IQKeyboardManager sharedManager] setEnable:YES];

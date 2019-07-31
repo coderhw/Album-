@@ -129,7 +129,6 @@ NSInteger touchIDTypeAccessed()
 
         NSError *authError = nil;
         BOOL isCanEvaluatePolicy = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError];
-        
         if (authError) {
             NSLog(@"检测设备是否支持TouchID或者FaceID失败！\n error : == %@",authError.localizedDescription);
             return 0;

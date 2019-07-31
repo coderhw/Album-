@@ -12,9 +12,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^HHDeleAlbumBlock)(void);
+
 @interface HHAlbumCollectionViewCell : UICollectionViewCell
 
-- (void)configCellWithAlbumModel:(HHAlbumModel *)albumModel;
+@property (nonatomic, copy) HHDeleAlbumBlock deleblock;
+
+- (void)configCellWithAlbumModel:(HHAlbumModel *)album
+                          isEdit:(BOOL)isEdit;
 
 @end
 

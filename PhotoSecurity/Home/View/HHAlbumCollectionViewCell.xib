@@ -12,19 +12,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HHAlbumCollectionViewCell">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="gTV-IL-0wX" customClass="HHAlbumCollectionViewCell">
             <rect key="frame" x="0.0" y="0.0" width="157" height="194"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="157" height="194"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HEB-n5-uBr">
-                        <rect key="frame" x="0.0" y="0.0" width="157" height="151"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="album-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="HEB-n5-uBr">
+                        <rect key="frame" x="5" y="5" width="147" height="146"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Klh-ne-2iC">
-                        <rect key="frame" x="2" y="158" width="30.5" height="16"/>
+                        <rect key="frame" x="6" y="158" width="30.5" height="16"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="SzB-dY-cEb"/>
@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWo-Df-iTC">
-                        <rect key="frame" x="2" y="179" width="30.5" height="10"/>
+                        <rect key="frame" x="6" y="179" width="30.5" height="10"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="9h7-A6-TL4"/>
@@ -43,16 +43,29 @@
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qm1-cb-maG">
+                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="JM5-ZB-Ud3"/>
+                            <constraint firstAttribute="height" constant="20" id="ZDI-nc-Io9"/>
+                        </constraints>
+                        <state key="normal" image="icon_delete"/>
+                        <connections>
+                            <action selector="deleButtonPressed:" destination="gTV-IL-0wX" eventType="touchDown" id="9ft-3v-1zk"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="HEB-n5-uBr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="3ch-fk-QMB"/>
-                <constraint firstItem="Klh-ne-2iC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="JPs-IM-xPQ"/>
+                <constraint firstItem="HEB-n5-uBr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="3ch-fk-QMB"/>
+                <constraint firstItem="Klh-ne-2iC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="JPs-IM-xPQ"/>
                 <constraint firstItem="pWo-Df-iTC" firstAttribute="top" secondItem="Klh-ne-2iC" secondAttribute="bottom" constant="5" id="Kdg-kv-ZYI"/>
+                <constraint firstItem="Qm1-cb-maG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="LO7-La-2c4"/>
                 <constraint firstItem="Klh-ne-2iC" firstAttribute="top" secondItem="HEB-n5-uBr" secondAttribute="bottom" constant="7" id="SCX-fz-wXd"/>
-                <constraint firstItem="pWo-Df-iTC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="dEI-KE-u0I"/>
-                <constraint firstAttribute="trailing" secondItem="HEB-n5-uBr" secondAttribute="trailing" id="rDy-eC-PM7"/>
-                <constraint firstItem="HEB-n5-uBr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ytK-6G-MDc"/>
+                <constraint firstItem="pWo-Df-iTC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="dEI-KE-u0I"/>
+                <constraint firstItem="Qm1-cb-maG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="kMf-YE-2GY"/>
+                <constraint firstAttribute="trailing" secondItem="HEB-n5-uBr" secondAttribute="trailing" constant="5" id="rDy-eC-PM7"/>
+                <constraint firstItem="HEB-n5-uBr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="ytK-6G-MDc"/>
                 <constraint firstAttribute="bottom" secondItem="pWo-Df-iTC" secondAttribute="bottom" constant="5" id="zAq-gU-pRq"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
@@ -61,8 +74,13 @@
                 <outlet property="avatorCount" destination="pWo-Df-iTC" id="8bm-Ik-Jui"/>
                 <outlet property="avatorName" destination="Klh-ne-2iC" id="vrq-7r-168"/>
                 <outlet property="avatorView" destination="HEB-n5-uBr" id="Nl7-KF-MAf"/>
+                <outlet property="deleteButton" destination="Qm1-cb-maG" id="gIw-Fg-9sG"/>
             </connections>
-            <point key="canvasLocation" x="-754" y="-186"/>
+            <point key="canvasLocation" x="-1622.4637681159422" y="-197.54464285714286"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="album-placeholder" width="60" height="60"/>
+        <image name="icon_delete" width="20" height="20"/>
+    </resources>
 </document>

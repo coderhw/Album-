@@ -185,15 +185,34 @@
                 [HHProgressHUD showFailureHUD:error.localizedDescription toView:weakSelf.view];
                 return;
             }else{
+                
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 NSString *type = [NSString stringWithFormat:@"%ld", (long)touchIDTypeAccessed()];
                 [userDefaults setValue:type forKey:XPTouchEnableStateKey];
                 [userDefaults synchronize];
-                [cell.stateSwitch setOn:YES];
-
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Face ID successed set", nil) toView:weakSelf.view];
-                });
+               //Face ID
+                if(@available(iOS 11.0, *)) {
+                    if (weakSelf.context.biometryType == LABiometryTypeFaceID){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [cell.stateSwitch setOn:YES];
+                            [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Face ID successed set", nil) toView:weakSelf.view];
+                        });
+                    }
+                    
+                }
+                //指纹
+                if (@available(iOS 11.0, *)) {
+                    if(weakSelf.context.biometryType == LABiometryTypeTouchID){
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [cell.stateSwitch setOn:YES];
+                            [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Touch ID successed set", nil) toView:weakSelf.view];
+                        });
+                    }
+                } else {
+                    // Fallback on earlier versions
+                }
+                
+                
             }
         }];
     }

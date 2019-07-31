@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *avatorView;
 @property (weak, nonatomic) IBOutlet UILabel *avatorName;
 @property (weak, nonatomic) IBOutlet UILabel *avatorCount;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 @end
 
@@ -24,7 +25,7 @@
 
 }
 
-- (void)configCellWithAlbumModel:(HHAlbumModel *)album {
+- (void)configCellWithAlbumModel:(HHAlbumModel *)album isEdit:(BOOL)isEdit {
     
     UIImage *image = nil;
     if (album.count && album.thumbImage) {
@@ -36,9 +37,26 @@
     }
     self.avatorName.text = album.name;
     self.avatorCount.text = [NSString stringWithFormat:@"%@张", [NSString stringWithFormat:@"%ld", album.count]];
+    
     self.avatorView.image = image ?: [UIImage imageNamed:@"album-placeholder"];
-//    self.avatorView.layer.masksToBounds = YES;
-//    self.avatorView.layer.cornerRadius = 5.0f;
+    if(!album.count){
+        self.avatorView.contentMode = UIViewContentModeCenter;
+    }else{
+        self.avatorView.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    
+    if(isEdit){
+        self.deleteButton.hidden = NO;
+    }else{
+        self.deleteButton.hidden = YES;
+    }
+
+}
+
+- (IBAction)deleButtonPressed:(id)sender {
+    if(self.deleblock){
+        self.deleblock();
+    }
 }
 
 @end

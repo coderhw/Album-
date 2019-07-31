@@ -21,7 +21,6 @@
     UINavigationBar *navigationBar = [UINavigationBar appearance];
     [navigationBar setTranslucent:NO];
     
-//    [navigationBar setBarTintColor:rgbColor(60.0, 65.0, 70.0)];
     UIColor *barTintColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Img_setPassword_bg.png"]];
     [navigationBar setBarTintColor:barTintColor];
     [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
@@ -30,10 +29,8 @@
     [navigationBar setBackIndicatorTransitionMaskImage:backImage];
     
     UIBarButtonItem *barButtonItem = [UIBarButtonItem appearance];
-    NSDictionary *dict = @{
-                           NSFontAttributeName: [UIFont systemFontOfSize:15.0],
-                           NSForegroundColorAttributeName: [UIColor whiteColor]
-                           };
+    NSDictionary *dict = @{NSFontAttributeName: [UIFont systemFontOfSize:15.0],
+                           NSForegroundColorAttributeName: [UIColor whiteColor]};
     [barButtonItem setTitleTextAttributes:dict forState:UIControlStateNormal];
 }
 
@@ -44,7 +41,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Override

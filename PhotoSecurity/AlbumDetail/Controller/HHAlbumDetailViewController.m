@@ -414,11 +414,7 @@ static CGFloat const kCellBorderMargin = 1.0;
             });
         });
     }]];
-    if (iPad()) {
-        UIPopoverPresentationController *popover = [alert popoverPresentationController];
-        popover.barButtonItem = sender;
-        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    }
+    
     [self presentViewController:alert animated:YES completion:nil];
 }
 
