@@ -89,7 +89,7 @@
     [navigationBar setBarTintColor:barTintColor];
     
     [navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-    UIImage *backImage = [[UIImage imageNamed:@"icon-back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage *backImage = [[UIImage imageNamed:@"icon-back.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [navigationBar setBackIndicatorImage:backImage];
     [navigationBar setBackIndicatorTransitionMaskImage:backImage];
     
