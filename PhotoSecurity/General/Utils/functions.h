@@ -99,8 +99,6 @@ UIKIT_STATIC_INLINE BOOL iPad()
 
 ///////////////////////////
 ////        常量        ////
-///////////////////////////
-
 /// 密码
 FOUNDATION_EXTERN NSString * const XPPasswordKey;
 /// 密码随机字符
@@ -115,4 +113,6 @@ FOUNDATION_EXTERN NSString * const XPFaceEnableStateKey;
 FOUNDATION_EXTERN NSString * const XPThumbDirectoryNameKey;
 /// 生成的缩略图的宽高尺寸
 FOUNDATION_EXTERN CGFloat const XPThumbImageWidthAndHeightKey;
+/// email
+FOUNDATION_EXTERN NSString * const HHEmailKey;
 

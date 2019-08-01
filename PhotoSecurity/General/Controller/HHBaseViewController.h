@@ -8,19 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^BackButtonClickBlock)(void);
-
 @interface HHBaseViewController : UIViewController
-
-@property (nonatomic, assign) BOOL hideNavBar;//是否隐藏导航栏
-@property (nonatomic, assign) BOOL hideBackButton; //是否隐藏返回按钮
-@property (nonatomic, assign) BOOL hideNavBottomLine; //是否隐藏导航条下划线
-
-@property (nonatomic, copy) BackButtonClickBlock backButtonClickBlock; //返回按钮回调
-@property (nonatomic, copy) NSString *titleStr; //导航栏标题
-@property (nonatomic, strong) UIColor *navColor; //导航栏颜色
-@property (nonatomic, strong) UIColor *titleColor; //导航栏字体颜色
-@property (nonatomic, strong) UIFont  *titleFont;
 
 
 

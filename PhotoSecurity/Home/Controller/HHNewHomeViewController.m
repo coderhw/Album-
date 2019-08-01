@@ -14,6 +14,7 @@
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <QuartzCore/CALayer.h>
+#import "HHNewSettingViewController.h"
 //
 #import "HHAlbumCollectionViewCell.h"
 #import "HHSettingViewController.h"
@@ -42,8 +43,9 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    self.navigationItem.title = NSLocalizedString(@"Album", nil);
 
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     self.navigationItem.leftBarButtonItem = self.leftBarButtton;
     self.navigationItem.rightBarButtonItem = self.rightBarButton;
     self.view.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
@@ -66,7 +68,6 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     self.collectionView.showsVerticalScrollIndicator = NO;
     [self.view bringSubviewToFront:self.addButton];
     
-    self.titleStr = NSLocalizedString(@"Album", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -272,9 +273,12 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 
 - (void)settingButtonPressed {
     
-    UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    HHSettingViewController *settingVC = [mainBoard instantiateViewControllerWithIdentifier:@"HHSettingViewController"];
-    [self.navigationController pushViewController:settingVC animated:YES];    
+//    UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    HHSettingViewController *settingVC = [mainBoard instantiateViewControllerWithIdentifier:@"HHSettingViewController"];
+//    [self.navigationController pushViewController:settingVC animated:YES];
+    
+    HHNewSettingViewController *settVC = [[HHNewSettingViewController alloc] init];
+    [self.navigationController pushViewController:settVC animated:YES];
 }
 
 - (IBAction)addAlbumButtonPressed:(id)sender {

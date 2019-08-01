@@ -42,6 +42,7 @@
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    
     if ([HHPasswordTool isSetPassword]) {
         for (UIView *subview in self.window.subviews) {
             if ([subview isKindOfClass:[GHPopupEditView class]]) {

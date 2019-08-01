@@ -48,11 +48,6 @@
 		12FA26901E76A47D0000A643 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 12FA26921E76A47D0000A643 /* Localizable.strings */; };
 		200F30F022EC70480030B957 /* HHPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 200F30EF22EC70480030B957 /* HHPhotoModel.m */; };
 		2021A3E322EC72BA00F75CD5 /* HHPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2021A3E222EC72BA00F75CD5 /* HHPhotoPickerViewController.m */; };
-		2021A40C22ED49F700F75CD5 /* HHTransitionInteractive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2021A40422ED49F700F75CD5 /* HHTransitionInteractive.m */; };
-		2021A40D22ED49F700F75CD5 /* UIScrollView+GestureConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = 2021A40722ED49F700F75CD5 /* UIScrollView+GestureConflict.m */; };
-		2021A40E22ED49F700F75CD5 /* HHTransitionAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2021A40822ED49F700F75CD5 /* HHTransitionAnimation.m */; };
-		2021A40F22ED49F700F75CD5 /* WSLAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2021A40922ED49F700F75CD5 /* WSLAnimationController.m */; };
-		2021A41022ED49F700F75CD5 /* WSLNavigatioController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2021A40A22ED49F700F75CD5 /* WSLNavigatioController.m */; };
 		205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */; };
 		209DDF6222EB6A54006A3D06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209DDF6122EB6A54006A3D06 /* Assets.xcassets */; };
 		20A9689122EB563000A3340F /* PPLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A9689022EB563000A3340F /* PPLockView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -60,9 +55,14 @@
 		548055CD1E6701750040143A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 548055CB1E6701750040143A /* Main.storyboard */; };
 		548055DE1E6702D70040143A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 548055DB1E6702D70040143A /* AppDelegate.m */; };
 		548055E01E6702D70040143A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 548055DD1E6702D70040143A /* main.m */; };
+		641F5A0722F300D50028E5AA /* HHAcountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 641F5A0622F300D50028E5AA /* HHAcountManager.m */; };
+		641F5A0A22F3027D0028E5AA /* HHSetEmailViewContrller.m in Sources */ = {isa = PBXBuildFile; fileRef = 641F5A0922F3027D0028E5AA /* HHSetEmailViewContrller.m */; };
 		648AA6B022F16540000CAF28 /* HHBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648AA6AE22F16540000CAF28 /* HHBaseViewController.m */; };
 		648AA6BA22F182C8000CAF28 /* HHBlurAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 648AA6B922F182C8000CAF28 /* HHBlurAlertView.m */; };
 		648AA6BC22F182D2000CAF28 /* HHBlurAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648AA6BB22F182D2000CAF28 /* HHBlurAlertView.xib */; };
+		648AA6BF22F28460000CAF28 /* HHNewSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648AA6BE22F28460000CAF28 /* HHNewSettingViewController.m */; };
+		648AA6C322F285F2000CAF28 /* HHSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648AA6C122F285F2000CAF28 /* HHSettingCell.m */; };
+		648AA6C422F285F2000CAF28 /* HHSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648AA6C222F285F2000CAF28 /* HHSettingCell.xib */; };
 		64D3D5A522EEBD9500B63DA9 /* HHNewHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64D3D5A422EEBD9500B63DA9 /* HHNewHomeViewController.m */; };
 		64F081D022EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F081CE22EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.m */; };
 		64F081D122EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F081CF22EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.xib */; };
@@ -147,16 +147,6 @@
 		200F30EF22EC70480030B957 /* HHPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHPhotoModel.m; sourceTree = "<group>"; };
 		2021A3E222EC72BA00F75CD5 /* HHPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHPhotoPickerViewController.m; sourceTree = "<group>"; };
 		2021A3F122ED3EA600F75CD5 /* HHUtilsDefineHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHUtilsDefineHeader.h; sourceTree = "<group>"; };
-		2021A40222ED49F700F75CD5 /* HHTransitionAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHTransitionAnimation.h; sourceTree = "<group>"; };
-		2021A40322ED49F700F75CD5 /* UIScrollView+GestureConflict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+GestureConflict.h"; sourceTree = "<group>"; };
-		2021A40422ED49F700F75CD5 /* HHTransitionInteractive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHTransitionInteractive.m; sourceTree = "<group>"; };
-		2021A40522ED49F700F75CD5 /* WSLNavigatioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSLNavigatioController.h; sourceTree = "<group>"; };
-		2021A40622ED49F700F75CD5 /* WSLAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSLAnimationController.h; sourceTree = "<group>"; };
-		2021A40722ED49F700F75CD5 /* UIScrollView+GestureConflict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+GestureConflict.m"; sourceTree = "<group>"; };
-		2021A40822ED49F700F75CD5 /* HHTransitionAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHTransitionAnimation.m; sourceTree = "<group>"; };
-		2021A40922ED49F700F75CD5 /* WSLAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSLAnimationController.m; sourceTree = "<group>"; };
-		2021A40A22ED49F700F75CD5 /* WSLNavigatioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSLNavigatioController.m; sourceTree = "<group>"; };
-		2021A40B22ED49F700F75CD5 /* HHTransitionInteractive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHTransitionInteractive.h; sourceTree = "<group>"; };
 		20411EC522ED5C3500AD6DAE /* HHThemeHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHThemeHeader.h; sourceTree = "<group>"; };
 		205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSetPasswordViewController.h; sourceTree = "<group>"; };
 		205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSetPasswordViewController.m; sourceTree = "<group>"; };
@@ -172,11 +162,20 @@
 		548055DD1E6702D70040143A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		548055E71E6705F80040143A /* HHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeViewController.h; sourceTree = "<group>"; };
 		548055E81E6705F80040143A /* HHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeViewController.m; sourceTree = "<group>"; };
+		641F5A0522F300D50028E5AA /* HHAcountManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHAcountManager.h; sourceTree = "<group>"; };
+		641F5A0622F300D50028E5AA /* HHAcountManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHAcountManager.m; sourceTree = "<group>"; };
+		641F5A0822F3027D0028E5AA /* HHSetEmailViewContrller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSetEmailViewContrller.h; sourceTree = "<group>"; };
+		641F5A0922F3027D0028E5AA /* HHSetEmailViewContrller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSetEmailViewContrller.m; sourceTree = "<group>"; };
 		648AA6AE22F16540000CAF28 /* HHBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHBaseViewController.m; sourceTree = "<group>"; };
 		648AA6AF22F16540000CAF28 /* HHBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHBaseViewController.h; sourceTree = "<group>"; };
 		648AA6B822F182C8000CAF28 /* HHBlurAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBlurAlertView.h; sourceTree = "<group>"; };
 		648AA6B922F182C8000CAF28 /* HHBlurAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHBlurAlertView.m; sourceTree = "<group>"; };
 		648AA6BB22F182D2000CAF28 /* HHBlurAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHBlurAlertView.xib; sourceTree = "<group>"; };
+		648AA6BD22F28460000CAF28 /* HHNewSettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHNewSettingViewController.h; sourceTree = "<group>"; };
+		648AA6BE22F28460000CAF28 /* HHNewSettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHNewSettingViewController.m; sourceTree = "<group>"; };
+		648AA6C022F285F2000CAF28 /* HHSettingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSettingCell.h; sourceTree = "<group>"; };
+		648AA6C122F285F2000CAF28 /* HHSettingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSettingCell.m; sourceTree = "<group>"; };
+		648AA6C222F285F2000CAF28 /* HHSettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHSettingCell.xib; sourceTree = "<group>"; };
 		64D3D5A322EEBD9500B63DA9 /* HHNewHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHNewHomeViewController.h; sourceTree = "<group>"; };
 		64D3D5A422EEBD9500B63DA9 /* HHNewHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHNewHomeViewController.m; sourceTree = "<group>"; };
 		64F081CD22EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHAlbumCollectionViewCell.h; sourceTree = "<group>"; };
@@ -218,6 +217,10 @@
 				124529221E80CBDB007222C4 /* XPChangePasswordViewController.m */,
 				1226BC361E8519830022C882 /* XPFTPViewController.h */,
 				1226BC371E8519830022C882 /* XPFTPViewController.m */,
+				648AA6BD22F28460000CAF28 /* HHNewSettingViewController.h */,
+				648AA6BE22F28460000CAF28 /* HHNewSettingViewController.m */,
+				641F5A0822F3027D0028E5AA /* HHSetEmailViewContrller.h */,
+				641F5A0922F3027D0028E5AA /* HHSetEmailViewContrller.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -402,6 +405,8 @@
 				129C3CE31E6D4DFD00A52448 /* HHProgressHUD.m */,
 				121DEB3C1E79125100491C97 /* HHSQLiteManager.h */,
 				121DEB3D1E79125100491C97 /* HHSQLiteManager.m */,
+				641F5A0522F300D50028E5AA /* HHAcountManager.h */,
+				641F5A0622F300D50028E5AA /* HHAcountManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -432,6 +437,9 @@
 			children = (
 				1245291E1E80BF6E007222C4 /* XPSettingCell.h */,
 				1245291F1E80BF6E007222C4 /* XPSettingCell.m */,
+				648AA6C022F285F2000CAF28 /* HHSettingCell.h */,
+				648AA6C122F285F2000CAF28 /* HHSettingCell.m */,
+				648AA6C222F285F2000CAF28 /* HHSettingCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -466,26 +474,8 @@
 		2021A3E422ED3C6500F75CD5 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				2021A40122ED49F700F75CD5 /* Animation */,
 			);
 			path = Base;
-			sourceTree = "<group>";
-		};
-		2021A40122ED49F700F75CD5 /* Animation */ = {
-			isa = PBXGroup;
-			children = (
-				2021A40222ED49F700F75CD5 /* HHTransitionAnimation.h */,
-				2021A40422ED49F700F75CD5 /* HHTransitionInteractive.m */,
-				2021A40522ED49F700F75CD5 /* WSLNavigatioController.h */,
-				2021A40622ED49F700F75CD5 /* WSLAnimationController.h */,
-				2021A40722ED49F700F75CD5 /* UIScrollView+GestureConflict.m */,
-				2021A40322ED49F700F75CD5 /* UIScrollView+GestureConflict.h */,
-				2021A40822ED49F700F75CD5 /* HHTransitionAnimation.m */,
-				2021A40922ED49F700F75CD5 /* WSLAnimationController.m */,
-				2021A40A22ED49F700F75CD5 /* WSLNavigatioController.m */,
-				2021A40B22ED49F700F75CD5 /* HHTransitionInteractive.h */,
-			);
-			path = Animation;
 			sourceTree = "<group>";
 		};
 		20A9688E22EB562200A3340F /* Views */ = {
@@ -664,6 +654,7 @@
 			files = (
 				12FA26901E76A47D0000A643 /* Localizable.strings in Resources */,
 				121C11891E9DCDFE008AB02D /* AppAlternateIcon@3x.png in Resources */,
+				648AA6C422F285F2000CAF28 /* HHSettingCell.xib in Resources */,
 				209DDF6222EB6A54006A3D06 /* Assets.xcassets in Resources */,
 				1226BC311E8515D00022C882 /* xmftp_commands.plist in Resources */,
 				121C11951E9DCFDA008AB02D /* AppAlternateIcon2@3x.png in Resources */,
@@ -739,27 +730,26 @@
 				129C3CE41E6D4DFD00A52448 /* HHProgressHUD.m in Sources */,
 				648AA6B022F16540000CAF28 /* HHBaseViewController.m in Sources */,
 				20A9689122EB563000A3340F /* PPLockView.m in Sources */,
-				2021A40C22ED49F700F75CD5 /* HHTransitionInteractive.m in Sources */,
-				2021A40F22ED49F700F75CD5 /* WSLAnimationController.m in Sources */,
 				121DEB3E1E79125200491C97 /* HHSQLiteManager.m in Sources */,
 				1224BB0B1E6E901700CCCD73 /* GHPopupEditView.m in Sources */,
 				648AA6BA22F182C8000CAF28 /* HHBlurAlertView.m in Sources */,
+				648AA6C322F285F2000CAF28 /* HHSettingCell.m in Sources */,
 				205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */,
 				200F30F022EC70480030B957 /* HHPhotoModel.m in Sources */,
 				1226BC381E8519830022C882 /* XPFTPViewController.m in Sources */,
 				64D3D5A522EEBD9500B63DA9 /* HHNewHomeViewController.m in Sources */,
 				124529231E80CBDB007222C4 /* XPChangePasswordViewController.m in Sources */,
-				2021A40E22ED49F700F75CD5 /* HHTransitionAnimation.m in Sources */,
-				2021A40D22ED49F700F75CD5 /* UIScrollView+GestureConflict.m in Sources */,
 				1214703C1E7FD05900FD5E51 /* HHSettingViewController.m in Sources */,
 				1226BC341E8515D00022C882 /* XMFTPHelper.m in Sources */,
 				121C11811E9DCA1D008AB02D /* Image+Snapshot.m in Sources */,
-				2021A41022ED49F700F75CD5 /* WSLNavigatioController.m in Sources */,
 				1212BFE31E83590C00BCD9E7 /* QLPreviewController+XP.m in Sources */,
 				548055DE1E6702D70040143A /* AppDelegate.m in Sources */,
 				122E01331E714EF700CE8E4C /* HHPhotoCollectionViewCell.m in Sources */,
+				641F5A0A22F3027D0028E5AA /* HHSetEmailViewContrller.m in Sources */,
 				122EE04C1E67C40800FCAF98 /* XPNavigationController.m in Sources */,
+				648AA6BF22F28460000CAF28 /* HHNewSettingViewController.m in Sources */,
 				64F081D022EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.m in Sources */,
+				641F5A0722F300D50028E5AA /* HHAcountManager.m in Sources */,
 				1226BC301E8515D00022C882 /* AsyncSocket.m in Sources */,
 				12F4AED21E7A79230034333E /* XPAlbumDetailCell.m in Sources */,
 				123F8E2B1E694D4F005379D2 /* NSString+XP.m in Sources */,

@@ -9,6 +9,7 @@
 #import "HHBlurAlertView.h"
 
 @interface HHBlurAlertView ()
+
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
 @property (nonatomic, strong) UIControl *background;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;

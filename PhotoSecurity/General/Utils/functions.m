@@ -210,11 +210,11 @@ NSString * const XPTouchEnableStateKey              = @"XPTouchEnableStateKey";
 
 /// FaceID是否启用
 NSString * const XPFaceEnableStateKey              = @"XPFaceEnableStateKey";
-
 /// 缩略图目录名称
 NSString * const XPThumbDirectoryNameKey            = @"Thumb";
 /// 生成的缩略图的宽高尺寸
 CGFloat const XPThumbImageWidthAndHeightKey         = 120.0;
-
+/// 生成的缩略图的宽高尺寸
+NSString * const HHEmailKey         = @"HHEmailKey";
 
 
