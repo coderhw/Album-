@@ -51,17 +51,18 @@
         }
         
         __weak typeof(self) weakSelf = self;
-        self.context = [[LAContext alloc] init];
         
         UIViewController *rootVc = [self.window rootViewController];
         if (nil == rootVc.presentedViewController || ![rootVc.presentedViewController isKindOfClass:[HHSetPasswordViewController class]]) {
             [rootVc.presentedViewController dismissViewControllerAnimated:NO completion:nil];
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UIViewController *unlockVc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HHSetPasswordViewController"];
+            HHSetPasswordViewController *unlockVc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HHSetPasswordViewController"];
+            [unlockVc showTips];
             [rootVc presentViewController:unlockVc animated:NO completion:^{
                 if(touchIDTypeEnabled()){
                     //如果设置了FaceID
-                    [weakSelf.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                    self.context = [[LAContext alloc] init];
+                    [self.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
                                      localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil)
                                                reply:^(BOOL success, NSError * _Nullable error) {
                                                    

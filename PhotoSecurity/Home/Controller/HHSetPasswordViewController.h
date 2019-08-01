@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL isChangePsd;
 
+- (void)showTips;
+
 @end
 
 NS_ASSUME_NONNULL_END

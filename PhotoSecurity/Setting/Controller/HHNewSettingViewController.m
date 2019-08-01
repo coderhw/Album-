@@ -13,6 +13,9 @@
 #import "HHSetPasswordViewController.h"
 #import "XPFTPViewController.h"
 #import "HHSetEmailViewContrller.h"
+#import "HHChangeIconViewController.h"
+#import <StoreKit/StoreKit.h>
+
 
 @interface HHNewSettingViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -28,7 +31,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-
+    
+    self.navigationItem.title = @"设置";
     self.context = [[LAContext alloc] init];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, APP_WIDH,
                                                                    APP_HIGH-Height_NavBar)
@@ -167,17 +171,30 @@
             break;
         case 4:
         {
-            
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            NSString *identifier =  @"HHChangeIconViewController";
+            HHChangeIconViewController *vc = (HHChangeIconViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+            [self.navigationController pushViewController:vc animated:YES];
+
         }
             break;
         case 5:
         {
             
+            NSMutableString *mailUrl = [[NSMutableString alloc] init];
+            NSArray *toRecipients = @[@"10089084@qq.com"];
+            [mailUrl appendFormat:@"mailto:%@", toRecipients[0]];
+            [mailUrl appendString:@"&subject=Feed Back"];
+            [mailUrl appendString:@"&body=<b></b>"];
+            NSString *emailPath = [mailUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:emailPath]];
         }
             break;
         case 6:
         {
-            
+            if (@available(iOS 10.3, *)) {
+                [SKStoreReviewController requestReview];
+            }
         }
             break;
         case 7:

@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *passwordSwitch;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *centerY;
 @property (weak, nonatomic) IBOutlet UIImageView *nextArrow;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
 @end
 
@@ -56,6 +57,14 @@
     self.titleLabel.text = model.title;
     self.tipLabel.text = model.footerTips;
     
+    if(row == 7){
+        self.versionLabel.hidden = NO;
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+        self.versionLabel.text = [NSString stringWithFormat:@"V %@", version];
+    }else{
+        self.versionLabel.hidden = YES;
+    }
     
     
 }

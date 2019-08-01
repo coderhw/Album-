@@ -12,20 +12,29 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>AppAlternateIcon</key>
+			<key>con_rainbow</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppAlternateIcon</string>
+					<string>con_rainbow</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>AppAlternateIcon2</key>
+			<key>icon_ drama</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>AppAlternateIcon2</string>
+					<string>icon_ drama</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>icon_pre</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>icon_pre</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -79,7 +88,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>

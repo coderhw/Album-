@@ -48,8 +48,16 @@
                             <constraint firstAttribute="width" constant="16" id="M86-zL-goC"/>
                         </constraints>
                     </imageView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Oq-DB-oJx">
+                        <rect key="frame" x="273.5" y="24.5" width="30.5" height="17"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="9Oq-DB-oJx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5nG-LS-uXf"/>
+                    <constraint firstAttribute="trailing" secondItem="9Oq-DB-oJx" secondAttribute="trailing" constant="16" id="83T-eH-e0G"/>
                     <constraint firstItem="CnL-Bf-QsU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="BsG-aw-Fxj"/>
                     <constraint firstItem="IKb-He-Tm3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="JmL-T5-lJw"/>
                     <constraint firstItem="nJf-Uv-3Mq" firstAttribute="leading" secondItem="CnL-Bf-QsU" secondAttribute="trailing" constant="12" id="LHZ-wk-Lav"/>
@@ -70,6 +78,7 @@
                 <outlet property="passwordSwitch" destination="nI7-4a-sJp" id="rXn-I1-AlQ"/>
                 <outlet property="tipLabel" destination="uZa-we-dQy" id="slb-n6-n8i"/>
                 <outlet property="titleLabel" destination="nJf-Uv-3Mq" id="hIX-Ls-WEg"/>
+                <outlet property="versionLabel" destination="9Oq-DB-oJx" id="JiG-Lx-ifb"/>
             </connections>
             <point key="canvasLocation" x="-488.40579710144931" y="22.767857142857142"/>
         </tableViewCell>

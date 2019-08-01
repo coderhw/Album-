@@ -47,6 +47,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    [self showTips];
     NSLog(@"%s", __func__);
     
 }
@@ -102,6 +103,11 @@
         self.lockView.tipsLabel.text = NSLocalizedString(@"Please set Gesture Password again", nil);
         self.firstPsd = password;
     }
+}
+
+- (void)showTips {
+    self.lockView.tipsLabel.hidden = NO;
+    self.lockView.tipsLabel.text = @"请输入密码";
 }
 
 #pragma mark - Getter Methods

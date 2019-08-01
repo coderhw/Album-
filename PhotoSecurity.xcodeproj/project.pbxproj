@@ -51,6 +51,9 @@
 		205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */; };
 		209DDF6222EB6A54006A3D06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209DDF6122EB6A54006A3D06 /* Assets.xcassets */; };
 		20A9689122EB563000A3340F /* PPLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A9689022EB563000A3340F /* PPLockView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		20B3337922F32D4400BAECCB /* HHChangeIconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337822F32D4400BAECCB /* HHChangeIconViewController.m */; };
+		20B3337D22F32F0C00BAECCB /* HHChangeIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337B22F32F0C00BAECCB /* HHChangeIconCell.m */; };
+		20B3337E22F32F0C00BAECCB /* HHChangeIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */; };
 		4ACD21B9B3E2750FAF0C1AF6 /* libPods-PhotoSecurity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB161BA3F61719AAE63C0CFE /* libPods-PhotoSecurity.a */; };
 		548055CD1E6701750040143A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 548055CB1E6701750040143A /* Main.storyboard */; };
 		548055DE1E6702D70040143A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 548055DB1E6702D70040143A /* AppDelegate.m */; };
@@ -154,6 +157,11 @@
 		209DDF6122EB6A54006A3D06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20A9688F22EB563000A3340F /* PPLockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLockView.h; sourceTree = "<group>"; };
 		20A9689022EB563000A3340F /* PPLockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLockView.m; sourceTree = "<group>"; };
+		20B3337722F32D4400BAECCB /* HHChangeIconViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHChangeIconViewController.h; sourceTree = "<group>"; };
+		20B3337822F32D4400BAECCB /* HHChangeIconViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHChangeIconViewController.m; sourceTree = "<group>"; };
+		20B3337A22F32F0C00BAECCB /* HHChangeIconCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHChangeIconCell.h; sourceTree = "<group>"; };
+		20B3337B22F32F0C00BAECCB /* HHChangeIconCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHChangeIconCell.m; sourceTree = "<group>"; };
+		20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHChangeIconCell.xib; sourceTree = "<group>"; };
 		548055BF1E6701750040143A /* PhotoSecurity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSecurity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		548055CC1E6701750040143A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		548055DA1E6702D70040143A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -221,6 +229,8 @@
 				648AA6BE22F28460000CAF28 /* HHNewSettingViewController.m */,
 				641F5A0822F3027D0028E5AA /* HHSetEmailViewContrller.h */,
 				641F5A0922F3027D0028E5AA /* HHSetEmailViewContrller.m */,
+				20B3337722F32D4400BAECCB /* HHChangeIconViewController.h */,
+				20B3337822F32D4400BAECCB /* HHChangeIconViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -440,6 +450,9 @@
 				648AA6C022F285F2000CAF28 /* HHSettingCell.h */,
 				648AA6C122F285F2000CAF28 /* HHSettingCell.m */,
 				648AA6C222F285F2000CAF28 /* HHSettingCell.xib */,
+				20B3337A22F32F0C00BAECCB /* HHChangeIconCell.h */,
+				20B3337B22F32F0C00BAECCB /* HHChangeIconCell.m */,
+				20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -623,7 +636,7 @@
 				TargetAttributes = {
 					548055BE1E6701750040143A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 3X97WNYE73;
+						DevelopmentTeam = Z94T2ZAC3Y;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -664,6 +677,7 @@
 				121C11981E9E0B02008AB02D /* AppAlternateIconiPad@2x.png in Resources */,
 				548055CD1E6701750040143A /* Main.storyboard in Resources */,
 				121C11881E9DCDFE008AB02D /* AppAlternateIcon@2x.png in Resources */,
+				20B3337E22F32F0C00BAECCB /* HHChangeIconCell.xib in Resources */,
 				12125A911E83BBEA00219A8E /* InfoPlist.strings in Resources */,
 				648AA6BC22F182D2000CAF28 /* HHBlurAlertView.xib in Resources */,
 			);
@@ -730,10 +744,12 @@
 				129C3CE41E6D4DFD00A52448 /* HHProgressHUD.m in Sources */,
 				648AA6B022F16540000CAF28 /* HHBaseViewController.m in Sources */,
 				20A9689122EB563000A3340F /* PPLockView.m in Sources */,
+				20B3337922F32D4400BAECCB /* HHChangeIconViewController.m in Sources */,
 				121DEB3E1E79125200491C97 /* HHSQLiteManager.m in Sources */,
 				1224BB0B1E6E901700CCCD73 /* GHPopupEditView.m in Sources */,
 				648AA6BA22F182C8000CAF28 /* HHBlurAlertView.m in Sources */,
 				648AA6C322F285F2000CAF28 /* HHSettingCell.m in Sources */,
+				20B3337D22F32F0C00BAECCB /* HHChangeIconCell.m in Sources */,
 				205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */,
 				200F30F022EC70480030B957 /* HHPhotoModel.m in Sources */,
 				1226BC381E8519830022C882 /* XPFTPViewController.m in Sources */,
@@ -910,16 +926,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mobile Vanke (RD4YM268K9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wen HU (7232A4Q659)";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 3X97WNYE73;
+				DEVELOPMENT_TEAM = Z94T2ZAC3Y;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoSecurity/System/PhotoSecurity-prefix.pch";
 				INFOPLIST_FILE = PhotoSecurity/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fenxj.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fxj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = fenxjUATDev;
+				PROVISIONING_PROFILE_SPECIFIER = fxjDev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -936,7 +952,7 @@
 				INFOPLIST_FILE = PhotoSecurity/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fenxj.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fxj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = fenxjUATDev;
 				TARGETED_DEVICE_FAMILY = 1;
