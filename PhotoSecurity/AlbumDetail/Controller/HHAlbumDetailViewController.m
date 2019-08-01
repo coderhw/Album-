@@ -555,7 +555,12 @@ static CGFloat const kCellBorderMargin = 1.0;
 /// 从系统中获取视频文件
 - (void)fetchVideoForPHAsset:(PHAsset *)asset completionHandler:(void(^)(HHPhotoModel *photo))completionHandler {
     @weakify(self);
-    [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:nil resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
+    PHVideoRequestOptions* options = [[PHVideoRequestOptions alloc] init];
+    options.version = PHVideoRequestOptionsVersionOriginal;
+    options.deliveryMode = PHVideoRequestOptionsDeliveryModeAutomatic;
+    options.networkAccessAllowed = YES;
+
+    [[PHImageManager defaultManager] requestAVAssetForVideo:asset options:options resultHandler:^(AVAsset * _Nullable asset, AVAudioMix * _Nullable audioMix, NSDictionary * _Nullable info) {
         @strongify(self);
         if (![asset isKindOfClass:[AVURLAsset class]]) return;
         AVURLAsset *urlAsset = (AVURLAsset *)asset;
@@ -589,6 +594,10 @@ static CGFloat const kCellBorderMargin = 1.0;
 /// 从系统中获取图片文件
 - (void)fetchImageForPHAsset:(PHAsset *)asset completionHandler:(void(^)(HHPhotoModel *photo))completionHandler {
     @weakify(self);
+    PHImageRequestOptions* options = [[PHImageRequestOptions alloc] init];
+    options.version = PHImageRequestOptionsVersionOriginal;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+    options.networkAccessAllowed = YES;
     [[PHImageManager defaultManager] requestImageDataForAsset:asset options:nil resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         @strongify(self);
         NSURL *imageFileURL = info[@"PHImageFileURLKey"];
