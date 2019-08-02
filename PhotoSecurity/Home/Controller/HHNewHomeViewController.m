@@ -17,8 +17,8 @@
 #import "HHNewSettingViewController.h"
 //
 #import "HHAlbumCollectionViewCell.h"
-#import "HHSettingViewController.h"
 #import "HHBlurAlertView.h"
+#import "UIView+Draggable.h"
 
 static NSString *cellIdentifier = @"gridcellidentifier";
 
@@ -68,6 +68,14 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     self.collectionView.showsVerticalScrollIndicator = NO;
     [self.view bringSubviewToFront:self.addButton];
     
+    self.addButton.draggingInBounds = YES;
+    self.addButton.draggingType = DraggingTypePullOver;
+    
+    self.addButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.addButton.layer.shadowOpacity = 0.5;
+    self.addButton.layer.shadowOffset = CGSizeMake(0.5, 0.5);
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -79,17 +87,22 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     
     [[IQKeyboardManager sharedManager] setEnable:NO];
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
-    // 打开应用必须先解锁才能使用
-    static dispatch_once_t onceToken;
-    @weakify(self);
-    dispatch_once(&onceToken, ^{
-        @strongify(self);
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        NSString *identifier = @"HHSetPasswordViewController";
-        UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
-        [self presentViewController:vc animated:NO completion:nil];
-
-    });
+    
+    if([HHPasswordTool isSetPassword] &&
+       [UIApplication sharedApplication].applicationState != UIApplicationStateActive){
+        //如果设置了密码则去密码页面
+        static dispatch_once_t onceToken;
+        @weakify(self);
+        dispatch_once(&onceToken, ^{
+            @strongify(self);
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            NSString *identifier = @"HHSetPasswordViewController";
+            UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+            [self presentViewController:vc animated:NO completion:nil];
+            
+        });
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -117,9 +130,12 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 
     if(self.isEditing){
         [cell configCellWithAlbumModel:album isEdit:YES];
+        [cell shakes];
     }else{
+        
         [cell configCellWithAlbumModel:album isEdit:NO];
     }
+    
     
     cell.deleblock = ^{
         //删除相册
@@ -269,21 +285,19 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     sender.selected = !sender.selected;
     self.isEditing = sender.selected;
     [self.collectionView reloadData];
+    
 }
 
 - (void)settingButtonPressed {
-    
-//    UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    HHSettingViewController *settingVC = [mainBoard instantiateViewControllerWithIdentifier:@"HHSettingViewController"];
-//    [self.navigationController pushViewController:settingVC animated:YES];
     
     HHNewSettingViewController *settVC = [[HHNewSettingViewController alloc] init];
     [self.navigationController pushViewController:settVC animated:YES];
 }
 
-- (IBAction)addAlbumButtonPressed:(id)sender {
+- (IBAction)addAlbumButtonPressed:(UIButton *)sender {
 
     __weak typeof(self) ws = self;
+    [sender zoom];
     [self.blurAlertView show];
     self.blurAlertView.alertActionBlock = ^(NSInteger index, NSString *name) {
         

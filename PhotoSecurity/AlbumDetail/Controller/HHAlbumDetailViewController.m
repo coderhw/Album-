@@ -536,16 +536,8 @@ static CGFloat const kCellBorderMargin = 1.0;
     
 }
 
-// Decide album show or not't
 // 决定相册显示与否
 - (BOOL)isAlbumCanSelect:(NSString *)albumName result:(PHFetchResult *)result {
-    /*
-     if ([albumName isEqualToString:@"个人收藏"]) {
-     return NO;
-     }
-     if ([albumName isEqualToString:@"视频"]) {
-     return NO;
-     }*/
     return YES;
 }
 
@@ -554,6 +546,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 
 /// 从系统中获取视频文件
 - (void)fetchVideoForPHAsset:(PHAsset *)asset completionHandler:(void(^)(HHPhotoModel *photo))completionHandler {
+   
     @weakify(self);
     PHVideoRequestOptions* options = [[PHVideoRequestOptions alloc] init];
     options.version = PHVideoRequestOptionsVersionOriginal;
@@ -574,7 +567,11 @@ static CGFloat const kCellBorderMargin = 1.0;
         UIImage *thumbImage = [UIImage snapshotImageWithVideoURL:urlAsset.URL];
         thumbImage = [UIImage thumbnailImageFromSourceImage:thumbImage destinationSize:CGSizeMake(XPThumbImageWidthAndHeightKey, XPThumbImageWidthAndHeightKey)];
         NSString *thumbPath = [NSString stringWithFormat:@"%@/%@/%@/%@", photoRootDirectory(),self.album.directory,XPThumbDirectoryNameKey,filename];
-        NSData *thumbData = UIImageJPEGRepresentation(thumbImage, 0.75);
+
+        NSString *pressRate =  [[NSUserDefaults standardUserDefaults] valueForKey:@"KPressRateKey"];
+        CGFloat rate = [pressRate floatValue] == 0 ? 1 : [pressRate floatValue];
+        NSData *thumbData = UIImageJPEGRepresentation(thumbImage, rate);
+        
         [thumbData writeToFile:thumbPath atomically:YES];
         // 保存视频信息
         HHPhotoModel *photo = [[HHPhotoModel alloc] init];
@@ -624,7 +621,10 @@ static CGFloat const kCellBorderMargin = 1.0;
         } else {
             thumbImage = [UIImage thumbnailImageFromSourceImageData:imageData destinationSize:thumbImageSize];
         }
-        NSData *thumbData = UIImageJPEGRepresentation(thumbImage, 0.75);
+        
+        NSString *pressRate =  [[NSUserDefaults standardUserDefaults] valueForKey:@"KPressRateKey"];
+        CGFloat rate = [pressRate floatValue] == 0 ? 1 : [pressRate floatValue];
+            NSData *thumbData = UIImageJPEGRepresentation(thumbImage, rate);
         [thumbData writeToFile:thumbPath atomically:YES];
         
         if (nil != completionHandler) {
@@ -635,6 +635,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 
 /// 添加底部的操作条
 - (void)addOperationToolbar {
+    
     UIToolbar *toolbar = [[UIToolbar alloc] init];
     toolbar.tag = OPERATION_TOOLBAR_TAG;
     [self.view addSubview:toolbar];

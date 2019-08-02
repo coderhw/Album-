@@ -16,6 +16,7 @@
 #import "HHChangeIconViewController.h"
 #import <StoreKit/StoreKit.h>
 #import <MessageUI/MessageUI.h>
+#import "HHChangePressController.h"
 
 @interface HHNewSettingViewController ()<UITableViewDelegate,UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
@@ -53,7 +54,8 @@
     //修改密码
     HHRowsModel *row1Model = [[HHRowsModel alloc] init];
     row1Model.imageName = @"change_psd.png";
-    row1Model.title = @"修改密码";
+    row1Model.title = @"密码";
+    row1Model.footerTips = @"设置、修改、删除密码";
     [self.dataSource addObject:row1Model];
     
     //ftp
@@ -76,6 +78,13 @@
     row4Model.title = @"切换ICON";
     row4Model.footerTips = @"随时随地切换图标";
     [self.dataSource addObject:row4Model];
+    
+    //切换icon
+    HHRowsModel *row8Model = [[HHRowsModel alloc] init];
+    row8Model.imageName = @"changeicon.png";
+    row8Model.title = @"压缩率";
+    row8Model.footerTips = @"该设置决定图片保存是否需要压缩，默认不压缩";
+    [self.dataSource addObject:row8Model];
 
     //意见反馈
     HHRowsModel *row5Model = [[HHRowsModel alloc] init];
@@ -175,6 +184,15 @@
             break;
         case 5:
         {
+            //压缩比设置
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            NSString *identifier =  @"HHChangePressController";
+            HHChangePressController *vc = (HHChangePressController *)[mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 6:
+        {
             
             if ([MFMailComposeViewController canSendMail]) {
                 MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
@@ -190,14 +208,14 @@
             }
         }
             break;
-        case 6:
+        case 7:
         {
             if (@available(iOS 10.3, *)) {
                 [SKStoreReviewController requestReview];
             }
         }
             break;
-        case 7:
+        case 8:
         {
             
         }

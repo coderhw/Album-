@@ -32,6 +32,38 @@
     [self.layer addAnimation:animation forKey:nil];
 }
 
+- (void)shakes {
+    
+    CAKeyframeAnimation *anim = [CAKeyframeAnimation animation];
+    anim.keyPath =@"transform.rotation";
+    anim.duration = 0.3;
+    anim.repeatCount = MAXFLOAT;
+    anim.values =@[@(-0.01), @0.01];
+    anim.removedOnCompletion = NO;
+    anim.fillMode = kCAFillModeRemoved;
+    [self.layer addAnimation:anim forKey:@"shake"];
+}
+
+- (void)endShakes {
+    [self.layer removeAnimationForKey:@"shake"];
+}
+
+- (void)zoom {
+    
+    self.transform = CGAffineTransformIdentity;
+    [UIView animateKeyframesWithDuration:0.6 delay:0 options:0 animations: ^{
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:1 / 3.0 animations: ^{
+            self.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:1/4.0 relativeDuration:1/3.0 animations: ^{
+            self.transform = CGAffineTransformMakeScale(0.9, 0.9);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:2/3.0 relativeDuration:1/3.0 animations: ^{
+            self.transform = CGAffineTransformMakeScale(1.0, 1.0);
+        }];
+    } completion:nil];
+}
+
 @end
 
 

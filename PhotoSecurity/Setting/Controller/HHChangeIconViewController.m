@@ -29,6 +29,13 @@
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     [self.view addSubview:self.tableView];
+    
+    UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, APP_WIDH, 14)];
+    tipLabel.text = @"点击切换APP图标";
+    tipLabel.textColor = [UIColor colorWithHex:@"#999999"];
+    tipLabel.font = kFONT(kTitleName_PingFang_M, 14);
+    tipLabel.textAlignment = NSTextAlignmentCenter;
+    self.tableView.tableFooterView = tipLabel;
 }
 
 
@@ -46,7 +53,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 66;
+    return 50;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -15,6 +15,22 @@
  */
 - (void)shake;
 
+
+/**
+ *一直抖
+ */
+- (void)shakes;
+
+/**
+ *停止
+ */
+- (void)endShakes;
+
+/**
+ *缩放动画
+ */
+- (void)zoom;
+
 @end
 
 @interface UIView (PCIBInspectable)

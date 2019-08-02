@@ -14,8 +14,10 @@
 
 @property (nonatomic, copy) NSString *firstPsd;
 @property (nonatomic, copy) NSString *secondPsd;
-
+@property (nonatomic, copy) NSString *tempPassword;
 @property (nonatomic, strong) PPLockView *lockView;
+@property (weak, nonatomic) IBOutlet UIButton *delePasswordBtn;
+@property (nonatomic, assign) BOOL isDeletePassword;
 
 @end
 
@@ -32,7 +34,6 @@
    
     [self.view addSubview:self.lockView];
     
-    
     if([HHPasswordTool isSetPassword]){
         self.lockView.tipsLabel.hidden = YES;
     }else{
@@ -42,6 +43,11 @@
     if(self.isChangePsd){
         self.lockView.tipsLabel.hidden = NO;
     }
+    
+    self.delePasswordBtn.hidden = !self.isChangePsd;
+    [self.delePasswordBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.delePasswordBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [self.view bringSubviewToFront:self.delePasswordBtn];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,26 +59,47 @@
 }
 
 - (void)lockViewUnlockWithPasswd:(NSString *)passoword {
+
     
+    self.tempPassword = passoword;
     NSLog(@"pass:%@", passoword);
-    //已经设置过密码
-    if([HHPasswordTool isSetPassword]){
-        
-        if(self.isChangePsd){
-            [self setPasswordWithPassword:passoword];
+    
+    if(self.isDeletePassword){
+        BOOL isCorrectPsd = [HHPasswordTool verifyPassword:passoword];
+        if(isCorrectPsd){
+            //删除手势密码
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:XPPasswordKey];
+            //删除生物识别
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:XPTouchEnableStateKey];
+            [HHProgressHUD showSuccessHUD:@"密码已清除，请注意数据安全" toView:self.view];
         }else{
-            
-            BOOL isCorrectPsd = [HHPasswordTool verifyPassword:passoword];
-            if(isCorrectPsd){
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }else{
-                self.lockView.tipsLabel.text = NSLocalizedString(@"Password is wrong, please try again.", nil);
-                [self.lockView shake];
-            }
+            [self.lockView shake];
+            self.lockView.tipsLabel.text = @"请输入历史密码";
         }
     }else{
-        [self setPasswordWithPassword:passoword];
+        
+        
+        //已经设置过密码
+        if([HHPasswordTool isSetPassword]){
+            
+            if(self.isChangePsd){
+                [self setPasswordWithPassword:passoword];
+            }else{
+                
+                BOOL isCorrectPsd = [HHPasswordTool verifyPassword:passoword];
+                if(isCorrectPsd){
+                    
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }else{
+                    self.lockView.tipsLabel.text = NSLocalizedString(@"Password is wrong, please try again.", nil);
+                    [self.lockView shake];
+                }
+            }
+        }else{
+            [self setPasswordWithPassword:self.tempPassword];
+        }
     }
+
 }
 
 - (void)setPasswordWithPassword:(NSString *)password {
@@ -81,30 +108,44 @@
     if(self.firstPsd.length){
         
         self.secondPsd = password;
-        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-
         if([self.firstPsd isEqualToString:self.secondPsd]){
             [HHPasswordTool storagePassword:self.secondPsd];
-            dispatch_async(dispatch_get_main_queue(), ^{
                 if(self.isChangePsd){
-                    
-                    [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Password is set success.", nil) toView:window];
-                    [self.navigationController popViewControllerAnimated:YES];
-                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                    });
                 }else{
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                    [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Password is set success.", nil) toView:window];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    });
                 }
-            });
         }else{
-            [self.lockView shake];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.lockView shake];
+                self.lockView.tipsLabel.text = @"不匹配，请重新设置";
+                self.firstPsd = @"";
+                self.secondPsd = @"";
+                self.tempPassword = @"";
+            });
+
         }
     }else{
-        
-        self.lockView.tipsLabel.text = NSLocalizedString(@"Please set Gesture Password again", nil);
-        self.firstPsd = password;
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            self.lockView.tipsLabel.text = NSLocalizedString(@"Please set Gesture Password again", nil);
+            self.firstPsd = self.tempPassword;
+        });
+       
     }
 }
+
+- (IBAction)deletePasswordPressed:(UIButton *)sender {
+    
+    sender.selected = !sender.selected;
+    self.isDeletePassword = sender.selected;
+
+}
+
 
 - (void)showTips {
     self.lockView.tipsLabel.hidden = NO;

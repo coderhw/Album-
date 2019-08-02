@@ -10,6 +10,7 @@
 #ifndef VKUtilsDefineHeader_h
 #define VKUtilsDefineHeader_h
 
+#define AppContext [HHAPPContext sharedAppContext]
 //UI
 #define IOS10 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0)
 #define iPhone4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)

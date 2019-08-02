@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		12125A911E83BBEA00219A8E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 12125A931E83BBEA00219A8E /* InfoPlist.strings */; };
 		1212BFE31E83590C00BCD9E7 /* QLPreviewController+XP.m in Sources */ = {isa = PBXBuildFile; fileRef = 1212BFE21E83590C00BCD9E7 /* QLPreviewController+XP.m */; };
-		1214703C1E7FD05900FD5E51 /* HHSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1214703B1E7FD05900FD5E51 /* HHSettingViewController.m */; };
 		12147DB31E6F92B5009D5321 /* HHAlbumDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12147DB21E6F92B5009D5321 /* HHAlbumDetailViewController.m */; };
 		121C11811E9DCA1D008AB02D /* Image+Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 121C11801E9DCA1D008AB02D /* Image+Snapshot.m */; };
 		121C11881E9DCDFE008AB02D /* AppAlternateIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 121C11851E9DCDFE008AB02D /* AppAlternateIcon@2x.png */; };
@@ -54,6 +53,9 @@
 		20B3337922F32D4400BAECCB /* HHChangeIconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337822F32D4400BAECCB /* HHChangeIconViewController.m */; };
 		20B3337D22F32F0C00BAECCB /* HHChangeIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337B22F32F0C00BAECCB /* HHChangeIconCell.m */; };
 		20B3337E22F32F0C00BAECCB /* HHChangeIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */; };
+		20B3338122F439FF00BAECCB /* UIView+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337F22F439FF00BAECCB /* UIView+Draggable.m */; };
+		20B3338422F47AF600BAECCB /* HHAPPContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3338322F47AF600BAECCB /* HHAPPContext.m */; };
+		20B3338722F47E0300BAECCB /* HHChangePressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3338622F47E0300BAECCB /* HHChangePressController.m */; };
 		4ACD21B9B3E2750FAF0C1AF6 /* libPods-PhotoSecurity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB161BA3F61719AAE63C0CFE /* libPods-PhotoSecurity.a */; };
 		548055CD1E6701750040143A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 548055CB1E6701750040143A /* Main.storyboard */; };
 		548055DE1E6702D70040143A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 548055DB1E6702D70040143A /* AppDelegate.m */; };
@@ -77,8 +79,6 @@
 		12125A941E83BBEC00219A8E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		1212BFE11E83590C00BCD9E7 /* QLPreviewController+XP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QLPreviewController+XP.h"; sourceTree = "<group>"; };
 		1212BFE21E83590C00BCD9E7 /* QLPreviewController+XP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QLPreviewController+XP.m"; sourceTree = "<group>"; };
-		1214703A1E7FD05900FD5E51 /* HHSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHSettingViewController.h; sourceTree = "<group>"; };
-		1214703B1E7FD05900FD5E51 /* HHSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHSettingViewController.m; sourceTree = "<group>"; };
 		12147DB11E6F92B5009D5321 /* HHAlbumDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHAlbumDetailViewController.h; sourceTree = "<group>"; };
 		12147DB21E6F92B5009D5321 /* HHAlbumDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHAlbumDetailViewController.m; sourceTree = "<group>"; };
 		121C117F1E9DCA1D008AB02D /* Image+Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Image+Snapshot.h"; sourceTree = "<group>"; };
@@ -163,14 +163,18 @@
 		20B3337A22F32F0C00BAECCB /* HHChangeIconCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHChangeIconCell.h; sourceTree = "<group>"; };
 		20B3337B22F32F0C00BAECCB /* HHChangeIconCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHChangeIconCell.m; sourceTree = "<group>"; };
 		20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHChangeIconCell.xib; sourceTree = "<group>"; };
+		20B3337F22F439FF00BAECCB /* UIView+Draggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Draggable.m"; sourceTree = "<group>"; };
+		20B3338022F439FF00BAECCB /* UIView+Draggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Draggable.h"; sourceTree = "<group>"; };
+		20B3338222F47AF600BAECCB /* HHAPPContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHAPPContext.h; sourceTree = "<group>"; };
+		20B3338322F47AF600BAECCB /* HHAPPContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHAPPContext.m; sourceTree = "<group>"; };
+		20B3338522F47E0300BAECCB /* HHChangePressController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHChangePressController.h; sourceTree = "<group>"; };
+		20B3338622F47E0300BAECCB /* HHChangePressController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHChangePressController.m; sourceTree = "<group>"; };
 		548055BF1E6701750040143A /* PhotoSecurity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSecurity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		548055CC1E6701750040143A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		548055DA1E6702D70040143A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		548055DB1E6702D70040143A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		548055DC1E6702D70040143A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		548055DD1E6702D70040143A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		548055E71E6705F80040143A /* HHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHomeViewController.h; sourceTree = "<group>"; };
-		548055E81E6705F80040143A /* HHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHomeViewController.m; sourceTree = "<group>"; };
 		641F5A0522F300D50028E5AA /* HHAcountManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHAcountManager.h; sourceTree = "<group>"; };
 		641F5A0622F300D50028E5AA /* HHAcountManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHAcountManager.m; sourceTree = "<group>"; };
 		641F5A0822F3027D0028E5AA /* HHSetEmailViewContrller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSetEmailViewContrller.h; sourceTree = "<group>"; };
@@ -222,18 +226,18 @@
 		121470391E7FD04300FD5E51 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1214703A1E7FD05900FD5E51 /* HHSettingViewController.h */,
-				1214703B1E7FD05900FD5E51 /* HHSettingViewController.m */,
+				648AA6BD22F28460000CAF28 /* HHNewSettingViewController.h */,
+				648AA6BE22F28460000CAF28 /* HHNewSettingViewController.m */,
 				124529211E80CBDB007222C4 /* XPChangePasswordViewController.h */,
 				124529221E80CBDB007222C4 /* XPChangePasswordViewController.m */,
 				1226BC361E8519830022C882 /* XPFTPViewController.h */,
 				1226BC371E8519830022C882 /* XPFTPViewController.m */,
-				648AA6BD22F28460000CAF28 /* HHNewSettingViewController.h */,
-				648AA6BE22F28460000CAF28 /* HHNewSettingViewController.m */,
 				641F5A0822F3027D0028E5AA /* HHSetEmailViewContrller.h */,
 				641F5A0922F3027D0028E5AA /* HHSetEmailViewContrller.m */,
 				20B3337722F32D4400BAECCB /* HHChangeIconViewController.h */,
 				20B3337822F32D4400BAECCB /* HHChangeIconViewController.m */,
+				20B3338522F47E0300BAECCB /* HHChangePressController.h */,
+				20B3338622F47E0300BAECCB /* HHChangePressController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -420,6 +424,8 @@
 				121DEB3D1E79125100491C97 /* HHSQLiteManager.m */,
 				641F5A0522F300D50028E5AA /* HHAcountManager.h */,
 				641F5A0622F300D50028E5AA /* HHAcountManager.m */,
+				20B3338222F47AF600BAECCB /* HHAPPContext.h */,
+				20B3338322F47AF600BAECCB /* HHAPPContext.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -427,6 +433,8 @@
 		122EE04D1E67F2D100FCAF98 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				20B3338022F439FF00BAECCB /* UIView+Draggable.h */,
+				20B3337F22F439FF00BAECCB /* UIView+Draggable.m */,
 				121C117F1E9DCA1D008AB02D /* Image+Snapshot.h */,
 				121C11801E9DCA1D008AB02D /* Image+Snapshot.m */,
 				122EE0541E67F51700FCAF98 /* UIImage+XP.h */,
@@ -577,8 +585,6 @@
 		548055E41E6705BE0040143A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				548055E71E6705F80040143A /* HHomeViewController.h */,
-				548055E81E6705F80040143A /* HHomeViewController.m */,
 				205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */,
 				205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */,
 				64D3D5A322EEBD9500B63DA9 /* HHNewHomeViewController.h */,
@@ -640,7 +646,7 @@
 				TargetAttributes = {
 					548055BE1E6701750040143A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 3X97WNYE73;
+						DevelopmentTeam = Z94T2ZAC3Y;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -741,10 +747,12 @@
 				122EE0501E67F2E800FCAF98 /* UIViewController+XP.m in Sources */,
 				1224BB141E6EB70900CCCD73 /* HHAlbumModel.m in Sources */,
 				1226BC321E8515D00022C882 /* XMFTPConnection.m in Sources */,
+				20B3338422F47AF600BAECCB /* HHAPPContext.m in Sources */,
 				122E012C1E712A4D00CE8E4C /* HHAlbumCollectionModel.m in Sources */,
 				1226BC331E8515D00022C882 /* XMFTPDataConnection.m in Sources */,
 				122EE0561E67F51700FCAF98 /* UIImage+XP.m in Sources */,
 				129C3CE11E6D325100A52448 /* HHPasswordTool.m in Sources */,
+				20B3338722F47E0300BAECCB /* HHChangePressController.m in Sources */,
 				129C3CE41E6D4DFD00A52448 /* HHProgressHUD.m in Sources */,
 				648AA6B022F16540000CAF28 /* HHBaseViewController.m in Sources */,
 				20A9689122EB563000A3340F /* PPLockView.m in Sources */,
@@ -759,12 +767,12 @@
 				1226BC381E8519830022C882 /* XPFTPViewController.m in Sources */,
 				64D3D5A522EEBD9500B63DA9 /* HHNewHomeViewController.m in Sources */,
 				124529231E80CBDB007222C4 /* XPChangePasswordViewController.m in Sources */,
-				1214703C1E7FD05900FD5E51 /* HHSettingViewController.m in Sources */,
 				1226BC341E8515D00022C882 /* XMFTPHelper.m in Sources */,
 				121C11811E9DCA1D008AB02D /* Image+Snapshot.m in Sources */,
 				1212BFE31E83590C00BCD9E7 /* QLPreviewController+XP.m in Sources */,
 				548055DE1E6702D70040143A /* AppDelegate.m in Sources */,
 				122E01331E714EF700CE8E4C /* HHPhotoCollectionViewCell.m in Sources */,
+				20B3338122F439FF00BAECCB /* UIView+Draggable.m in Sources */,
 				641F5A0A22F3027D0028E5AA /* HHSetEmailViewContrller.m in Sources */,
 				122EE04C1E67C40800FCAF98 /* XPNavigationController.m in Sources */,
 				648AA6BF22F28460000CAF28 /* HHNewSettingViewController.m in Sources */,
@@ -930,16 +938,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mobile Vanke (RD4YM268K9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wen HU (7232A4Q659)";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 3X97WNYE73;
+				DEVELOPMENT_TEAM = Z94T2ZAC3Y;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoSecurity/System/PhotoSecurity-prefix.pch";
 				INFOPLIST_FILE = PhotoSecurity/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fenxj.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fxj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = fenxjUATDev;
+				PROVISIONING_PROFILE_SPECIFIER = fxjDev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -957,7 +965,7 @@
 				INFOPLIST_FILE = PhotoSecurity/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fenxj.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fxj;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = fenxjUATDev;
 				TARGETED_DEVICE_FAMILY = 1;

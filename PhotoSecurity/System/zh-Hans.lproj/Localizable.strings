@@ -10,7 +10,7 @@
 "OK" = "确定";
 "Done" = "完成";
 "Edit" = "编辑";
-"Close" = "关闭";
+"Close" = "确定";
 "Copying the pictures..." = "正在保存图片...";
 "Whether to delete the selected image from the photo library?" = "是否从系统图库中删除选中的图片？";
 "Delete" = "删除";
