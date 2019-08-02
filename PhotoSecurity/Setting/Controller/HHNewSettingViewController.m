@@ -15,9 +15,9 @@
 #import "HHSetEmailViewContrller.h"
 #import "HHChangeIconViewController.h"
 #import <StoreKit/StoreKit.h>
+#import <MessageUI/MessageUI.h>
 
-
-@interface HHNewSettingViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface HHNewSettingViewController ()<UITableViewDelegate,UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
@@ -137,11 +137,6 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.row) {
-        case 0:
-            {
-                
-            }
-            break;
         case 1:
         {
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -181,13 +176,18 @@
         case 5:
         {
             
-            NSMutableString *mailUrl = [[NSMutableString alloc] init];
-            NSArray *toRecipients = @[@"10089084@qq.com"];
-            [mailUrl appendFormat:@"mailto:%@", toRecipients[0]];
-            [mailUrl appendString:@"&subject=Feed Back"];
-            [mailUrl appendString:@"&body=<b></b>"];
-            NSString *emailPath = [mailUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:emailPath]];
+            if ([MFMailComposeViewController canSendMail]) {
+                MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
+                mailCompose.mailComposeDelegate = self;
+                [mailCompose setSubject:@"意见反馈"];
+                [mailCompose setToRecipients:@[@"10089084@qq.com"]];
+                NSString *emailContent = @"";
+                [mailCompose setMessageBody:emailContent isHTML:NO];
+                [self presentViewController:mailCompose animated:YES completion:nil];
+                
+            }else{
+                NSLog(@"请先设置登录邮箱号");
+            }
         }
             break;
         case 6:
@@ -205,6 +205,15 @@
         default:
             break;
     }
+}
+
+#pragma mark - MFMailDelegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
+{
+    [HHProgressHUD showToast:@"谢谢您的反馈"];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private

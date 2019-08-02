@@ -60,6 +60,7 @@
 		548055E01E6702D70040143A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 548055DD1E6702D70040143A /* main.m */; };
 		641F5A0722F300D50028E5AA /* HHAcountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 641F5A0622F300D50028E5AA /* HHAcountManager.m */; };
 		641F5A0A22F3027D0028E5AA /* HHSetEmailViewContrller.m in Sources */ = {isa = PBXBuildFile; fileRef = 641F5A0922F3027D0028E5AA /* HHSetEmailViewContrller.m */; };
+		644B33F122F3E2B200D6F1B6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644B33F022F3E2B200D6F1B6 /* MessageUI.framework */; };
 		648AA6B022F16540000CAF28 /* HHBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648AA6AE22F16540000CAF28 /* HHBaseViewController.m */; };
 		648AA6BA22F182C8000CAF28 /* HHBlurAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 648AA6B922F182C8000CAF28 /* HHBlurAlertView.m */; };
 		648AA6BC22F182D2000CAF28 /* HHBlurAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648AA6BB22F182D2000CAF28 /* HHBlurAlertView.xib */; };
@@ -174,6 +175,7 @@
 		641F5A0622F300D50028E5AA /* HHAcountManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHAcountManager.m; sourceTree = "<group>"; };
 		641F5A0822F3027D0028E5AA /* HHSetEmailViewContrller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSetEmailViewContrller.h; sourceTree = "<group>"; };
 		641F5A0922F3027D0028E5AA /* HHSetEmailViewContrller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSetEmailViewContrller.m; sourceTree = "<group>"; };
+		644B33F022F3E2B200D6F1B6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		648AA6AE22F16540000CAF28 /* HHBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHBaseViewController.m; sourceTree = "<group>"; };
 		648AA6AF22F16540000CAF28 /* HHBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHBaseViewController.h; sourceTree = "<group>"; };
 		648AA6B822F182C8000CAF28 /* HHBlurAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHBlurAlertView.h; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				644B33F122F3E2B200D6F1B6 /* MessageUI.framework in Frameworks */,
 				12972AD01E6D08880092D64B /* LocalAuthentication.framework in Frameworks */,
 				4ACD21B9B3E2750FAF0C1AF6 /* libPods-PhotoSecurity.a in Frameworks */,
 			);
@@ -460,6 +463,7 @@
 		12972ACE1E6D08880092D64B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				644B33F022F3E2B200D6F1B6 /* MessageUI.framework */,
 				12972ACF1E6D08880092D64B /* LocalAuthentication.framework */,
 				CB161BA3F61719AAE63C0CFE /* libPods-PhotoSecurity.a */,
 			);
@@ -636,7 +640,7 @@
 				TargetAttributes = {
 					548055BE1E6701750040143A = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = Z94T2ZAC3Y;
+						DevelopmentTeam = 3X97WNYE73;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -926,16 +930,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wen HU (7232A4Q659)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mobile Vanke (RD4YM268K9)";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = Z94T2ZAC3Y;
+				DEVELOPMENT_TEAM = 3X97WNYE73;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoSecurity/System/PhotoSecurity-prefix.pch";
 				INFOPLIST_FILE = PhotoSecurity/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fxj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fenxj.uat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = fxjDev;
+				PROVISIONING_PROFILE_SPECIFIER = fenxjUATDev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -946,13 +950,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mobile Vanke (RD4YM268K9)";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 3X97WNYE73;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoSecurity/System/PhotoSecurity-prefix.pch";
 				INFOPLIST_FILE = PhotoSecurity/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fxj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanke.fenxj.uat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = fenxjUATDev;
 				TARGETED_DEVICE_FAMILY = 1;

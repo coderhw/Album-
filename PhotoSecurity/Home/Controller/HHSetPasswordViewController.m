@@ -66,7 +66,8 @@
             if(isCorrectPsd){
                 [self dismissViewControllerAnimated:YES completion:nil];
             }else{
-                [HHProgressHUD showToast:NSLocalizedString(@"Password is wrong, please try again.", nil)];
+                self.lockView.tipsLabel.text = NSLocalizedString(@"Password is wrong, please try again.", nil);
+                [self.lockView shake];
             }
         }
     }else{
