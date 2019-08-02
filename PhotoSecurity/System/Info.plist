@@ -12,29 +12,29 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>con_rainbow</key>
+			<key>IconRainbow</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>con_rainbow</string>
+					<string>IconRainbow</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>icon_ drama</key>
+			<key>IconDrama</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>icon_ drama</string>
+					<string>IconDrama</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
 			</dict>
-			<key>icon_pre</key>
+			<key>IconPre</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>icon_pre</string>
+					<string>IconPre</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
@@ -45,37 +45,6 @@
 			<key>CFBundleIconFiles</key>
 			<array>
 				<string>AppIcon60x60</string>
-			</array>
-		</dict>
-	</dict>
-	<key>CFBundleIcons~ipad</key>
-	<dict>
-		<key>CFBundleAlternateIcons</key>
-		<dict>
-			<key>AppAlternateIconiPad</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>AppAlternateIconiPad</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-			<key>AppAlternateIconiPad2</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>AppAlternateIconiPad2</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
-		</dict>
-		<key>CFBundlePrimaryIcon</key>
-		<dict>
-			<key>CFBundleIconFiles</key>
-			<array>
-				<string>AppIcon83.5x83.5</string>
 			</array>
 		</dict>
 	</dict>

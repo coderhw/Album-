@@ -71,7 +71,8 @@
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:XPPasswordKey];
             //删除生物识别
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:XPTouchEnableStateKey];
-            [HHProgressHUD showSuccessHUD:@"密码已清除，请注意数据安全" toView:self.view];
+            self.lockView.tipsLabel.text = @"密码已清除，请注意数据安全";
+
         }else{
             [self.lockView shake];
             self.lockView.tipsLabel.text = @"请输入历史密码";

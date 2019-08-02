@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  PhotoSecurity
 //
-//  Created by xiaopin on 2017/3/1.
-//  Copyright © 2017年 xiaopin. All rights reserved.
+//  Created by huwen on 2017/3/1.
+//  Copyright © 2017年 huwen. All rights reserved.
 //
 
 #import "AppDelegate.h"

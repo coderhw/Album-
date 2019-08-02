@@ -49,7 +49,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -69,10 +69,44 @@
     }
 }
 
-#pragma mark - Private
-- (void)handlePasswordSetting:(UISwitch *)sender {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSString *imageName = nil;
+    switch (indexPath.row) {
+        case 0:
+        {
+            imageName = @"IconRainbow";
+        }
+            break;
+        case 1:
+        {
+            imageName = @"IconDrama";
+        }
+            break;
+        case 2:
+        {
+            imageName = @"IconPre";
+        }
+            break;
+        case 3:
+        {
+            imageName = nil;
+        }
+        default:
+            break;
+    }
+    [[UIApplication sharedApplication] setAlternateIconName:imageName
+                                          completionHandler:^(NSError * _Nullable error) {
+                                              if(!error){
+                                                  [self.navigationController popViewControllerAnimated:YES];
+                                              }
+                                              NSLog(@"error = %@", error.localizedDescription);
+                                              
+    }];
 }
+
+
 
 
 @end

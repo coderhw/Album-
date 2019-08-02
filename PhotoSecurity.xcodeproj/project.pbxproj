@@ -46,6 +46,14 @@
 		12F4AED21E7A79230034333E /* XPAlbumDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F4AED11E7A79230034333E /* XPAlbumDetailCell.m */; };
 		12FA26901E76A47D0000A643 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 12FA26921E76A47D0000A643 /* Localizable.strings */; };
 		200F30F022EC70480030B957 /* HHPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 200F30EF22EC70480030B957 /* HHPhotoModel.m */; };
+		201B0C2222F48E7E00A37938 /* IconDrama@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2022F48E7E00A37938 /* IconDrama@2x.png */; };
+		201B0C2322F48E7E00A37938 /* IconDrama@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2122F48E7E00A37938 /* IconDrama@3x.png */; };
+		201B0C2622F48E8F00A37938 /* IconPre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2422F48E8F00A37938 /* IconPre@2x.png */; };
+		201B0C2722F48E8F00A37938 /* IconPre@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2522F48E8F00A37938 /* IconPre@3x.png */; };
+		201B0C2A22F48E9900A37938 /* IconRainbow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2822F48E9900A37938 /* IconRainbow@2x.png */; };
+		201B0C2B22F48E9900A37938 /* IconRainbow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2922F48E9900A37938 /* IconRainbow@3x.png */; };
+		201B0C2E22F4906000A37938 /* IconDefalt@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2C22F4905F00A37938 /* IconDefalt@3x.png */; };
+		201B0C2F22F4906000A37938 /* IconDefalt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2D22F4906000A37938 /* IconDefalt@2x.png */; };
 		2021A3E322EC72BA00F75CD5 /* HHPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2021A3E222EC72BA00F75CD5 /* HHPhotoPickerViewController.m */; };
 		205E067E22EA091D00E060B3 /* HHSetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */; };
 		209DDF6222EB6A54006A3D06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 209DDF6122EB6A54006A3D06 /* Assets.xcassets */; };
@@ -149,6 +157,14 @@
 		12FA26931E76A4800000A643 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		200F30EE22EC70480030B957 /* HHPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHPhotoModel.h; sourceTree = "<group>"; };
 		200F30EF22EC70480030B957 /* HHPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHPhotoModel.m; sourceTree = "<group>"; };
+		201B0C2022F48E7E00A37938 /* IconDrama@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconDrama@2x.png"; sourceTree = "<group>"; };
+		201B0C2122F48E7E00A37938 /* IconDrama@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconDrama@3x.png"; sourceTree = "<group>"; };
+		201B0C2422F48E8F00A37938 /* IconPre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconPre@2x.png"; sourceTree = "<group>"; };
+		201B0C2522F48E8F00A37938 /* IconPre@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconPre@3x.png"; sourceTree = "<group>"; };
+		201B0C2822F48E9900A37938 /* IconRainbow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconRainbow@2x.png"; sourceTree = "<group>"; };
+		201B0C2922F48E9900A37938 /* IconRainbow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconRainbow@3x.png"; sourceTree = "<group>"; };
+		201B0C2C22F4905F00A37938 /* IconDefalt@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconDefalt@3x.png"; sourceTree = "<group>"; };
+		201B0C2D22F4906000A37938 /* IconDefalt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconDefalt@2x.png"; sourceTree = "<group>"; };
 		2021A3E222EC72BA00F75CD5 /* HHPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHPhotoPickerViewController.m; sourceTree = "<group>"; };
 		2021A3F122ED3EA600F75CD5 /* HHUtilsDefineHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHUtilsDefineHeader.h; sourceTree = "<group>"; };
 		20411EC522ED5C3500AD6DAE /* HHThemeHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHThemeHeader.h; sourceTree = "<group>"; };
@@ -563,6 +579,14 @@
 		548055D91E6702D70040143A /* System */ = {
 			isa = PBXGroup;
 			children = (
+				201B0C2D22F4906000A37938 /* IconDefalt@2x.png */,
+				201B0C2C22F4905F00A37938 /* IconDefalt@3x.png */,
+				201B0C2822F48E9900A37938 /* IconRainbow@2x.png */,
+				201B0C2922F48E9900A37938 /* IconRainbow@3x.png */,
+				201B0C2422F48E8F00A37938 /* IconPre@2x.png */,
+				201B0C2522F48E8F00A37938 /* IconPre@3x.png */,
+				201B0C2022F48E7E00A37938 /* IconDrama@2x.png */,
+				201B0C2122F48E7E00A37938 /* IconDrama@3x.png */,
 				548055DC1E6702D70040143A /* Info.plist */,
 				548055DD1E6702D70040143A /* main.m */,
 				122EE0491E67C2CE00FCAF98 /* PhotoSecurity-prefix.pch */,
@@ -677,18 +701,26 @@
 			files = (
 				12FA26901E76A47D0000A643 /* Localizable.strings in Resources */,
 				121C11891E9DCDFE008AB02D /* AppAlternateIcon@3x.png in Resources */,
+				201B0C2B22F48E9900A37938 /* IconRainbow@3x.png in Resources */,
 				648AA6C422F285F2000CAF28 /* HHSettingCell.xib in Resources */,
+				201B0C2622F48E8F00A37938 /* IconPre@2x.png in Resources */,
 				209DDF6222EB6A54006A3D06 /* Assets.xcassets in Resources */,
 				1226BC311E8515D00022C882 /* xmftp_commands.plist in Resources */,
 				121C11951E9DCFDA008AB02D /* AppAlternateIcon2@3x.png in Resources */,
 				121C11991E9E0B02008AB02D /* AppAlternateIconiPad2@2x.png in Resources */,
 				64F081D122EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.xib in Resources */,
+				201B0C2722F48E8F00A37938 /* IconPre@3x.png in Resources */,
+				201B0C2A22F48E9900A37938 /* IconRainbow@2x.png in Resources */,
 				121C11941E9DCFDA008AB02D /* AppAlternateIcon2@2x.png in Resources */,
 				121C11981E9E0B02008AB02D /* AppAlternateIconiPad@2x.png in Resources */,
+				201B0C2322F48E7E00A37938 /* IconDrama@3x.png in Resources */,
 				548055CD1E6701750040143A /* Main.storyboard in Resources */,
 				121C11881E9DCDFE008AB02D /* AppAlternateIcon@2x.png in Resources */,
+				201B0C2F22F4906000A37938 /* IconDefalt@2x.png in Resources */,
+				201B0C2222F48E7E00A37938 /* IconDrama@2x.png in Resources */,
 				20B3337E22F32F0C00BAECCB /* HHChangeIconCell.xib in Resources */,
 				12125A911E83BBEA00219A8E /* InfoPlist.strings in Resources */,
+				201B0C2E22F4906000A37938 /* IconDefalt@3x.png in Resources */,
 				648AA6BC22F182D2000CAF28 /* HHBlurAlertView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

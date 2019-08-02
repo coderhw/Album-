@@ -20,7 +20,6 @@
 - (void)awakeFromNib {
     
     [super awakeFromNib];
-    [self.iconSwitch addTarget:self action:@selector(iconSwitchStateChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)configCellWithRow:(NSInteger)row selectRow:(NSInteger)selectRow; {
@@ -29,17 +28,22 @@
     switch (row) {
         case 0:
         {
-            imageName = @"icon_rainbow.png";
+            imageName = @"IconRainbow.png";
         }
             break;
         case 1:
         {
-            imageName = @"icon_ drama.png";
+            imageName = @"IconDrama.png";
         }
             break;
         case 2:
         {
-            imageName = @"icon_pre.png";
+            imageName = @"IconPre.png";
+        }
+            break;
+        case 3:
+        {
+            imageName = @"IconDefalt.png";
         }
         default:
             break;
@@ -48,12 +52,7 @@
     [self.avatorView setImage:[UIImage imageNamed:imageName]];
 }
 
-- (void)iconSwitchStateChanged:(UISwitch *)sender {
-    
-    if(self.changeIconBlock){
-        self.changeIconBlock(sender);
-    }
-}
+
 
 
 

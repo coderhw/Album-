@@ -24,9 +24,9 @@
         self.progressSilder.value = 1;
     }else{
         self.progressSilder.value = [pressRate floatValue];
-        self.progressLabel.text = [NSString stringWithFormat:@"%f", self.progressSilder.value];
     }
-    
+    self.progressLabel.text = [NSString stringWithFormat:@"%.2f", self.progressSilder.value];
+
     [self.progressSilder addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 

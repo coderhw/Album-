@@ -2,8 +2,8 @@
 //  HHNewSettingViewController.m
 //  PhotoSecurity
 //
-//  Created by vanke on 2019/8/1.
-//  Copyright © 2019 xiaopin. All rights reserved.
+//  Created by huwen on 2019/8/1.
+//  Copyright © 2019 huwen. All rights reserved.
 //
 
 #import "HHNewSettingViewController.h"
@@ -81,7 +81,7 @@
     
     //切换icon
     HHRowsModel *row8Model = [[HHRowsModel alloc] init];
-    row8Model.imageName = @"changeicon.png";
+    row8Model.imageName = @"icon_press.png";
     row8Model.title = @"压缩率";
     row8Model.footerTips = @"该设置决定图片保存是否需要压缩，默认不压缩";
     [self.dataSource addObject:row8Model];
@@ -236,107 +236,112 @@
 
 #pragma mark - Private
 - (void)handlePasswordSetting:(UISwitch *)sender {
-    
-    if (touchIDTypeEnabled() == 1) {
-        // 已开启,则关闭指纹解锁
-        UIAlertController *alert = [UIAlertController
-                                    alertControllerWithTitle:NSLocalizedString(@"Make sure you want to turn off Touch ID?", nil) message:NSLocalizedString(@"", nil)
-                                    preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                                                  style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                                                      
-                                                      [sender setOn:YES];
-                                                      NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                                      [userDefaults setValue:@"1" forKey:XPTouchEnableStateKey];
-                                                      [userDefaults synchronize];
-                                                      
-                                                  }]];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
-                                                  style:UIAlertActionStyleDestructive
-                                                handler:^(UIAlertAction * _Nonnull action) {
-                                                    
-                                                    [sender setOn:NO];
-                                                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                                    [userDefaults removeObjectForKey:XPTouchEnableStateKey];        }]];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    }else if (touchIDTypeEnabled() == 2) {
-        
-        // 已开启,则关毕面容解锁
-        UIAlertController *alert = [UIAlertController
-                                    alertControllerWithTitle:NSLocalizedString(@"Make sure you want to turn off Face ID?", nil) message:NSLocalizedString(@"", nil)
-                                    preferredStyle:UIAlertControllerStyleAlert];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                                                  style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                                                      NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                                      [sender setOn:YES];
-                                                      [userDefaults setValue:@"2" forKey:XPTouchEnableStateKey];
-                                                      [userDefaults synchronize];
-                                                      
-                                                  }]];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
-                                                  style:UIAlertActionStyleDestructive
-                                                handler:^(UIAlertAction * _Nonnull action) {
-                                                    [sender setOn:NO];
-                                                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                                                    [userDefaults removeObjectForKey:XPTouchEnableStateKey];
-                                                }]];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    } else {
-        
-        NSError *error = nil;
-        BOOL isAvailable = [self.context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
-        if (!isAvailable) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [sender setOn:NO];
-            });
-            [HHProgressHUD showFailureHUD:error.localizedDescription toView:self.view];
-            return;
-        }
-        
-        __weak typeof(self) weakSelf = self;
-        [_context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                 localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil) reply:^(BOOL success, NSError * _Nullable error) {
-                     
-                     if (!success) {
-                         [HHProgressHUD showFailureHUD:error.localizedDescription toView:weakSelf.view];
-                         return;
-                     }else{
+    if([HHPasswordTool isSetPassword]){
+        //必须要先设置密码
+        if (touchIDTypeEnabled() == 1) {
+            // 已开启,则关闭指纹解锁
+            UIAlertController *alert = [UIAlertController
+                                        alertControllerWithTitle:NSLocalizedString(@"Make sure you want to turn off Touch ID?", nil) message:NSLocalizedString(@"", nil)
+                                        preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                                      style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                                          
+                                                          [sender setOn:YES];
+                                                          NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                          [userDefaults setValue:@"1" forKey:XPTouchEnableStateKey];
+                                                          [userDefaults synchronize];
+                                                          
+                                                      }]];
+            
+            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
+                                                      style:UIAlertActionStyleDestructive
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        
+                                                        [sender setOn:NO];
+                                                        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                        [userDefaults removeObjectForKey:XPTouchEnableStateKey];        }]];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }else if (touchIDTypeEnabled() == 2) {
+            
+            // 已开启,则关毕面容解锁
+            UIAlertController *alert = [UIAlertController
+                                        alertControllerWithTitle:NSLocalizedString(@"Make sure you want to turn off Face ID?", nil) message:NSLocalizedString(@"", nil)
+                                        preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                                      style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                                          NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                          [sender setOn:YES];
+                                                          [userDefaults setValue:@"2" forKey:XPTouchEnableStateKey];
+                                                          [userDefaults synchronize];
+                                                          
+                                                      }]];
+            
+            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil)
+                                                      style:UIAlertActionStyleDestructive
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        [sender setOn:NO];
+                                                        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                                                        [userDefaults removeObjectForKey:XPTouchEnableStateKey];
+                                                    }]];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        } else {
+            
+            NSError *error = nil;
+            BOOL isAvailable = [self.context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+            if (!isAvailable) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [sender setOn:NO];
+                });
+                [HHProgressHUD showFailureHUD:error.localizedDescription toView:self.view];
+                return;
+            }
+            
+            __weak typeof(self) weakSelf = self;
+            [_context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                     localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil) reply:^(BOOL success, NSError * _Nullable error) {
                          
-                         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                         NSString *type = [NSString stringWithFormat:@"%ld", (long)touchIDTypeAccessed()];
-                         [userDefaults setValue:type forKey:XPTouchEnableStateKey];
-                         [userDefaults synchronize];
-                         //Face ID
-                         if(@available(iOS 11.0, *)) {
-                             if (weakSelf.context.biometryType == LABiometryTypeFaceID){
-                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                     [sender setOn:YES];
-                                     [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Face ID successed set", nil) toView:weakSelf.view];
-                                 });
+                         if (!success) {
+                             [HHProgressHUD showFailureHUD:error.localizedDescription toView:weakSelf.view];
+                             return;
+                         }else{
+                             
+                             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                             NSString *type = [NSString stringWithFormat:@"%ld", (long)touchIDTypeAccessed()];
+                             [userDefaults setValue:type forKey:XPTouchEnableStateKey];
+                             [userDefaults synchronize];
+                             //Face ID
+                             if(@available(iOS 11.0, *)) {
+                                 if (weakSelf.context.biometryType == LABiometryTypeFaceID){
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                         [sender setOn:YES];
+                                         [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Face ID successed set", nil) toView:weakSelf.view];
+                                     });
+                                 }
+                                 
+                             }
+                             //指纹
+                             if (@available(iOS 11.0, *)) {
+                                 if(weakSelf.context.biometryType == LABiometryTypeTouchID){
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                         [sender setOn:YES];
+                                         [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Touch ID successed set", nil) toView:weakSelf.view];
+                                     });
+                                 }
+                             } else {
+                                 // Fallback on earlier versions
                              }
                              
+                             
                          }
-                         //指纹
-                         if (@available(iOS 11.0, *)) {
-                             if(weakSelf.context.biometryType == LABiometryTypeTouchID){
-                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                     [sender setOn:YES];
-                                     [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Touch ID successed set", nil) toView:weakSelf.view];
-                                 });
-                             }
-                         } else {
-                             // Fallback on earlier versions
-                         }
-                         
-                         
-                     }
-                 }];
+                     }];
+        }
+    }else{
+        [HHProgressHUD showToast:@"请先设置密码, 才能使用Touch ID/Face ID"];
     }
+    
 }
 
 - (NSMutableArray *)dataSource {
