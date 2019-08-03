@@ -20,7 +20,7 @@
 #import "Image+Snapshot.h"
 #import "HHUtilsDefineHeader.h"
 #import "HHPasswordTool.h"
-#import "HHProgressHUD.h"
+#import <SVProgressHUD.h>
 #import "HHSQLiteManager.h"
 #import "HHThemeHeader.h"
 #import "HHScreenDefineHeader.h"

@@ -9,7 +9,6 @@
 #import "HHSetPasswordViewController.h"
 #import "PPLockView.h"
 
-
 @interface HHSetPasswordViewController ()<PPLockViewDelegate>
 
 @property (nonatomic, copy) NSString *firstPsd;

@@ -93,7 +93,7 @@
     
     [self dismiss];
     if(self.alertActionBlock){
-        self.alertActionBlock(1, self.nameTF.text.length ? self.nameTF.text : @"默认相册");
+        self.alertActionBlock(1, self.nameTF.text.length ? self.nameTF.text : NSLocalizedString(@"Default Album", nil));
     }
 }
 

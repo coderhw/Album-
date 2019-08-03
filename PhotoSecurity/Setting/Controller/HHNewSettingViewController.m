@@ -48,62 +48,56 @@
     HHRowsModel *row0Model = [[HHRowsModel alloc] init];
     row0Model.imageName = @"faceID.png";
     row0Model.title = @"Touch IDs/Face IDs";
-    row0Model.footerTips = @"开启后，你可以通过Touch ID/Face ID快速解锁";
+    row0Model.footerTips = NSLocalizedString(@"Quick unlock by this way", nil);
     [self.dataSource addObject:row0Model];
    
     //修改密码
     HHRowsModel *row1Model = [[HHRowsModel alloc] init];
     row1Model.imageName = @"change_psd.png";
-    row1Model.title = @"密码";
-    row1Model.footerTips = @"设置、修改、删除密码";
+    row1Model.title = NSLocalizedString(@"Password", nil);
+    row1Model.footerTips = NSLocalizedString(@"Setting or modify or delete password", nil);
     [self.dataSource addObject:row1Model];
     
     //ftp
     HHRowsModel *row2Model = [[HHRowsModel alloc] init];
     row2Model.imageName = @"ftp.png";
-    row2Model.title = @"FTP传输服务";
-    row2Model.footerTips = @"可以通过此服务快速的迁移数据";
+    row2Model.title = NSLocalizedString(@"FTP transfer service", nil);
+    row2Model.footerTips = NSLocalizedString(@"Quick transfer Date by this way", nil);
     [self.dataSource addObject:row2Model];
     
     //找回密码icon
     HHRowsModel *row3Model = [[HHRowsModel alloc] init];
     row3Model.imageName = @"fine_psd.png";
-    row3Model.title = @"找回密码";
-    row3Model.footerTips = @"此服务需要先设置邮箱哦";
+    row3Model.title = NSLocalizedString(@"Find your password", nil);
+    row3Model.footerTips = NSLocalizedString(@"Email need Before this service", nil);
     [self.dataSource addObject:row3Model];
     
     //切换icon
     HHRowsModel *row4Model = [[HHRowsModel alloc] init];
     row4Model.imageName = @"changeicon.png";
-    row4Model.title = @"切换ICON";
-    row4Model.footerTips = @"随时随地切换图标";
+    row4Model.title = NSLocalizedString(@"Change App icon", nil);
+    row4Model.footerTips = NSLocalizedString(@"Change Your App icon whenever", nil);
     [self.dataSource addObject:row4Model];
     
     //切换icon
     HHRowsModel *row8Model = [[HHRowsModel alloc] init];
     row8Model.imageName = @"icon_press.png";
-    row8Model.title = @"压缩率";
-    row8Model.footerTips = @"该设置决定图片保存是否需要压缩，默认不压缩";
+    row8Model.title = NSLocalizedString(@"Compression ratio", nil);
+    row8Model.footerTips = NSLocalizedString(@"determine your Image should be compression, Default no", nil);
     [self.dataSource addObject:row8Model];
 
-    //意见反馈
-    HHRowsModel *row5Model = [[HHRowsModel alloc] init];
-    row5Model.imageName = @"feedback.png";
-    row5Model.title = @"意见反馈";
-    row5Model.footerTips = @"您的意见是我改进的最大动力";
-    [self.dataSource addObject:row5Model];
-    
+
     //评分icon
     HHRowsModel *row6Model = [[HHRowsModel alloc] init];
     row6Model.imageName = @"score.png";
-    row6Model.title = @"给我评分";
-    row6Model.footerTips = @"如果您觉得e可以，麻烦给一个五星好评";
+    row6Model.title = NSLocalizedString(@"AppStore grade", nil);
+    row6Model.footerTips = NSLocalizedString(@"Give me five star, thanks", nil);
     [self.dataSource addObject:row6Model];
     
     //版本icon
     HHRowsModel *row7Model = [[HHRowsModel alloc] init];
     row7Model.imageName = @"icon_version.png";
-    row7Model.title = @"检查版本";
+    row7Model.title = NSLocalizedString(@"Upgrade", nil);
     [self.dataSource addObject:row7Model];
     [self.tableView reloadData];
 }
@@ -152,7 +146,7 @@
             NSString *identifier =  @"HHSetPasswordViewController";
             HHSetPasswordViewController *vc = (HHSetPasswordViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:identifier];
             vc.isChangePsd = YES;
-            vc.navigationItem.title = @"修改密码";
+            vc.navigationItem.title = NSLocalizedString(@"Change Password", nil);
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
@@ -193,29 +187,12 @@
             break;
         case 6:
         {
-            
-            if ([MFMailComposeViewController canSendMail]) {
-                MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
-                mailCompose.mailComposeDelegate = self;
-                [mailCompose setSubject:@"意见反馈"];
-                [mailCompose setToRecipients:@[@"10089084@qq.com"]];
-                NSString *emailContent = @"";
-                [mailCompose setMessageBody:emailContent isHTML:NO];
-                [self presentViewController:mailCompose animated:YES completion:nil];
-                
-            }else{
-                NSLog(@"请先设置登录邮箱号");
-            }
-        }
-            break;
-        case 7:
-        {
             if (@available(iOS 10.3, *)) {
                 [SKStoreReviewController requestReview];
             }
         }
             break;
-        case 8:
+        case 7:
         {
             
         }
@@ -230,7 +207,7 @@
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError *)error
 {
-    [HHProgressHUD showToast:@"谢谢您的反馈"];
+    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Thanks for your feedback", nil)];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -295,7 +272,8 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [sender setOn:NO];
                 });
-                [HHProgressHUD showFailureHUD:error.localizedDescription toView:self.view];
+
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                 return;
             }
             
@@ -304,7 +282,8 @@
                      localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil) reply:^(BOOL success, NSError * _Nullable error) {
                          
                          if (!success) {
-                             [HHProgressHUD showFailureHUD:error.localizedDescription toView:weakSelf.view];
+                             
+                             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                              return;
                          }else{
                              
@@ -317,7 +296,8 @@
                                  if (weakSelf.context.biometryType == LABiometryTypeFaceID){
                                      dispatch_async(dispatch_get_main_queue(), ^{
                                          [sender setOn:YES];
-                                         [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Face ID successed set", nil) toView:weakSelf.view];
+
+                                         [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Face ID successed set", nil)];
                                      });
                                  }
                                  
@@ -327,7 +307,7 @@
                                  if(weakSelf.context.biometryType == LABiometryTypeTouchID){
                                      dispatch_async(dispatch_get_main_queue(), ^{
                                          [sender setOn:YES];
-                                         [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Touch ID successed set", nil) toView:weakSelf.view];
+                                         [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Touch ID successed set", nil)];
                                      });
                                  }
                              } else {
@@ -339,7 +319,8 @@
                      }];
         }
     }else{
-        [HHProgressHUD showToast:@"请先设置密码, 才能使用Touch ID/Face ID"];
+
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"Please set Password before use Touch ID/Face ID", nil)];
     }
     
 }

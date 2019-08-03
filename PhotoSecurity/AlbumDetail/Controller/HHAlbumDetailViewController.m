@@ -40,6 +40,9 @@ QLPreviewControllerDelegate>
 /// 选中列表(key为下标索引,value固定为@(YES))
 @property (nonatomic, strong) NSMutableDictionary *selectMaps;
 
+@property (nonatomic, strong) UIBarButtonItem *editButton;
+@property (nonatomic, strong) UIBarButtonItem *addButton;
+
 @end
 
 @implementation HHAlbumDetailViewController
@@ -59,6 +62,9 @@ static CGFloat const kCellBorderMargin = 1.0;
     HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
     self.photos = [manager requestAllPhotosWithAlbumid:self.album.albumid];
     [self.collectionView reloadData];
+    
+    self.navigationItem.rightBarButtonItems = @[self.editButton, self.addButton];
+
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -97,7 +103,7 @@ static CGFloat const kCellBorderMargin = 1.0;
             [cell changeSelectState:NO];
         } else {
             if (9 <= _selectMaps.count) {
-                [HHProgressHUD showToast:NSLocalizedString(@"You can only select up to 9 images.", nil)];
+                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"You can only select up to 9 images.", nil)];
                 return;
             }
             [_selectMaps setObject:@(YES) forKey:key];
@@ -198,7 +204,7 @@ static CGFloat const kCellBorderMargin = 1.0;
         [self.photos addObjectsFromArray:latestPhotos];
         [self.collectionView reloadData];
     } else {
-        [HHProgressHUD showFailureHUD:NSLocalizedString(@"Photo saved failed", nil) toView:self.view];
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Photo saved failed", nil)];
     }
 }
 
@@ -242,7 +248,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 #pragma mark - <DZNEmptyDataSetDelegate>
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self showAddPictureSheet:button];
+    [self addButtonPressed:nil];
 }
 
 #pragma mark - Actions
@@ -250,7 +256,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 /**
  添加相片
  */
-- (IBAction)showAddPictureSheet:(id)sender {
+- (void)addButtonPressed:(UIButton *)sender {
     
     __weak typeof(self) weakSelf = self;
     
@@ -268,7 +274,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 
         if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             // 没有摄像头
-            [HHProgressHUD showFailureHUD:NSLocalizedString(@"The camera is not available", nil) toView:weakSelf.view];
+            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"The camera is not available", nil)];
             return;
         }
         
@@ -308,10 +314,12 @@ static CGFloat const kCellBorderMargin = 1.0;
     [weakSelf presentViewController:alert animated:YES completion:nil];
 }
 
-- (IBAction)editButtonAction:(UIBarButtonItem *)sender {
+- (void)editButtonPressed:(UIButton *)sender {
     _editing = !_editing;
     if (_editing) {
-        sender.image = [UIImage imageNamed:@"icon-done"];
+        
+        [sender setImage:[UIImage imageNamed:@"icon-done"] forState:UIControlStateNormal];
+
         self.collectionView.contentInset = UIEdgeInsetsMake(0.0, 0.0, OPERATION_TOOLBAR_HEIGHT, 0.0);
         CGFloat contentHeight = self.collectionView.contentSize.height;
         CGFloat offsetY = self.collectionView.contentOffset.y;
@@ -327,7 +335,7 @@ static CGFloat const kCellBorderMargin = 1.0;
         }
         [self addOperationToolbar];
     } else {
-        sender.image = [UIImage imageNamed:@"icon-edit"];
+        [sender setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
         self.collectionView.contentInset = UIEdgeInsetsZero;
         [[self.view viewWithTag:OPERATION_TOOLBAR_TAG] removeFromSuperview];
         if (_selectMaps.count) { // 取消图片的选中状态
@@ -345,17 +353,20 @@ static CGFloat const kCellBorderMargin = 1.0;
 /// 保存选中的图片
 - (void)saveButtonItemAction:(UIBarButtonItem *)sender {
     if (0 == _selectMaps.count) {
-        return [HHProgressHUD showToast:NSLocalizedString(@"Please select the pictures you want to save", nil)];
+
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"Please select the pictures you want to save", nil)];
+        return;
     }
     @weakify(self);
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
             if (status != PHAuthorizationStatusAuthorized) {
-                [HHProgressHUD showFailureHUD:NSLocalizedString(@"No authorization to access Photo Library", nil) toView:self.view];
+                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"No authorization to access Photo Library", nil)];
                 return;
             }
-            [HHProgressHUD showLoadingHUD:NSLocalizedString(@"Copying the pictures...", nil) toView:self.view];
+            
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
             // 保存图片到系统相册(可以保存到自定义相册)
             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                 for (NSString *key in self.selectMaps) {
@@ -367,12 +378,12 @@ static CGFloat const kCellBorderMargin = 1.0;
                 }
             } completionHandler:^(BOOL success, NSError * _Nullable error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    @strongify(self);
-                    [HHProgressHUD hideHUDForView:self.view];
+
+                    [SVProgressHUD dismiss];
                     if (error) {
-                        [HHProgressHUD showFailureHUD:NSLocalizedString(@"Photo saved failed", nil) toView:self.view];
+                        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"Photo saved failed", nil)];
                     } else {
-                        [HHProgressHUD showSuccessHUD:NSLocalizedString(@"Photo saved successfully", nil) toView:self.view];
+                        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Photo saved successfully", nil)];
                     }
                 });
             }];
@@ -383,14 +394,17 @@ static CGFloat const kCellBorderMargin = 1.0;
 /// 删除选中的图片
 - (void)deleteButtonItemAction:(UIBarButtonItem *)sender {
     if (0 == _selectMaps.count) {
-        return [HHProgressHUD showToast:NSLocalizedString(@"Please select the pictures you want to delete", nil)];
+
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Please select the pictures you want to delete", nil)];
+        return;
     }
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Are you sure you want to delete the selected photos?", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
     @weakify(self);
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        [HHProgressHUD showLoadingHUD:NSLocalizedString(@"Deleting pictures...", nil)
-                               toView:[UIApplication sharedApplication].keyWindow];
+        
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Deleting pictures...", nil)];
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             @strongify(self);
             NSMutableArray<HHPhotoModel *> *photos = [NSMutableArray array];
@@ -401,16 +415,21 @@ static CGFloat const kCellBorderMargin = 1.0;
             }
             HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
             BOOL success = [manager deletePhotos:photos fromAlbum:self.album];
-            if (success) {
+            
+            if(success) {
                 [self.photos removeObjectsInArray:photos];
                 self.album.count = MAX(0, self.album.count-photos.count);
             }
+            
             [self.selectMaps removeAllObjects];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.collectionView reloadData];
-                [HHProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow];
+                
+                [SVProgressHUD dismiss];
                 [self.selectMaps removeAllObjects];
                 [self updateToolbarIndicator];
+                
             });
         });
     }]];
@@ -420,30 +439,18 @@ static CGFloat const kCellBorderMargin = 1.0;
 
 #pragma mark - TZImagePickerControllerDelegate
 
-/// User click cancel button
-/// 用户点击了取消
 - (void)tz_imagePickerControllerDidCancel:(TZImagePickerController *)picker {
      NSLog(@"cancel");
 }
 
-// The picker should dismiss itself; when it dismissed these handle will be called.
-// You can also set autoDismiss to NO, then the picker don't dismiss itself.
-// If isOriginalPhoto is YES, user picked the original photo.
-// You can get original photo with asset, by the method [[TZImageManager manager] getOriginalPhotoWithAsset:completion:].
-// The UIImage Object in photos default width is 828px, you can set it by photoWidth property.
-// 这个照片选择器会自己dismiss，当选择器dismiss的时候，会执行下面的代理方法
-// 你也可以设置autoDismiss属性为NO，选择器就不会自己dismis了
-// 如果isSelectOriginalPhoto为YES，表明用户选择了原图
-// 你可以通过一个asset获得原图，通过这个方法：[[TZImageManager manager] getOriginalPhotoWithAsset:completion:]
-// photos数组里的UIImage对象，默认是828像素宽，你可以通过设置photoWidth属性的值来改变它
+
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos
                  sourceAssets:(NSArray *)assets
         isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
                         infos:(NSArray<NSDictionary *> *)infos {
 
-        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-        [HHProgressHUD showLoadingHUD:NSLocalizedString(@"Copying the pictures...", nil) toView:window];
     
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
         @weakify(self);
         dispatch_group_t group = dispatch_group_create();
         dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
@@ -454,12 +461,14 @@ static CGFloat const kCellBorderMargin = 1.0;
             dispatch_group_enter(group);
             dispatch_group_async(group, queue, ^{
                 @strongify(self);
-                if (asset.mediaType == PHAssetMediaTypeVideo) { // 视频
+                if (asset.mediaType == PHAssetMediaTypeVideo) {
+                    //视频
                     [self fetchVideoForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
                         [imagePhotos addObject:photo];
                         dispatch_group_leave(group);
                     }];
-                } else if (asset.mediaType == PHAssetMediaTypeImage) { // 图片
+                } else if (asset.mediaType == PHAssetMediaTypeImage) {
+                    //图片
                     [self fetchImageForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
                         [imagePhotos addObject:photo];
                         dispatch_group_leave(group);
@@ -473,8 +482,8 @@ static CGFloat const kCellBorderMargin = 1.0;
                 @strongify(self);
                 [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos]; // 将图片数据写入数据库
                 self.album.count += photos.count;
-                [HHProgressHUD hideHUDForView:[UIApplication sharedApplication].keyWindow];
-    
+
+                [SVProgressHUD dismiss];
                 // 获取允许删除的图片资源
                 NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
                 for (PHAsset *asset in assets) {
@@ -484,26 +493,25 @@ static CGFloat const kCellBorderMargin = 1.0;
                 }
                 if (deleteAssets.count) {
                     // 提示用户是否删除系统图片
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alert = [UIAlertController
+                                                alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil)
+                                                message:nil
+                                                preferredStyle:UIAlertControllerStyleAlert];
+                    
                     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                            /**
-                             删除图片注意点:
-                             1、图片将会被移入"最近删除"的相册中,30天后会自动删除
-                             2、不能删除通过iTunes同步的图片,[asset canPerformEditOperation:PHAssetEditOperationDelete]可判断图片是否可以删除
-    
-                             针对情况1可以先将图片修改成一个默认图片然后才删除,情况二就无解了,苹果不允许这种操作,只能通过iTunes取消同步来删除
-                             */
+                         
                             [PHAssetChangeRequest deleteAssets:deleteAssets];
                         } completionHandler:^(BOOL success, NSError * _Nullable error) {
                             if (success == NO) {
                                 NSString *message = NSLocalizedString(@"Delete fail.", nil);
                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                    [HHProgressHUD showFailureHUD:message toView:[UIApplication sharedApplication].keyWindow];
+                                    [SVProgressHUD showInfoWithStatus:message];
                                 });
                             }
                         }];
                     }]];
+                    
                     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                     [self presentViewController:alert animated:YES completion:nil];
                 }
@@ -519,18 +527,72 @@ static CGFloat const kCellBorderMargin = 1.0;
     
 }
 
-// If user picking a video and allowPickingMultipleVideo is NO, this callback will be called.
-// If allowPickingMultipleVideo is YES, will call imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:
-// 如果用户选择了一个视频且allowPickingMultipleVideo是NO，下面的代理方法会被执行
-// 如果allowPickingMultipleVideo是YES，将会调用imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(PHAsset *)asset {
+    
+    NSLog(@"imagePickerController:%s %@", __func__, [NSThread currentThread]);
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
+
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
+    __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
+    // 从系统中拷贝图片/视频到沙盒目录
+
+    dispatch_group_enter(group);
+        dispatch_group_async(group, queue, ^{
+
+            if (asset.mediaType == PHAssetMediaTypeVideo) { // 视频
+                [self fetchVideoForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
+                    [imagePhotos addObject:photo];
+                    dispatch_group_leave(group);
+                }];
+            }
+    });
+    // 所有图片/视频已拷贝完毕
+    dispatch_group_notify(group, queue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+
+            [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos]; // 将图片数据写入数据库
+            self.album.count += 1;
+            [SVProgressHUD dismiss];
+            // 获取允许删除的图片资源
+            NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
+            if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
+                [deleteAssets addObject:asset];
+            }
+            
+            if (deleteAssets.count) {
+                // 提示用户是否删除系统图片
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                        
+                        [PHAssetChangeRequest deleteAssets:deleteAssets];
+                    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+                        if (success == NO) {
+                            NSString *message = NSLocalizedString(@"Delete fail.", nil);
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [SVProgressHUD showInfoWithStatus:message];
+                            });
+                        }
+                    }];
+                }]];
+                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+            // 加载最新添加的图片信息并显示在最后
+            NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
+            if (nil == self.photos) {
+                self.photos = [NSMutableArray array];
+            }
+            [self.photos addObjectsFromArray:latestPhotos];
+            [self.collectionView reloadData];
+        });
+    });
     
 }
 
-// If user picking a gif image and allowPickingMultipleVideo is NO, this callback will be called.
-// If allowPickingMultipleVideo is YES, will call imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:
-// 如果用户选择了一个gif图片且allowPickingMultipleVideo是NO，下面的代理方法会被执行
-// 如果allowPickingMultipleVideo是YES，将会调用imagePickerController:didFinishPickingPhotos:sourceAssets:isSelectOriginalPhoto:
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingGifImage:(UIImage *)animatedImage sourceAssets:(PHAsset *)asset {
     
 }
@@ -667,4 +729,30 @@ static CGFloat const kCellBorderMargin = 1.0;
     }
 }
 
+#pragma mark - Getter
+- (UIBarButtonItem *)editButton {
+    
+    if(!_editButton){
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 44)];
+        [button setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -5);
+        [button addTarget:self action:@selector(editButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        _editButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    }
+    
+    return _editButton;
+}
+
+- (UIBarButtonItem *)addButton {
+    
+    if(!_addButton){
+        UIButton *letButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+        [letButton setImage:[UIImage imageNamed:@"icon-add.png"] forState:UIControlStateNormal];
+        letButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        [letButton addTarget:self action:@selector(addButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        _addButton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
+    }
+    return _addButton;
+}
 @end

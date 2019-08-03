@@ -18,7 +18,8 @@
 //
 #import "HHAlbumCollectionViewCell.h"
 #import "HHBlurAlertView.h"
-#import "UIView+Draggable.h"
+
+#import "DragView.h"
 
 static NSString *cellIdentifier = @"gridcellidentifier";
 
@@ -31,8 +32,8 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, assign, getter=isReSequence)BOOL reSequence;
 @property (nonatomic, strong) UICollectionView   *collectionView;
 @property (nonatomic, strong) NSMutableArray *datasource;
-@property (nonatomic, strong) UIBarButtonItem *leftBarButtton;
-@property (nonatomic, strong) UIBarButtonItem *rightBarButton;
+@property (nonatomic, strong) UIBarButtonItem *settingButtton;
+@property (nonatomic, strong) UIBarButtonItem *editButton;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, strong) HHBlurAlertView *blurAlertView;
@@ -46,8 +47,8 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     self.navigationItem.title = NSLocalizedString(@"Album", nil);
 
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    self.navigationItem.leftBarButtonItem = self.leftBarButtton;
-    self.navigationItem.rightBarButtonItem = self.rightBarButton;
+    self.navigationItem.leftBarButtonItem = self.settingButtton;
+    self.navigationItem.rightBarButtonItems = @[self.editButton];
     self.view.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
     self.navigationItem.title = NSLocalizedString(@"Album", nil);
     
@@ -68,13 +69,10 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     self.collectionView.showsVerticalScrollIndicator = NO;
     [self.view bringSubviewToFront:self.addButton];
     
-    self.addButton.draggingInBounds = YES;
-    self.addButton.draggingType = DraggingTypePullOver;
     
     self.addButton.layer.shadowColor = [UIColor blackColor].CGColor;
     self.addButton.layer.shadowOpacity = 0.5;
     self.addButton.layer.shadowOffset = CGSizeMake(0.5, 0.5);
-    
     
 }
 
@@ -88,20 +86,23 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     [[IQKeyboardManager sharedManager] setEnable:NO];
     [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
     
-    if([HHPasswordTool isSetPassword] &&
-       [UIApplication sharedApplication].applicationState != UIApplicationStateActive){
-        //如果设置了密码则去密码页面
-        static dispatch_once_t onceToken;
-        @weakify(self);
-        dispatch_once(&onceToken, ^{
-            @strongify(self);
-            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            NSString *identifier = @"HHSetPasswordViewController";
-            UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
-            [self presentViewController:vc animated:NO completion:nil];
-            
-        });
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if([HHPasswordTool isSetPassword] &&
+           [UIApplication sharedApplication].applicationState != UIApplicationStateActive){
+            //如果设置了密码则去密码页面
+            static dispatch_once_t onceToken;
+            @weakify(self);
+            dispatch_once(&onceToken, ^{
+                @strongify(self);
+                UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                NSString *identifier = @"HHSetPasswordViewController";
+                UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+                [self presentViewController:vc animated:NO completion:nil];
+                
+            });
+        }
+    });
+    
     
 }
 
@@ -152,12 +153,13 @@ UICollectionViewDataSource, UICollectionViewDelegate>
             BOOL success = [[HHSQLiteManager sharedSQLiteManager] deleteAlbumWithAlbum:album];
             if (!success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [HHProgressHUD showFailureHUD:NSLocalizedString(@"Delete fail.", nil) toView:self.view];
+
+                    [SVProgressHUD showWithStatus:NSLocalizedString(@"Delete fail.", nil)];
                 });
                 return;
             }
+            
             [self.userAlbums removeObjectAtIndex:indexPath.row];
-//            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
 
             if (0 == self.userAlbums.count) {
@@ -312,32 +314,29 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     };
 }
 
-- (UIBarButtonItem *)rightBarButton {
+- (UIBarButtonItem *)editButton {
     
-    if(!_rightBarButton){
+    if(!_editButton){
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 44)];
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 44)];
         [button setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -40);
+        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -5);
         [button addTarget:self action:@selector(editButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        _rightBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        _editButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     }
-    
-    return _rightBarButton;
+    return _editButton;
 }
 
-- (UIBarButtonItem *)leftBarButtton {
+- (UIBarButtonItem *)settingButtton {
     
-    if(!_leftBarButtton){
-        UIButton *letButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 64, 32)];
+    if(!_settingButtton){
+        UIButton *letButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
         [letButton setImage:[UIImage imageNamed:@"icon-setting"] forState:UIControlStateNormal];
-        [letButton setTitleColor:RGB(51, 51, 51) forState:UIControlStateNormal];
-        letButton.titleLabel.font = kFONT(kTitleName_PingFang_R, 18);
-        letButton.imageEdgeInsets = UIEdgeInsetsMake(0, -40, 0, 0);
+        letButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
         [letButton addTarget:self action:@selector(settingButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-        _leftBarButtton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
+        _settingButtton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
     }
-    return _leftBarButtton;
+    return _settingButtton;
 }
 
 - (HHBlurAlertView *)blurAlertView {

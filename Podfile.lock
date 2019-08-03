@@ -4,31 +4,23 @@ PODS:
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
   - IQKeyboardManager (4.0.13)
-  - MBProgressHUD (1.0.0)
+  - SVProgressHUD (2.2.5)
   - TZImagePickerController (3.2.1)
 
 DEPENDENCIES:
   - DZNEmptyDataSet (~> 1.8.1)
   - FMDB (~> 2.6.2)
   - IQKeyboardManager (~> 4.0.8)
-  - MBProgressHUD (~> 1.0.0)
+  - SVProgressHUD
   - TZImagePickerController (~> 3.2.1)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - DZNEmptyDataSet
-    - FMDB
-    - IQKeyboardManager
-    - MBProgressHUD
-    - TZImagePickerController
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TZImagePickerController: bf4c57b98d8707fce41ea6be872414a71c7a8c9d
 
-PODFILE CHECKSUM: e3e7c256932d2fee1b5bcd4c1d9730827e588109
+PODFILE CHECKSUM: 0affedc56fa8817377c49ed77386765507120a29
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.1.1

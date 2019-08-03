@@ -27,6 +27,7 @@
     self.title = NSLocalizedString(@"FTP Service", nil);
     
     [self.startFTPButton setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Img_setPassword_bg.png"]]];
+    [self.startFTPButton setTitle:NSLocalizedString(@"Start FTP Service", nil) forState:UIControlStateNormal];
 }
 
 - (void)dealloc {
@@ -42,7 +43,8 @@
         NSString *ip = [XMFTPHelper localIPAddress];
         if (![ip isIP]) {
             sender.selected = !sender.selected;
-            [HHProgressHUD showFailureHUD:NSLocalizedString(@"FTP server failed to open, please confirm open WIFI and connect WIFI", nil) toView:self.view];
+
+            [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"FTP server failed to open, please confirm open WIFI and connect WIFI", nil)];
             return;
         }
         self.textField.text = [NSString stringWithFormat:@"ftp://%@:%d", ip, ftpPort];

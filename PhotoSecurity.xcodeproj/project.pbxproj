@@ -39,10 +39,8 @@
 		122EE0561E67F51700FCAF98 /* UIImage+XP.m in Sources */ = {isa = PBXBuildFile; fileRef = 122EE0551E67F51700FCAF98 /* UIImage+XP.m */; };
 		123F8E2B1E694D4F005379D2 /* NSString+XP.m in Sources */ = {isa = PBXBuildFile; fileRef = 123F8E2A1E694D4F005379D2 /* NSString+XP.m */; };
 		124529201E80BF6E007222C4 /* XPSettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1245291F1E80BF6E007222C4 /* XPSettingCell.m */; };
-		124529231E80CBDB007222C4 /* XPChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 124529221E80CBDB007222C4 /* XPChangePasswordViewController.m */; };
 		12972AD01E6D08880092D64B /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12972ACF1E6D08880092D64B /* LocalAuthentication.framework */; };
 		129C3CE11E6D325100A52448 /* HHPasswordTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 129C3CE01E6D325100A52448 /* HHPasswordTool.m */; };
-		129C3CE41E6D4DFD00A52448 /* HHProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 129C3CE31E6D4DFD00A52448 /* HHProgressHUD.m */; };
 		12F4AED21E7A79230034333E /* XPAlbumDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12F4AED11E7A79230034333E /* XPAlbumDetailCell.m */; };
 		12FA26901E76A47D0000A643 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 12FA26921E76A47D0000A643 /* Localizable.strings */; };
 		200F30F022EC70480030B957 /* HHPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 200F30EF22EC70480030B957 /* HHPhotoModel.m */; };
@@ -61,9 +59,9 @@
 		20B3337922F32D4400BAECCB /* HHChangeIconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337822F32D4400BAECCB /* HHChangeIconViewController.m */; };
 		20B3337D22F32F0C00BAECCB /* HHChangeIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337B22F32F0C00BAECCB /* HHChangeIconCell.m */; };
 		20B3337E22F32F0C00BAECCB /* HHChangeIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */; };
-		20B3338122F439FF00BAECCB /* UIView+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3337F22F439FF00BAECCB /* UIView+Draggable.m */; };
 		20B3338422F47AF600BAECCB /* HHAPPContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3338322F47AF600BAECCB /* HHAPPContext.m */; };
 		20B3338722F47E0300BAECCB /* HHChangePressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3338622F47E0300BAECCB /* HHChangePressController.m */; };
+		20E1DB0622F5DA1C001822C5 /* DragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E1DB0522F5DA1C001822C5 /* DragView.m */; };
 		4ACD21B9B3E2750FAF0C1AF6 /* libPods-PhotoSecurity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB161BA3F61719AAE63C0CFE /* libPods-PhotoSecurity.a */; };
 		548055CD1E6701750040143A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 548055CB1E6701750040143A /* Main.storyboard */; };
 		548055DE1E6702D70040143A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 548055DB1E6702D70040143A /* AppDelegate.m */; };
@@ -144,13 +142,9 @@
 		123F8E2A1E694D4F005379D2 /* NSString+XP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XP.m"; sourceTree = "<group>"; };
 		1245291E1E80BF6E007222C4 /* XPSettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPSettingCell.h; sourceTree = "<group>"; };
 		1245291F1E80BF6E007222C4 /* XPSettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPSettingCell.m; sourceTree = "<group>"; };
-		124529211E80CBDB007222C4 /* XPChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPChangePasswordViewController.h; sourceTree = "<group>"; };
-		124529221E80CBDB007222C4 /* XPChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPChangePasswordViewController.m; sourceTree = "<group>"; };
 		12972ACF1E6D08880092D64B /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		129C3CDF1E6D325100A52448 /* HHPasswordTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHPasswordTool.h; sourceTree = "<group>"; };
 		129C3CE01E6D325100A52448 /* HHPasswordTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHPasswordTool.m; sourceTree = "<group>"; };
-		129C3CE21E6D4DFD00A52448 /* HHProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHProgressHUD.h; sourceTree = "<group>"; };
-		129C3CE31E6D4DFD00A52448 /* HHProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHProgressHUD.m; sourceTree = "<group>"; };
 		12F4AED01E7A79230034333E /* XPAlbumDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPAlbumDetailCell.h; sourceTree = "<group>"; };
 		12F4AED11E7A79230034333E /* XPAlbumDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPAlbumDetailCell.m; sourceTree = "<group>"; };
 		12FA26911E76A47D0000A643 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -179,12 +173,12 @@
 		20B3337A22F32F0C00BAECCB /* HHChangeIconCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHChangeIconCell.h; sourceTree = "<group>"; };
 		20B3337B22F32F0C00BAECCB /* HHChangeIconCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHChangeIconCell.m; sourceTree = "<group>"; };
 		20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HHChangeIconCell.xib; sourceTree = "<group>"; };
-		20B3337F22F439FF00BAECCB /* UIView+Draggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Draggable.m"; sourceTree = "<group>"; };
-		20B3338022F439FF00BAECCB /* UIView+Draggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Draggable.h"; sourceTree = "<group>"; };
 		20B3338222F47AF600BAECCB /* HHAPPContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHAPPContext.h; sourceTree = "<group>"; };
 		20B3338322F47AF600BAECCB /* HHAPPContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHAPPContext.m; sourceTree = "<group>"; };
 		20B3338522F47E0300BAECCB /* HHChangePressController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHChangePressController.h; sourceTree = "<group>"; };
 		20B3338622F47E0300BAECCB /* HHChangePressController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHChangePressController.m; sourceTree = "<group>"; };
+		20E1DB0422F5DA1C001822C5 /* DragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragView.h; sourceTree = "<group>"; };
+		20E1DB0522F5DA1C001822C5 /* DragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragView.m; sourceTree = "<group>"; };
 		548055BF1E6701750040143A /* PhotoSecurity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSecurity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		548055CC1E6701750040143A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		548055DA1E6702D70040143A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -244,8 +238,6 @@
 			children = (
 				648AA6BD22F28460000CAF28 /* HHNewSettingViewController.h */,
 				648AA6BE22F28460000CAF28 /* HHNewSettingViewController.m */,
-				124529211E80CBDB007222C4 /* XPChangePasswordViewController.h */,
-				124529221E80CBDB007222C4 /* XPChangePasswordViewController.m */,
 				1226BC361E8519830022C882 /* XPFTPViewController.h */,
 				1226BC371E8519830022C882 /* XPFTPViewController.m */,
 				641F5A0822F3027D0028E5AA /* HHSetEmailViewContrller.h */,
@@ -434,8 +426,6 @@
 				122EE0471E67C15400FCAF98 /* functions.m */,
 				129C3CDF1E6D325100A52448 /* HHPasswordTool.h */,
 				129C3CE01E6D325100A52448 /* HHPasswordTool.m */,
-				129C3CE21E6D4DFD00A52448 /* HHProgressHUD.h */,
-				129C3CE31E6D4DFD00A52448 /* HHProgressHUD.m */,
 				121DEB3C1E79125100491C97 /* HHSQLiteManager.h */,
 				121DEB3D1E79125100491C97 /* HHSQLiteManager.m */,
 				641F5A0522F300D50028E5AA /* HHAcountManager.h */,
@@ -449,8 +439,6 @@
 		122EE04D1E67F2D100FCAF98 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				20B3338022F439FF00BAECCB /* UIView+Draggable.h */,
-				20B3337F22F439FF00BAECCB /* UIView+Draggable.m */,
 				121C117F1E9DCA1D008AB02D /* Image+Snapshot.h */,
 				121C11801E9DCA1D008AB02D /* Image+Snapshot.m */,
 				122EE0541E67F51700FCAF98 /* UIImage+XP.h */,
@@ -522,6 +510,8 @@
 		20A9688E22EB562200A3340F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				20E1DB0422F5DA1C001822C5 /* DragView.h */,
+				20E1DB0522F5DA1C001822C5 /* DragView.m */,
 				20A9688F22EB563000A3340F /* PPLockView.h */,
 				20A9689022EB563000A3340F /* PPLockView.m */,
 				648AA6B122F1803A000CAF28 /* HHBlurView */,
@@ -648,6 +638,7 @@
 				548055BC1E6701750040143A /* Frameworks */,
 				548055BD1E6701750040143A /* Resources */,
 				5F288F9FDF0A36345ACD08EC /* [CP] Copy Pods Resources */,
+				1477B0FCEDEEA03310F3053B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -728,6 +719,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1477B0FCEDEEA03310F3053B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PhotoSecurity/Pods-PhotoSecurity-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4C28B26C9CDBFEB6735A6C69 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -743,7 +749,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		5F288F9FDF0A36345ACD08EC /* [CP] Copy Pods Resources */ = {
@@ -785,7 +791,6 @@
 				122EE0561E67F51700FCAF98 /* UIImage+XP.m in Sources */,
 				129C3CE11E6D325100A52448 /* HHPasswordTool.m in Sources */,
 				20B3338722F47E0300BAECCB /* HHChangePressController.m in Sources */,
-				129C3CE41E6D4DFD00A52448 /* HHProgressHUD.m in Sources */,
 				648AA6B022F16540000CAF28 /* HHBaseViewController.m in Sources */,
 				20A9689122EB563000A3340F /* PPLockView.m in Sources */,
 				20B3337922F32D4400BAECCB /* HHChangeIconViewController.m in Sources */,
@@ -798,13 +803,11 @@
 				200F30F022EC70480030B957 /* HHPhotoModel.m in Sources */,
 				1226BC381E8519830022C882 /* XPFTPViewController.m in Sources */,
 				64D3D5A522EEBD9500B63DA9 /* HHNewHomeViewController.m in Sources */,
-				124529231E80CBDB007222C4 /* XPChangePasswordViewController.m in Sources */,
 				1226BC341E8515D00022C882 /* XMFTPHelper.m in Sources */,
 				121C11811E9DCA1D008AB02D /* Image+Snapshot.m in Sources */,
 				1212BFE31E83590C00BCD9E7 /* QLPreviewController+XP.m in Sources */,
 				548055DE1E6702D70040143A /* AppDelegate.m in Sources */,
 				122E01331E714EF700CE8E4C /* HHPhotoCollectionViewCell.m in Sources */,
-				20B3338122F439FF00BAECCB /* UIView+Draggable.m in Sources */,
 				641F5A0A22F3027D0028E5AA /* HHSetEmailViewContrller.m in Sources */,
 				122EE04C1E67C40800FCAF98 /* XPNavigationController.m in Sources */,
 				648AA6BF22F28460000CAF28 /* HHNewSettingViewController.m in Sources */,
@@ -820,6 +823,7 @@
 				2021A3E322EC72BA00F75CD5 /* HHPhotoPickerViewController.m in Sources */,
 				1226BC351E8515D00022C882 /* XMFTPServer.m in Sources */,
 				1226BC1A1E84A4C60022C882 /* XPAlbumCell.m in Sources */,
+				20E1DB0622F5DA1C001822C5 /* DragView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

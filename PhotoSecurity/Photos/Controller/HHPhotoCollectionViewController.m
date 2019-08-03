@@ -123,7 +123,8 @@ static NSString * const reuseIdentifier = @"Cell";
     PHAsset *asset = [self.assetResults objectAtIndex:index];
     if (isSelected) {
         if (9 <= self.selectedAssets.count) {
-            [HHProgressHUD showToast:NSLocalizedString(@"You can only select up to 9 images.", nil)];
+
+            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"You can only select up to 9 images.", nil)];
             return;
         }
         [self.selectedAssets addObject:asset];

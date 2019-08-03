@@ -39,7 +39,7 @@
         account.email = self.emailTF.text;
         [self.navigationController popViewControllerAnimated:YES];
     }else{
-        [HHProgressHUD showToast:@"请输入邮箱"];
+        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"Please enter email address", nil)];
     }
 }
 

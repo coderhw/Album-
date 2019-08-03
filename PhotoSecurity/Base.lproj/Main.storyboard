@@ -161,20 +161,7 @@
                             <outlet property="delegate" destination="8Zv-JX-XNp" id="Vf9-gl-L4p"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="VCz-qG-cbv">
-                        <rightBarButtonItems>
-                            <barButtonItem image="icon-edit" id="Sm7-NS-OPa">
-                                <connections>
-                                    <action selector="editButtonAction:" destination="8Zv-JX-XNp" id="xj8-ya-gzm"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="icon-add" id="0Ef-PF-eCj">
-                                <connections>
-                                    <action selector="showAddPictureSheet:" destination="8Zv-JX-XNp" id="1FA-UR-4d7"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="VCz-qG-cbv"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eIz-Zm-VH8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -315,7 +302,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-bH-cGE">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-bH-cGE" customClass="DragView">
                                 <rect key="frame" x="334" y="598" width="64" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="Y7a-le-7A9"/>
@@ -483,7 +470,7 @@
         <image name="icon-add" width="20" height="20"/>
         <image name="icon-edit" width="24" height="24"/>
         <image name="icon-selected" width="20" height="20"/>
-        <image name="icon-setting" width="24" height="23"/>
+        <image name="icon-setting" width="24" height="24"/>
         <image name="icon_addAblum" width="32" height="32"/>
         <image name="icon_ftp" width="40" height="32"/>
     </resources>
