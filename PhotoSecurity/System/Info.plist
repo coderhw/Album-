@@ -5,22 +5,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>私密相册</string>
+	<string>微册</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>IconRainbow</key>
-			<dict>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>IconRainbow</string>
-				</array>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-			</dict>
 			<key>IconDrama</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
@@ -35,6 +26,15 @@
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>IconPre</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>IconRainbow</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>IconRainbow</string>
 				</array>
 				<key>UIPrerenderedIcon</key>
 				<false/>
