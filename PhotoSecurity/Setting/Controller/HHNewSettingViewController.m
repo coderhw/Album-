@@ -321,6 +321,8 @@
     }else{
 
         [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"Please set Password before use Touch ID/Face ID", nil)];
+        [sender setOn:NO];
+
     }
     
 }
