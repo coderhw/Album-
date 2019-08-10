@@ -36,16 +36,16 @@
     
     CAKeyframeAnimation *anim = [CAKeyframeAnimation animation];
     anim.keyPath =@"transform.rotation";
-    anim.duration = 0.3;
+    anim.duration = 0.4;
     anim.repeatCount = MAXFLOAT;
     anim.values =@[@(-0.01), @0.01];
     anim.removedOnCompletion = NO;
-    anim.fillMode = kCAFillModeRemoved;
-    [self.layer addAnimation:anim forKey:@"shake"];
+    anim.fillMode = kCAFillModeBoth;
+    [self.layer addAnimation:anim forKey:@"shakes"];
 }
 
 - (void)endShakes {
-    [self.layer removeAnimationForKey:@"shake"];
+    [self.layer removeAnimationForKey:@"shakes"];
 }
 
 - (void)zoom {

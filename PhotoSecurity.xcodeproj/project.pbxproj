@@ -67,6 +67,8 @@
 		20B3337E22F32F0C00BAECCB /* HHChangeIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20B3337C22F32F0C00BAECCB /* HHChangeIconCell.xib */; };
 		20B3338422F47AF600BAECCB /* HHAPPContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3338322F47AF600BAECCB /* HHAPPContext.m */; };
 		20B3338722F47E0300BAECCB /* HHChangePressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B3338622F47E0300BAECCB /* HHChangePressController.m */; };
+		20C3D36222FF2835001C634A /* HHPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C3D36122FF2835001C634A /* HHPreviewViewController.m */; };
+		20C3D36522FF2848001C634A /* HHPreviewViewController+HH.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C3D36422FF2848001C634A /* HHPreviewViewController+HH.m */; };
 		20E1DB0622F5DA1C001822C5 /* DragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E1DB0522F5DA1C001822C5 /* DragView.m */; };
 		4ACD21B9B3E2750FAF0C1AF6 /* libPods-PhotoSecurity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB161BA3F61719AAE63C0CFE /* libPods-PhotoSecurity.a */; };
 		548055CD1E6701750040143A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 548055CB1E6701750040143A /* Main.storyboard */; };
@@ -195,6 +197,10 @@
 		20B3338322F47AF600BAECCB /* HHAPPContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHAPPContext.m; sourceTree = "<group>"; };
 		20B3338522F47E0300BAECCB /* HHChangePressController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHChangePressController.h; sourceTree = "<group>"; };
 		20B3338622F47E0300BAECCB /* HHChangePressController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHChangePressController.m; sourceTree = "<group>"; };
+		20C3D36022FF2835001C634A /* HHPreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHPreviewViewController.h; sourceTree = "<group>"; };
+		20C3D36122FF2835001C634A /* HHPreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHPreviewViewController.m; sourceTree = "<group>"; };
+		20C3D36322FF2848001C634A /* HHPreviewViewController+HH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HHPreviewViewController+HH.h"; sourceTree = "<group>"; };
+		20C3D36422FF2848001C634A /* HHPreviewViewController+HH.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "HHPreviewViewController+HH.m"; sourceTree = "<group>"; };
 		20E1DB0422F5DA1C001822C5 /* DragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragView.h; sourceTree = "<group>"; };
 		20E1DB0522F5DA1C001822C5 /* DragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragView.m; sourceTree = "<group>"; };
 		548055BF1E6701750040143A /* PhotoSecurity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSecurity.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -283,6 +289,8 @@
 			children = (
 				12147DB11E6F92B5009D5321 /* HHAlbumDetailViewController.h */,
 				12147DB21E6F92B5009D5321 /* HHAlbumDetailViewController.m */,
+				20C3D36022FF2835001C634A /* HHPreviewViewController.h */,
+				20C3D36122FF2835001C634A /* HHPreviewViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -481,6 +489,8 @@
 				1224BB051E6E41E200CCCD73 /* UIColor+XP.m */,
 				1212BFE11E83590C00BCD9E7 /* QLPreviewController+XP.h */,
 				1212BFE21E83590C00BCD9E7 /* QLPreviewController+XP.m */,
+				20C3D36322FF2848001C634A /* HHPreviewViewController+HH.h */,
+				20C3D36422FF2848001C634A /* HHPreviewViewController+HH.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -811,6 +821,7 @@
 			files = (
 				548055E01E6702D70040143A /* main.m in Sources */,
 				124529201E80BF6E007222C4 /* XPSettingCell.m in Sources */,
+				20C3D36522FF2848001C634A /* HHPreviewViewController+HH.m in Sources */,
 				12147DB31E6F92B5009D5321 /* HHAlbumDetailViewController.m in Sources */,
 				122EE0501E67F2E800FCAF98 /* UIViewController+XP.m in Sources */,
 				1224BB141E6EB70900CCCD73 /* HHAlbumModel.m in Sources */,
@@ -846,6 +857,7 @@
 				122EE04C1E67C40800FCAF98 /* XPNavigationController.m in Sources */,
 				648AA6BF22F28460000CAF28 /* HHNewSettingViewController.m in Sources */,
 				64F081D022EF0BF0005DF2E2 /* HHAlbumCollectionViewCell.m in Sources */,
+				20C3D36222FF2835001C634A /* HHPreviewViewController.m in Sources */,
 				641F5A0722F300D50028E5AA /* HHAcountManager.m in Sources */,
 				1226BC301E8515D00022C882 /* AsyncSocket.m in Sources */,
 				12F4AED21E7A79230034333E /* XPAlbumDetailCell.m in Sources */,

@@ -38,6 +38,8 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
 @property (nonatomic, strong) NSMutableArray *datasource;
 @property (nonatomic, strong) UIBarButtonItem *settingButtton;
 @property (nonatomic, strong) UIBarButtonItem *editButton;
+@property (nonatomic, strong) UIButton *subEditButton;
+
 @property (weak, nonatomic) IBOutlet DragView *addButton;
 
 @property (nonatomic, assign) BOOL isEditing;
@@ -77,6 +79,9 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
     self.collectionView.showsVerticalScrollIndicator = NO;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)];
+    self.collectionView.userInteractionEnabled = YES;
+    [self.collectionView addGestureRecognizer:tap];
 
     [self.view bringSubviewToFront:self.addButton];
     self.addBtnBottomPading.constant = 60;
@@ -85,16 +90,13 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     self.addButton.layer.shadowOpacity = 0.5;
     self.addButton.layer.shadowOffset = CGSizeMake(0.5, 0.5);
     
+    //广告
     [self.view addSubview:self.bannerView];
     self.bannerView.delegate = self;
     [self.bannerView loadRequest:[GADRequest request]];
     [self.view bringSubviewToFront:self.bannerView];
-    
-    
     self.interstitial = [self createAndLoadInterstitial];
-
 }
-
 
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -333,6 +335,15 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     [self showCreateAlbumAlert];
 }
 
+- (void)tapGesture:(UITapGestureRecognizer *)tap {
+    
+    if(self.isEditing) {
+        self.isEditing = NO;
+        self.subEditButton.selected = NO;
+        [self.collectionView reloadData];
+    }
+}
+
 #pragma mark - GAD Delegate
 - (void)adViewDidReceiveAd:(GADBannerView *)adView {
     NSLog(@"adViewDidReceiveAd");
@@ -399,7 +410,6 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
     sender.selected = !sender.selected;
     self.isEditing = sender.selected;
     [self.collectionView reloadData];
-    
 }
 
 - (void)settingButtonPressed {
@@ -433,11 +443,11 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
     
     if(!_editButton){
         
-        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 44)];
-        [button setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
-        button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -5);
-        [button addTarget:self action:@selector(editButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        _editButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        _subEditButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 44)];
+        [_subEditButton setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
+        _subEditButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -5);
+        [_subEditButton addTarget:self action:@selector(editButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        _editButton = [[UIBarButtonItem alloc] initWithCustomView:_subEditButton];
     }
     return _editButton;
 }

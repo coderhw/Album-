@@ -8,6 +8,7 @@
 
 #import "HHAlbumDetailViewController.h"
 #import "HHPhotoPickerViewController.h"
+#import "HHPreviewViewController.h"
 #import "XPNavigationController.h"
 #import "XPAlbumDetailCell.h"
 #import "HHAlbumModel.h"
@@ -64,24 +65,33 @@ static CGFloat const kCellBorderMargin = 1.0;
     self.collectionView.emptyDataSetDelegate = self;
     self.collectionView.frame = CGRectMake(0, 1, APP_WIDH, APP_HIGH-1);
     
-    // 加载相册所有图片数据
-    HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
-    self.photos = [manager requestAllPhotosWithAlbumid:self.album.albumid];
-    [self.collectionView reloadData];
+//    // 加载相册所有图片数据
+//    [self configAlbumData];
     
     if(!self.isChoseThumb){
         self.navigationItem.rightBarButtonItems = @[self.editButton, self.addButton];
     }
 
-    
+    //广告
     self.interstitial = [self createAndLoadInterstitial];
-    
     [self.view addSubview:self.bannerView];
     self.bannerView.delegate = self;
     [self.bannerView loadRequest:[GADRequest request]];
     [self.view bringSubviewToFront:self.bannerView];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
+    // 加载相册所有图片数据
+    [self configAlbumData];
+}
+
+- (void)configAlbumData {
+    HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
+    self.photos = [manager requestAllPhotosWithAlbumid:self.album.albumid];
+    [self.collectionView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -156,10 +166,21 @@ static CGFloat const kCellBorderMargin = 1.0;
             }
             [self updateToolbarIndicator];
         } else {
-            QLPreviewController *previewController = [[QLPreviewController alloc] init];
+
+            HHPreviewViewController *previewController = [[HHPreviewViewController alloc] init];
             previewController.delegate = self;
             previewController.dataSource = self;
             previewController.currentPreviewItemIndex = indexPath.row;
+            previewController.deleteImageBlock = ^(HHPreviewViewController * _Nonnull previewVC) {
+              
+                HHPhotoModel *photo = self.photos[indexPath.row];
+                HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
+                BOOL success = [manager deletePhotos:@[photo] fromAlbum:self.album];
+                if(success) {
+                    [self.photos removeObject:photo];
+                    [previewVC reloadData];
+                };
+            };
             [self.navigationController pushViewController:previewController animated:YES];
         }
     }
