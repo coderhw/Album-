@@ -18,13 +18,15 @@
 //
 #import "HHAlbumCollectionViewCell.h"
 #import "HHBlurAlertView.h"
-
 #import "DragView.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
+
+
 
 static NSString *cellIdentifier = @"gridcellidentifier";
 
 @interface HHNewHomeViewController ()<DZNEmptyDataSetSource, DZNEmptyDataSetDelegate,
-UICollectionViewDataSource, UICollectionViewDelegate>
+UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADInterstitialDelegate>
 
 /// 用户的相册数据
 @property (nonatomic, strong) NSMutableArray<HHAlbumModel *> *userAlbums;
@@ -34,14 +36,20 @@ UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, strong) NSMutableArray *datasource;
 @property (nonatomic, strong) UIBarButtonItem *settingButtton;
 @property (nonatomic, strong) UIBarButtonItem *editButton;
-@property (weak, nonatomic) IBOutlet UIButton *addButton;
+@property (weak, nonatomic) IBOutlet DragView *addButton;
+
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, strong) HHBlurAlertView *blurAlertView;
+@property(nonatomic, strong) GADBannerView *bannerView;
+@property(nonatomic, strong) GADInterstitial *interstitial;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addBtnBottomPading;
+
 @end
 
 @implementation HHNewHomeViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     self.navigationItem.title = NSLocalizedString(@"Album", nil);
@@ -67,14 +75,24 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
     self.collectionView.showsVerticalScrollIndicator = NO;
+
     [self.view bringSubviewToFront:self.addButton];
-    
+    self.addBtnBottomPading.constant = 60;
     
     self.addButton.layer.shadowColor = [UIColor blackColor].CGColor;
     self.addButton.layer.shadowOpacity = 0.5;
     self.addButton.layer.shadowOffset = CGSizeMake(0.5, 0.5);
     
+    [self.view addSubview:self.bannerView];
+    self.bannerView.delegate = self;
+    [self.bannerView loadRequest:[GADRequest request]];
+    [self.view bringSubviewToFront:self.bannerView];
+    
+    
+    self.interstitial = [self createAndLoadInterstitial];
+
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -102,14 +120,8 @@ UICollectionViewDataSource, UICollectionViewDelegate>
             });
         }
     });
-    
-    
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-}
 
 - (NSMutableArray *)datasource {
     if (_datasource == nil) {
@@ -244,10 +256,67 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     [self addAlbumButtonPressed:nil];
 }
 
+- (GADInterstitial *)createAndLoadInterstitial {
+    
+    NSString *uintID = kEnvironment ? @"ca-app-pub-4714556776467699/1329687562" :@"ca-app-pub-3940256099942544/4411468910";
+    
+    GADInterstitial *interstitial =
+    [[GADInterstitial alloc] initWithAdUnitID:uintID];
+    interstitial.delegate = self;
+    [interstitial loadRequest:[GADRequest request]];
+    return interstitial;
+    
+}
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
+    self.interstitial = [self createAndLoadInterstitial];
+}
+
+- (void)showTheInterstitialAd {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.interstitial.isReady) {
+            [self.interstitial presentFromRootViewController:self];
+        } else {
+            NSLog(@"Ad wasn't ready");
+        }
+    });
+    
+}
+
 #pragma mark - Actions
 
 - (IBAction)addButtonAction:(UIBarButtonItem *)sender {
     [self showCreateAlbumAlert];
+}
+
+#pragma mark - GAD Delegate
+- (void)adViewDidReceiveAd:(GADBannerView *)adView {
+    NSLog(@"adViewDidReceiveAd");
+}
+
+
+- (void)adView:(GADBannerView *)adView
+didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"adView:didFailToReceiveAdWithError: %@", [error localizedDescription]);
+}
+
+
+- (void)adViewWillPresentScreen:(GADBannerView *)adView {
+    NSLog(@"adViewWillPresentScreen");
+}
+
+- (void)adViewWillDismissScreen:(GADBannerView *)adView {
+    NSLog(@"adViewWillDismissScreen");
+}
+
+
+- (void)adViewDidDismissScreen:(GADBannerView *)adView {
+    NSLog(@"adViewDidDismissScreen");
+}
+
+- (void)adViewWillLeaveApplication:(GADBannerView *)adView {
+    NSLog(@"adViewWillLeaveApplication");
 }
 
 #pragma mark - Private
@@ -301,6 +370,7 @@ UICollectionViewDataSource, UICollectionViewDelegate>
     __weak typeof(self) ws = self;
     [sender zoom];
     [self.blurAlertView show];
+    
     self.blurAlertView.alertActionBlock = ^(NSInteger index, NSString *name) {
         
         if(index == 1){
@@ -310,6 +380,8 @@ UICollectionViewDataSource, UICollectionViewDelegate>
             if (nil == album) return;
             [ws.userAlbums addObject:album];
             [ws.collectionView reloadData];
+            
+            [ws showTheInterstitialAd];
         }
     };
 }
@@ -345,6 +417,17 @@ UICollectionViewDataSource, UICollectionViewDelegate>
         _blurAlertView = [HHBlurAlertView blurAlertView];
     }
     return _blurAlertView;
+}
+
+- (GADBannerView *)bannerView {
+    
+    if(!_bannerView){
+        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 50)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-50)];        
+        NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/1329687562": @"ca-app-pub-3940256099942544/2934735716";
+        _bannerView.adUnitID = unitId;
+        _bannerView.rootViewController = self;
+    }
+    return _bannerView;
 }
 
 @end

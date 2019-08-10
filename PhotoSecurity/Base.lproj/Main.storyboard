@@ -302,27 +302,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-bH-cGE" customClass="DragView">
-                                <rect key="frame" x="334" y="598" width="64" height="64"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QOB-bH-cGE">
+                                <rect key="frame" x="350" y="598" width="64" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="Y7a-le-7A9"/>
                                     <constraint firstAttribute="height" constant="64" id="pXY-kC-05E"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="icon_addAblum"/>
                                 <connections>
-                                    <action selector="addAlbumButtonPressed:" destination="gtl-8a-oxg" eventType="touchUpInside" id="7o3-B7-TUf"/>
+                                    <action selector="addAlbumButtonPressed:" destination="gtl-8a-oxg" eventType="touchUpInside" id="Sfd-wC-Ovk"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fNq-Bm-7Br" firstAttribute="top" secondItem="QOB-bH-cGE" secondAttribute="bottom" constant="200" id="8RJ-cv-kuT"/>
-                            <constraint firstAttribute="trailing" secondItem="QOB-bH-cGE" secondAttribute="trailing" constant="16" id="zPV-bq-g1G"/>
+                            <constraint firstAttribute="trailing" secondItem="QOB-bH-cGE" secondAttribute="trailing" id="zPV-bq-g1G"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MwN-jh-HJr"/>
                     <connections>
-                        <outlet property="addButton" destination="QOB-bH-cGE" id="Uqu-Sk-5Vk"/>
+                        <outlet property="addBtnBottomPading" destination="8RJ-cv-kuT" id="UFI-2Q-stC"/>
+                        <outlet property="addButton" destination="QOB-bH-cGE" id="Afu-Pu-bnc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hfB-oL-6aP" userLabel="First Responder" sceneMemberID="firstResponder"/>

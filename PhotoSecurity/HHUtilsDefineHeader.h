@@ -54,6 +54,8 @@
 #define SAFE_NUMBER(value) ([value isKindOfClass: [NSNumber class]] ? value : @(-1))
 
 
+#define kEnvironment 1
+
 #endif /* VKUtilsDefineHeader_h */
 
 

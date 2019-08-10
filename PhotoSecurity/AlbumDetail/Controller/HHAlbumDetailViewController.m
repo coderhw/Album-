@@ -17,7 +17,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <QuickLook/QuickLook.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-
+#import <GoogleMobileAds/GoogleMobileAds.h>
+#import "NSDate+Category.h"
 
 #define OPERATION_TOOLBAR_TAG                   999
 #define OPERATION_TOOLBAR_HEIGHT                64.0
@@ -31,7 +32,7 @@ XPPhotoPickerViewControllerDelegate,
 UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
 QLPreviewControllerDataSource,
-QLPreviewControllerDelegate>
+QLPreviewControllerDelegate,GADInterstitialDelegate, GADBannerViewDelegate>
 
 /// 该相册下的图片数据
 @property (nonatomic, strong) NSMutableArray<HHPhotoModel *> *photos;
@@ -42,6 +43,8 @@ QLPreviewControllerDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *editButton;
 @property (nonatomic, strong) UIBarButtonItem *addButton;
+@property(nonatomic, strong) GADInterstitial *interstitial;
+@property(nonatomic, strong) GADBannerView *bannerView;
 
 @end
 
@@ -65,6 +68,29 @@ static CGFloat const kCellBorderMargin = 1.0;
     
     self.navigationItem.rightBarButtonItems = @[self.editButton, self.addButton];
 
+    self.interstitial = [self createAndLoadInterstitial];
+    
+    [self.view addSubview:self.bannerView];
+    self.bannerView.delegate = self;
+    [self.bannerView loadRequest:[GADRequest request]];
+    [self.view bringSubviewToFront:self.bannerView];
+    
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+//    NSDate *after3Hours = [NSDate dateWithHoursFromNow:2];
+//    NSDate *lastUseDate = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:HHLastUsedDateKey];
+//    if(lastUseDate){
+//        //上一次时间 + 3小时
+//        NSDate *date = [lastUseDate dateByAddingHours:2];
+//        if([after3Hours isLaterThanDate:date]){
+//            //每两个小时展示一个插入广告
+//            [self showTheInterstitialAd];
+//        }
+//    }
 }
 
 #pragma mark - <UICollectionViewDataSource>
@@ -74,6 +100,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString * const identifier = @"Cell";
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor randomColor];
@@ -449,25 +476,18 @@ static CGFloat const kCellBorderMargin = 1.0;
         isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
                         infos:(NSArray<NSDictionary *> *)infos {
 
-    
-        [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
         @weakify(self);
         dispatch_group_t group = dispatch_group_create();
         dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
         __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
         // 从系统中拷贝图片/视频到沙盒目录
+
         for (PHAsset *asset in assets) {
             if (asset.mediaType == PHAssetMediaTypeUnknown || asset.mediaType == PHAssetMediaTypeAudio) continue;
             dispatch_group_enter(group);
             dispatch_group_async(group, queue, ^{
                 @strongify(self);
-                if (asset.mediaType == PHAssetMediaTypeVideo) {
-                    //视频
-                    [self fetchVideoForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
-                        [imagePhotos addObject:photo];
-                        dispatch_group_leave(group);
-                    }];
-                } else if (asset.mediaType == PHAssetMediaTypeImage) {
+                if (asset.mediaType == PHAssetMediaTypeImage) {
                     //图片
                     [self fetchImageForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
                         [imagePhotos addObject:photo];
@@ -476,22 +496,26 @@ static CGFloat const kCellBorderMargin = 1.0;
                 }
             });
         }
+    
         // 所有图片/视频已拷贝完毕
         dispatch_group_notify(group, queue, ^{
             dispatch_async(dispatch_get_main_queue(), ^{
+                
                 @strongify(self);
-                [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos]; // 将图片数据写入数据库
+                [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos];
+                
+                //将图片数据写入数据库
                 self.album.count += photos.count;
-
-                [SVProgressHUD dismiss];
-                // 获取允许删除的图片资源
+                
+                //获取允许删除的图片资源
                 NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
                 for (PHAsset *asset in assets) {
                     if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
                         [deleteAssets addObject:asset];
                     }
                 }
-                if (deleteAssets.count) {
+                
+                if(deleteAssets.count) {
                     // 提示用户是否删除系统图片
                     UIAlertController *alert = [UIAlertController
                                                 alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil)
@@ -499,22 +523,28 @@ static CGFloat const kCellBorderMargin = 1.0;
                                                 preferredStyle:UIAlertControllerStyleAlert];
                     
                     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        //展示广告
+                        [self showTheInterstitialAd];
                         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                         
+                            
                             [PHAssetChangeRequest deleteAssets:deleteAssets];
+                            
                         } completionHandler:^(BOOL success, NSError * _Nullable error) {
-                            if (success == NO) {
+
+                            if(success == NO) {
                                 NSString *message = NSLocalizedString(@"Delete fail.", nil);
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    [SVProgressHUD showInfoWithStatus:message];
-                                });
                             }
                         }];
                     }]];
                     
-                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        //展示广告
+                        [self showTheInterstitialAd];
+                    }]];
                     [self presentViewController:alert animated:YES completion:nil];
                 }
+                
                 // 加载最新添加的图片信息并显示在最后
                 NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
                 if (nil == self.photos) {
@@ -526,6 +556,8 @@ static CGFloat const kCellBorderMargin = 1.0;
         });
     
 }
+
+
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(PHAsset *)asset {
     
@@ -602,6 +634,33 @@ static CGFloat const kCellBorderMargin = 1.0;
     return YES;
 }
 
+- (GADInterstitial *)createAndLoadInterstitial {
+    
+    NSString *uintID = kEnvironment ? @"ca-app-pub-4714556776467699/6972896489" :@"ca-app-pub-3940256099942544/4411468910";
+
+    GADInterstitial *interstitial =
+    [[GADInterstitial alloc] initWithAdUnitID:uintID];
+    interstitial.delegate = self;
+    [interstitial loadRequest:[GADRequest request]];
+    return interstitial;
+    
+}
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
+    self.interstitial = [self createAndLoadInterstitial];
+}
+
+- (void)showTheInterstitialAd {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.interstitial.isReady) {
+            [self.interstitial presentFromRootViewController:self];
+        } else {
+            NSLog(@"Ad wasn't ready");
+        }
+    });
+    
+}
 
 #pragma mark - Private
 
@@ -651,6 +710,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 
 /// 从系统中获取图片文件
 - (void)fetchImageForPHAsset:(PHAsset *)asset completionHandler:(void(^)(HHPhotoModel *photo))completionHandler {
+   
     @weakify(self);
     PHImageRequestOptions* options = [[PHImageRequestOptions alloc] init];
     options.version = PHImageRequestOptionsVersionOriginal;
@@ -755,4 +815,15 @@ static CGFloat const kCellBorderMargin = 1.0;
     }
     return _addButton;
 }
+- (GADBannerView *)bannerView {
+    
+    if(!_bannerView){
+        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 50)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-50)];        
+        NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/7272279381": @"ca-app-pub-3940256099942544/2934735716";
+        _bannerView.adUnitID = unitId;
+        _bannerView.rootViewController = self;
+    }
+    return _bannerView;
+}
+
 @end

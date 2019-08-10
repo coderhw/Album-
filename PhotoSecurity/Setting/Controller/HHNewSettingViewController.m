@@ -17,13 +17,16 @@
 #import <StoreKit/StoreKit.h>
 #import <MessageUI/MessageUI.h>
 #import "HHChangePressController.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
-@interface HHNewSettingViewController ()<UITableViewDelegate,UITableViewDataSource, MFMailComposeViewControllerDelegate>
+
+@interface HHNewSettingViewController ()<UITableViewDelegate,UITableViewDataSource,
+MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) LAContext *context;
-
+@property(nonatomic, strong) GADBannerView *bannerView;
 
 @end
 
@@ -65,12 +68,12 @@
     row2Model.footerTips = NSLocalizedString(@"Quick transfer Date by this way", nil);
     [self.dataSource addObject:row2Model];
     
-    //找回密码icon
-    HHRowsModel *row3Model = [[HHRowsModel alloc] init];
-    row3Model.imageName = @"fine_psd.png";
-    row3Model.title = NSLocalizedString(@"Find your password", nil);
-    row3Model.footerTips = NSLocalizedString(@"Email need Before this service", nil);
-    [self.dataSource addObject:row3Model];
+//    //找回密码icon
+//    HHRowsModel *row3Model = [[HHRowsModel alloc] init];
+//    row3Model.imageName = @"fine_psd.png";
+//    row3Model.title = NSLocalizedString(@"Find your password", nil);
+//    row3Model.footerTips = NSLocalizedString(@"Email need Before this service", nil);
+//    [self.dataSource addObject:row3Model];
     
     //切换icon
     HHRowsModel *row4Model = [[HHRowsModel alloc] init];
@@ -100,6 +103,11 @@
     row7Model.title = NSLocalizedString(@"Upgrade", nil);
     [self.dataSource addObject:row7Model];
     [self.tableView reloadData];
+    
+    [self.view addSubview:self.bannerView];
+    self.bannerView.delegate = self;
+    [self.bannerView loadRequest:[GADRequest request]];
+    [self.view bringSubviewToFront:self.bannerView];
 }
 
 #pragma mark - UITableView Delegate
@@ -159,15 +167,8 @@
 
         }
             break;
+        
         case 3:
-        {
-            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            NSString *identifier =  @"HHSetEmailViewContrller";
-            HHSetEmailViewContrller *vc = (HHSetEmailViewContrller *)[mainStoryboard instantiateViewControllerWithIdentifier:identifier];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-            break;
-        case 4:
         {
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             NSString *identifier =  @"HHChangeIconViewController";
@@ -176,7 +177,7 @@
 
         }
             break;
-        case 5:
+        case 4:
         {
             //压缩比设置
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -185,16 +186,77 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
-        case 6:
+        case 5:
         {
             if (@available(iOS 10.3, *)) {
                 [SKStoreReviewController requestReview];
             }
         }
             break;
-        case 7:
+        case 6:
         {
             
+//            NSError*error;
+//            NSData*response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",@"1475634223"]]]returningResponse:nilerror:nil];
+//            NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
+            
+            NSURL *url = [NSURL URLWithString:@"http://itunes.apple.com/cn/lookup?id=1475634223"];
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                if(error == nil) {
+                    
+                    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+                    NSString *currentVersion = infoDic[@"CFBundleShortVersionString"];
+
+                    
+                    NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                    NSLog(@"可输出一下看看%@",appInfoDic);
+                    NSArray *array = appInfoDic[@"results"];
+                    if(array.count < 1) {
+                        NSLog(@"此APPID为未上架的APP或者查询不到");
+                        return;
+                    }
+                    NSDictionary*dic = array[0];
+                    //AppStore版本号
+                    NSString *appStoreVersion = dic[@"version"];
+                    NSLog(@"当前版本号:%@---商店版本号:%@",currentVersion,appStoreVersion);
+        
+                    currentVersion = [currentVersion stringByReplacingOccurrencesOfString:@"."withString:@""];
+                    if(currentVersion.length == 2) {
+                        currentVersion = [currentVersion stringByAppendingString:@"0"];
+                    }else if (currentVersion.length==1){
+                        currentVersion = [currentVersion stringByAppendingString:@"00"];
+                    }
+        
+                    appStoreVersion = [appStoreVersion stringByReplacingOccurrencesOfString:@"."withString:@""];
+        
+                    if(appStoreVersion.length == 2) {
+                        appStoreVersion = [appStoreVersion stringByAppendingString:@"0"];
+                    }else if(appStoreVersion.length ==1){
+                        appStoreVersion= [appStoreVersion stringByAppendingString:@"00"];
+                    }
+        
+                    if([currentVersion floatValue] < [appStoreVersion floatValue]) {
+                        UIAlertController *alertC = [UIAlertController
+                                                     alertControllerWithTitle:@"版本有更新"
+                                                     message:[NSString stringWithFormat:@"检测到新版本(%@),是否更新?",dic[@"version"]]
+                                                     preferredStyle:UIAlertControllerStyleAlert];
+        
+                        UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction*_Nonnullaction){
+                            NSURL*url = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/us/app/id%@?ls=1&mt=8",@"1475634223"]];
+                            [[UIApplication sharedApplication] openURL:url];
+                        }];
+        
+                        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                        [alertC addAction:sureAction];
+                        [alertC addAction:cancelAction];
+                        [self presentViewController:alertC animated:YES completion:nil];
+                    }
+                }
+            }];
+            
+            [dataTask resume];
         }
             break;
         default:
@@ -334,7 +396,21 @@
     return _dataSource;
 }
 
+
+- (GADBannerView *)bannerView {
+    
+    if(!_bannerView){
+        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 50)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-50)];
+        NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/1214369004": @"ca-app-pub-3940256099942544/2934735716";
+        _bannerView.adUnitID = unitId;
+        _bannerView.rootViewController = self;
+    }
+    return _bannerView;
+}
+
+
 @end
+
 
 @implementation HHRowsModel
 @end

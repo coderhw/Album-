@@ -116,3 +116,6 @@ FOUNDATION_EXTERN CGFloat const XPThumbImageWidthAndHeightKey;
 /// email
 FOUNDATION_EXTERN NSString * const HHEmailKey;
 
+/// email
+FOUNDATION_EXTERN NSString * const HHLastUsedDateKey;
+

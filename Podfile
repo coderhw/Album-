@@ -6,4 +6,7 @@ pod 'DZNEmptyDataSet', '~> 1.8.1'
 pod 'FMDB', '~> 2.6.2'
 pod 'TZImagePickerController', '~> 3.2.1'
 pod 'SVProgressHUD'
+pod 'UMCCommon'
+pod 'UMCAnalytics'
+pod 'Google-Mobile-Ads-SDK'
 end

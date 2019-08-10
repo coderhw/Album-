@@ -10,7 +10,8 @@
 #import "GHPopupEditView.h"
 #import "HHSetPasswordViewController.h"
 #import <LocalAuthentication/LocalAuthentication.h>
-
+#import <UMCommon/UMCommon.h>
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) LAContext *context;
@@ -30,14 +31,19 @@
         [userDefaults setObject:random forKey:XPEncryptionPasswordRandomKey];
         [userDefaults synchronize];
     }
+
     // 初始化数据库
     [[HHSQLiteManager sharedSQLiteManager] initializationDatabase];
+    [UMConfigure initWithAppkey:@"5d4d35ef3fc195132b00044c" channel:@"App Store"];
+    [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
     return YES;
 }
 
-
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
+    NSDate *date = [NSDate date];
+    [[NSUserDefaults standardUserDefaults] setObject:date forKey:HHLastUsedDateKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
@@ -84,6 +90,9 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    NSDate *date = [NSDate date];
+    [[NSUserDefaults standardUserDefaults] setObject:date forKey:HHLastUsedDateKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

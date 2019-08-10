@@ -217,4 +217,6 @@ CGFloat const XPThumbImageWidthAndHeightKey         = 120.0;
 /// 生成的缩略图的宽高尺寸
 NSString * const HHEmailKey         = @"HHEmailKey";
 
+//应用上一次进入后台的时间
+NSString * const HHLastUsedDateKey = @"HHLastUsedDate";
 
