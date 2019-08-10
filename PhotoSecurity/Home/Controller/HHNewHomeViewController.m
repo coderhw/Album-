@@ -15,6 +15,8 @@
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import <QuartzCore/CALayer.h>
 #import "HHNewSettingViewController.h"
+#import "HHEditAlbumViewController.h"
+
 //
 #import "HHAlbumCollectionViewCell.h"
 #import "HHBlurAlertView.h"
@@ -151,6 +153,9 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     
     
     cell.deleblock = ^{
+        if(self.userAlbums.count < indexPath.row){
+            return;
+        }
         //删除相册
         HHAlbumModel *album = self.userAlbums[indexPath.row];
         NSString *title = [NSString stringWithFormat:@"%@ \"%@\"", NSLocalizedString(@"Delete", nil),album.name];
@@ -190,6 +195,44 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
         }
         [self presentViewController:alert animated:YES completion:nil];
     };
+    
+    //编辑相册
+    cell.editAlbumblock = ^{
+        UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        HHEditAlbumViewController *editVC = [mainBoard instantiateViewControllerWithIdentifier:@"HHEditAlbumViewController"];
+        editVC.album = album;
+        
+        //修改
+        editVC.changeAlbumBlock = ^(HHAlbumModel * _Nonnull ablum) {
+            [self.userAlbums replaceObjectAtIndex:indexPath.row withObject:album];
+            [self.collectionView reloadData];
+        };
+        
+        //删除
+        editVC.deleteAlbumBlock = ^{
+            
+            HHAlbumModel *album = self.userAlbums[indexPath.row];
+            BOOL success = [[HHSQLiteManager sharedSQLiteManager] deleteAlbumWithAlbum:album];
+            if (!success) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SVProgressHUD showWithStatus:NSLocalizedString(@"Delete fail.", nil)];
+                });
+                return;
+            }
+            
+            [self.userAlbums removeObjectAtIndex:indexPath.row];
+            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            
+            if (0 == self.userAlbums.count) {
+                [self.collectionView reloadEmptyDataSet];
+            }
+        };
+        [self.navigationController pushViewController:editVC animated:YES];
+    };
+    
+    
+    
+    
     return cell;
 }
 
@@ -422,7 +465,7 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 - (GADBannerView *)bannerView {
     
     if(!_bannerView){
-        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 50)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-50)];        
+        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 50)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-60)];        
         NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/1329687562": @"ca-app-pub-3940256099942544/2934735716";
         _bannerView.adUnitID = unitId;
         _bannerView.rootViewController = self;

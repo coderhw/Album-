@@ -135,15 +135,18 @@
             self.lockView.tipsLabel.text = NSLocalizedString(@"Please set Gesture Password again", nil);
             self.firstPsd = self.tempPassword;
         });
-       
     }
 }
 
 - (IBAction)deletePasswordPressed:(UIButton *)sender {
     
-    sender.selected = !sender.selected;
-    self.isDeletePassword = sender.selected;
-
+    if([HHPasswordTool isSetPassword]){
+        sender.selected = !sender.selected;
+        self.isDeletePassword = sender.selected;
+        self.lockView.tipsLabel.text = @"请输入当前的密码以删除密码设置";
+    }else{
+        self.lockView.tipsLabel.text = @"您还未设置密码, 请先设置密码";
+    }
 }
 
 

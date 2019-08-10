@@ -49,6 +49,7 @@
 		2000A67422FE921D00DD08D1 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2000A66C22FE921C00DD08D1 /* NSDate+Helper.m */; };
 		2000A67522FE921D00DD08D1 /* NSDateFormatter+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 2000A67022FE921D00DD08D1 /* NSDateFormatter+Category.m */; };
 		200F30F022EC70480030B957 /* HHPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 200F30EF22EC70480030B957 /* HHPhotoModel.m */; };
+		201A5C4022FF0ED400915C4B /* HHEditAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 201A5C3F22FF0ED400915C4B /* HHEditAlbumViewController.m */; };
 		201B0C2222F48E7E00A37938 /* IconDrama@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2022F48E7E00A37938 /* IconDrama@2x.png */; };
 		201B0C2322F48E7E00A37938 /* IconDrama@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2122F48E7E00A37938 /* IconDrama@3x.png */; };
 		201B0C2622F48E8F00A37938 /* IconPre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 201B0C2422F48E8F00A37938 /* IconPre@2x.png */; };
@@ -166,6 +167,8 @@
 		2000A67022FE921D00DD08D1 /* NSDateFormatter+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+Category.m"; sourceTree = "<group>"; };
 		200F30EE22EC70480030B957 /* HHPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHPhotoModel.h; sourceTree = "<group>"; };
 		200F30EF22EC70480030B957 /* HHPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHPhotoModel.m; sourceTree = "<group>"; };
+		201A5C3E22FF0ED400915C4B /* HHEditAlbumViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHEditAlbumViewController.h; sourceTree = "<group>"; };
+		201A5C3F22FF0ED400915C4B /* HHEditAlbumViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHEditAlbumViewController.m; sourceTree = "<group>"; };
 		201B0C2022F48E7E00A37938 /* IconDrama@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconDrama@2x.png"; sourceTree = "<group>"; };
 		201B0C2122F48E7E00A37938 /* IconDrama@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconDrama@3x.png"; sourceTree = "<group>"; };
 		201B0C2422F48E8F00A37938 /* IconPre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IconPre@2x.png"; sourceTree = "<group>"; };
@@ -628,6 +631,8 @@
 				205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */,
 				64D3D5A322EEBD9500B63DA9 /* HHNewHomeViewController.h */,
 				64D3D5A422EEBD9500B63DA9 /* HHNewHomeViewController.m */,
+				201A5C3E22FF0ED400915C4B /* HHEditAlbumViewController.h */,
+				201A5C3F22FF0ED400915C4B /* HHEditAlbumViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -853,6 +858,7 @@
 				1226BC351E8515D00022C882 /* XMFTPServer.m in Sources */,
 				2000A67522FE921D00DD08D1 /* NSDateFormatter+Category.m in Sources */,
 				1226BC1A1E84A4C60022C882 /* XPAlbumCell.m in Sources */,
+				201A5C4022FF0ED400915C4B /* HHEditAlbumViewController.m in Sources */,
 				20E1DB0622F5DA1C001822C5 /* DragView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1004,7 +1010,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: China Vanke Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = Z29237TAHW;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoSecurity/System/PhotoSecurity-prefix.pch";
@@ -1013,7 +1020,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coder.album;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = ablumhoc;
+				PROVISIONING_PROFILE_SPECIFIER = albumDev;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1024,16 +1031,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: China Vanke Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 3X97WNYE73;
+				DEVELOPMENT_TEAM = Z29237TAHW;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PhotoSecurity/System/PhotoSecurity-prefix.pch";
 				INFOPLIST_FILE = PhotoSecurity/System/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coder.album;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = testApp;
+				PROVISIONING_PROFILE_SPECIFIER = ablumHoc;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -9,6 +9,120 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Edit Album View Controller-->
+        <scene sceneID="Rbe-wk-h58">
+            <objects>
+                <viewController storyboardIdentifier="HHEditAlbumViewController" id="MuV-SC-aC0" customClass="HHEditAlbumViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HEb-iV-VWp"/>
+                        <viewControllerLayoutGuide type="bottom" id="UyU-2C-Yvp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aBP-TX-g7U">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相册名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdh-re-Ab5">
+                                <rect key="frame" x="55" y="106" width="65" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="Kju-mz-hsb"/>
+                                    <constraint firstAttribute="width" constant="65" id="mAf-3n-CZd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相册封面" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdm-1r-7XF">
+                                <rect key="frame" x="55" y="169.5" width="65" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="59g-Oy-4KY"/>
+                                    <constraint firstAttribute="height" constant="29" id="cgW-3u-deu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eC0-Me-oWq" userLabel="Line1">
+                                <rect key="frame" x="55" y="144" width="304" height="0.5"/>
+                                <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="5Fa-DP-T8N"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DIG-Jf-BbV" userLabel="Line1">
+                                <rect key="frame" x="55" y="215.5" width="304" height="0.5"/>
+                                <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="0.5" id="N3t-16-ZJh"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="默认相册" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aWa-05-TTg">
+                                <rect key="frame" x="189" y="105.5" width="170" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0uH-Sn-gAB"/>
+                                    <constraint firstAttribute="width" constant="170" id="4N4-Vv-2sk"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iq-8n-Wr1">
+                                <rect key="frame" x="295" y="152.5" width="64" height="55"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="DQK-UO-sgD"/>
+                                    <constraint firstAttribute="width" constant="64" id="a0w-ZA-gDi"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="avatorButtonPressed:" destination="MuV-SC-aC0" eventType="touchUpInside" id="a9u-sv-JUo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dey-H4-j8X">
+                                <rect key="frame" x="55" y="259" width="304" height="44"/>
+                                <color key="backgroundColor" red="0.9137254901960784" green="0.27843137254901962" blue="0.16078431372549018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="jx7-zu-C84"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="PingFangSC-Semibold" family="PingFang SC" pointSize="16"/>
+                                <state key="normal" title="删除相册"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="20"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="deleButtonPressed:" destination="MuV-SC-aC0" eventType="touchUpInside" id="R5f-za-wOn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1iq-8n-Wr1" firstAttribute="top" secondItem="eC0-Me-oWq" secondAttribute="bottom" constant="8" id="32P-6O-R6l"/>
+                            <constraint firstItem="DIG-Jf-BbV" firstAttribute="top" secondItem="1iq-8n-Wr1" secondAttribute="bottom" constant="8" id="52b-8r-SvF"/>
+                            <constraint firstItem="vdm-1r-7XF" firstAttribute="leading" secondItem="eC0-Me-oWq" secondAttribute="leading" id="5ce-sP-dRa"/>
+                            <constraint firstItem="DIG-Jf-BbV" firstAttribute="leading" secondItem="vdm-1r-7XF" secondAttribute="leading" id="CZT-HJ-Glb"/>
+                            <constraint firstItem="aWa-05-TTg" firstAttribute="trailing" secondItem="eC0-Me-oWq" secondAttribute="trailing" id="K4P-UW-tNs"/>
+                            <constraint firstItem="1iq-8n-Wr1" firstAttribute="trailing" secondItem="DIG-Jf-BbV" secondAttribute="trailing" id="Pg2-Wg-qIj"/>
+                            <constraint firstAttribute="trailing" secondItem="aWa-05-TTg" secondAttribute="trailing" constant="55" id="R6R-Dk-oix"/>
+                            <constraint firstItem="1iq-8n-Wr1" firstAttribute="trailing" secondItem="dey-H4-j8X" secondAttribute="trailing" id="VeS-R4-d43"/>
+                            <constraint firstItem="eC0-Me-oWq" firstAttribute="leading" secondItem="fdh-re-Ab5" secondAttribute="leading" id="b52-zx-zjr"/>
+                            <constraint firstItem="fdh-re-Ab5" firstAttribute="leading" secondItem="aBP-TX-g7U" secondAttribute="leading" constant="55" id="eNs-1s-z2G"/>
+                            <constraint firstItem="aWa-05-TTg" firstAttribute="centerY" secondItem="fdh-re-Ab5" secondAttribute="centerY" id="fgk-Gw-krt"/>
+                            <constraint firstItem="dey-H4-j8X" firstAttribute="top" secondItem="DIG-Jf-BbV" secondAttribute="bottom" constant="43" id="nAK-wo-MEF"/>
+                            <constraint firstItem="vdm-1r-7XF" firstAttribute="top" secondItem="eC0-Me-oWq" secondAttribute="bottom" constant="25" id="pTi-La-zYD"/>
+                            <constraint firstItem="1iq-8n-Wr1" firstAttribute="trailing" secondItem="eC0-Me-oWq" secondAttribute="trailing" id="sVa-l1-TLL"/>
+                            <constraint firstItem="eC0-Me-oWq" firstAttribute="top" secondItem="aWa-05-TTg" secondAttribute="bottom" constant="8.5" id="tfZ-eZ-38l"/>
+                            <constraint firstItem="fdh-re-Ab5" firstAttribute="top" secondItem="aBP-TX-g7U" secondAttribute="top" constant="106" id="uHs-hK-X6R"/>
+                            <constraint firstItem="dey-H4-j8X" firstAttribute="leading" secondItem="vdm-1r-7XF" secondAttribute="leading" id="yaL-ql-jez"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="albumNameTF" destination="aWa-05-TTg" id="Dej-U0-qzE"/>
+                        <outlet property="avatorView" destination="1iq-8n-Wr1" id="sYv-2U-dWR"/>
+                        <outlet property="deleAlbumButton" destination="dey-H4-j8X" id="NWa-Pc-tS7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ul3-aI-tm6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="256.52173913043481" y="-944.19642857142856"/>
+        </scene>
         <!--All albums-->
         <scene sceneID="smE-1v-TFA">
             <objects>

@@ -54,14 +54,27 @@
                             <action selector="deleButtonPressed:" destination="gTV-IL-0wX" eventType="touchDown" id="9ft-3v-1zk"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0OH-qm-aER">
+                        <rect key="frame" x="135" y="169" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="YTQ-lQ-0jX"/>
+                            <constraint firstAttribute="width" constant="20" id="fkb-NP-72X"/>
+                        </constraints>
+                        <state key="normal" image="dot"/>
+                        <connections>
+                            <action selector="editAlbumPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="BIg-Qy-9w3"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="HEB-n5-uBr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="3ch-fk-QMB"/>
+                <constraint firstAttribute="trailing" secondItem="0OH-qm-aER" secondAttribute="trailing" constant="2" id="IYQ-Tp-iPt"/>
                 <constraint firstItem="Klh-ne-2iC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="JPs-IM-xPQ"/>
                 <constraint firstItem="pWo-Df-iTC" firstAttribute="top" secondItem="Klh-ne-2iC" secondAttribute="bottom" constant="5" id="Kdg-kv-ZYI"/>
                 <constraint firstItem="Qm1-cb-maG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-3" id="LO7-La-2c4"/>
                 <constraint firstItem="Klh-ne-2iC" firstAttribute="top" secondItem="HEB-n5-uBr" secondAttribute="bottom" constant="7" id="SCX-fz-wXd"/>
+                <constraint firstAttribute="bottom" secondItem="0OH-qm-aER" secondAttribute="bottom" constant="5" id="ZhP-4L-jkd"/>
                 <constraint firstItem="pWo-Df-iTC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="dEI-KE-u0I"/>
                 <constraint firstItem="Qm1-cb-maG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="-3" id="kMf-YE-2GY"/>
                 <constraint firstAttribute="trailing" secondItem="HEB-n5-uBr" secondAttribute="trailing" constant="6" id="rDy-eC-PM7"/>
@@ -81,6 +94,7 @@
     </objects>
     <resources>
         <image name="album-placeholder" width="60" height="60"/>
+        <image name="dot" width="24" height="24"/>
         <image name="icon_delete" width="20" height="20"/>
     </resources>
 </document>

@@ -16,7 +16,7 @@
 @implementation HHBaseViewController
 
 - (void)dealloc {
-    NSLog(@"%s", NSStringFromClass([self class]));
+    NSLog(@"%@", NSStringFromClass([self class]));
 }
 
 

@@ -53,10 +53,18 @@
 
 }
 
-- (IBAction)deleButtonPressed:(id)sender {
+- (IBAction)deleButtonPressed:(UIButton *)sender {
     if(self.deleblock){
         self.deleblock();
     }
 }
+
+- (IBAction)editAlbumPressed:(UIButton *)sender {
+    
+    if(self.editAlbumblock){
+        self.editAlbumblock();
+    }
+}
+
 
 @end

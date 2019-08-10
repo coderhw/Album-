@@ -10,8 +10,12 @@
 #import <TZImagePickerController.h>
 @class HHAlbumModel;
 
+typedef void(^HHChangeAblumThumbBlock)(HHAlbumModel *ablum);
+
 @interface HHAlbumDetailViewController : UICollectionViewController<TZImagePickerControllerDelegate>
 
 @property (nonatomic, strong) HHAlbumModel *album;
+@property (nonatomic, assign) BOOL isChoseThumb; //是否选择封面
+@property (nonatomic, copy) HHChangeAblumThumbBlock changeAlbumBlock;
 
 @end

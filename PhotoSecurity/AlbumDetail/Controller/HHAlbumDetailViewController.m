@@ -57,17 +57,23 @@ static CGFloat const kCellBorderMargin = 1.0;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.title = self.album.name;
+    self.title = self.isChoseThumb ? @"选择封面" : self.album.name;
+    
+    
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
     self.collectionView.frame = CGRectMake(0, 1, APP_WIDH, APP_HIGH-1);
+    
     // 加载相册所有图片数据
     HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
     self.photos = [manager requestAllPhotosWithAlbumid:self.album.albumid];
     [self.collectionView reloadData];
     
-    self.navigationItem.rightBarButtonItems = @[self.editButton, self.addButton];
+    if(!self.isChoseThumb){
+        self.navigationItem.rightBarButtonItems = @[self.editButton, self.addButton];
+    }
 
+    
     self.interstitial = [self createAndLoadInterstitial];
     
     [self.view addSubview:self.bannerView];
@@ -119,31 +125,46 @@ static CGFloat const kCellBorderMargin = 1.0;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    if (_editing) {
-        NSString *key = [NSString stringWithFormat:@"%ld", indexPath.row];
-        if (nil == _selectMaps) _selectMaps = [NSMutableDictionary dictionary];
-        BOOL isExists = [_selectMaps objectForKey:key] ? YES : NO;
-        XPAlbumDetailCell *cell = (XPAlbumDetailCell *)[collectionView cellForItemAtIndexPath:indexPath];
-        if (isExists) {
-            [_selectMaps removeObjectForKey:key];
-            [cell changeSelectState:NO];
-        } else {
-            if (9 <= _selectMaps.count) {
-                [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"You can only select up to 9 images.", nil)];
-                return;
-            }
-            [_selectMaps setObject:@(YES) forKey:key];
-            [cell changeSelectState:YES];
+    if(self.isChoseThumb){
+        
+        HHPhotoModel *photo = self.photos[indexPath.row];
+        self.album.thumbImage = photo;
+        
+        if(self.changeAlbumBlock){
+            self.changeAlbumBlock(self.album ? self.album : [HHAlbumModel new]);
         }
-        [self updateToolbarIndicator];
-    } else {
-        QLPreviewController *previewController = [[QLPreviewController alloc] init];
-        previewController.delegate = self;
-        previewController.dataSource = self;
-        previewController.currentPreviewItemIndex = indexPath.row;
-        [self.navigationController pushViewController:previewController animated:YES];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        if (_editing) {
+            NSString *key = [NSString stringWithFormat:@"%ld", indexPath.row];
+            if (nil == _selectMaps) _selectMaps = [NSMutableDictionary dictionary];
+            BOOL isExists = [_selectMaps objectForKey:key] ? YES : NO;
+            XPAlbumDetailCell *cell = (XPAlbumDetailCell *)[collectionView cellForItemAtIndexPath:indexPath];
+            if (isExists) {
+                [_selectMaps removeObjectForKey:key];
+                [cell changeSelectState:NO];
+            } else {
+                if (9 <= _selectMaps.count) {
+                    [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"You can only select up to 9 images.", nil)];
+                    return;
+                }
+                [_selectMaps setObject:@(YES) forKey:key];
+                [cell changeSelectState:YES];
+            }
+            [self updateToolbarIndicator];
+        } else {
+            QLPreviewController *previewController = [[QLPreviewController alloc] init];
+            previewController.delegate = self;
+            previewController.dataSource = self;
+            previewController.currentPreviewItemIndex = indexPath.row;
+            [self.navigationController pushViewController:previewController animated:YES];
+        }
     }
+    
+    
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
