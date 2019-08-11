@@ -16,7 +16,10 @@
 "Find your password" = "找回密码";
 "Change App icon" = "切换APP ICON";
 "Change Your App icon whenever" = "随时随地切换图标";
+"Select You icon you like" = "点击切换APP图标";
+"Change APP ICON" = "换图标";
 "Compression ratio" = "压缩率";
+"Please use browser visit this address"= "请通过浏览器访问该地址";
 "determine your Image should be compression, Default no" = "该设置决定图片保存是否需要压缩，默认不压缩";
 "Suggestion feedback" = "意见反馈";
 "Please set your email first" = "请先设置登录邮箱号";

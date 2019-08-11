@@ -54,7 +54,14 @@
 #define SAFE_NUMBER(value) ([value isKindOfClass: [NSNumber class]] ? value : @(-1))
 
 
-#define kEnvironment 0
+#define kEnvironment 1
+
+// 日志输出
+#ifdef DEBUG // 开发阶段-DEBUG阶段:使用Log
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else // 发布阶段-上线阶段:移除Log
+#define NSLog(...)
+#endif
 
 #endif /* VKUtilsDefineHeader_h */
 

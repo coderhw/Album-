@@ -26,6 +26,7 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"FTP Service", nil);
     
+    self.textField.placeholder = NSLocalizedString(@"Please use browser visit this address", nil);
     [self.startFTPButton setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Img_setPassword_bg.png"]]];
     [self.startFTPButton setTitle:NSLocalizedString(@"Start FTP Service", nil) forState:UIControlStateNormal];
 }

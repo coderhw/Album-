@@ -36,13 +36,13 @@
     
     self.cancelButton.layer.borderWidth = 0.05;
     self.cancelButton.layer.borderColor = [UIColor colorWithHex:@"#333333"].CGColor;
-    self.cancelButton.layer.cornerRadius = 20.0f;
+    self.cancelButton.layer.cornerRadius = 18.0f;
     [self.cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
     
     
     self.okButton.layer.borderWidth = 0.05;
     self.okButton.layer.borderColor = [UIColor colorWithHex:@"#333333"].CGColor;
-    self.okButton.layer.cornerRadius = 20.0f;
+    self.okButton.layer.cornerRadius = 18.0f;
     [self.okButton setTitle:NSLocalizedString(@"OK", nil) forState:UIControlStateNormal];
     self.nameTF.tintColor = [UIColor colorWithHex:@"#333333"];
 

@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.navigationItem.title = @"换图标";
+    self.navigationItem.title = NSLocalizedString(@"Change APP ICON", nil);
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, APP_WIDH,
                                                                    APP_HIGH-Height_NavBar)
                                                   style:UITableViewStylePlain];
@@ -31,13 +31,12 @@
     [self.view addSubview:self.tableView];
     
     UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, APP_WIDH, 14)];
-    tipLabel.text = @"点击切换APP图标";
+    tipLabel.text = NSLocalizedString(@"Select You icon you like", nil);
     tipLabel.textColor = [UIColor colorWithHex:@"#999999"];
     tipLabel.font = kFONT(kTitleName_PingFang_M, 14);
     tipLabel.textAlignment = NSTextAlignmentCenter;
     self.tableView.tableFooterView = tipLabel;
 }
-
 
 #pragma mark - UITableView Delegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

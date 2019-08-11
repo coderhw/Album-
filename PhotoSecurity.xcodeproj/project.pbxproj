@@ -638,10 +638,10 @@
 		548055E41E6705BE0040143A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */,
-				205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */,
 				64D3D5A322EEBD9500B63DA9 /* HHNewHomeViewController.h */,
 				64D3D5A422EEBD9500B63DA9 /* HHNewHomeViewController.m */,
+				205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */,
+				205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */,
 				201A5C3E22FF0ED400915C4B /* HHEditAlbumViewController.h */,
 				201A5C3F22FF0ED400915C4B /* HHEditAlbumViewController.m */,
 			);
@@ -1055,7 +1055,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coder.album;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = ablumHoc;
+				PROVISIONING_PROFILE_SPECIFIER = albumDis;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

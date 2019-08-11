@@ -34,6 +34,9 @@
         [userDefaults synchronize];
     }
 
+    //
+    NSLog(@"Home:%@", NSHomeDirectory());
+    
     // 初始化数据库
     [[HHSQLiteManager sharedSQLiteManager] initializationDatabase];
     [UMConfigure initWithAppkey:@"5d4d35ef3fc195132b00044c" channel:@"App Store"];

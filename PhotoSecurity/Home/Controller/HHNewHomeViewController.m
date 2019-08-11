@@ -358,7 +358,10 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 
 #pragma mark - Notification
 - (void)beginShowAdsNotification:(NSNotification *)note {
-    [self showTheInterstitialAd];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showTheInterstitialAd];
+    });
+    
 }
 
 #pragma mark - Private
@@ -422,7 +425,9 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
             [ws.userAlbums addObject:album];
             [ws.collectionView reloadData];
             
-            [ws showTheInterstitialAd];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [ws showTheInterstitialAd];
+            });
         }
     };
 }
@@ -476,13 +481,15 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 - (GADBannerView *)bannerView {
     
     if(!_bannerView){
-        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 50)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-60)];        
-        NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/1329687562": @"ca-app-pub-3940256099942544/2934735716";
+        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 60)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-70)];        
+        NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/7822943721": @"ca-app-pub-3940256099942544/2934735716";
         _bannerView.adUnitID = unitId;
         _bannerView.rootViewController = self;
     }
     return _bannerView;
 }
+
+
 
 @end
 

@@ -385,7 +385,7 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
 - (GADBannerView *)bannerView {
     
     if(!_bannerView){
-        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 50)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-50)];
+        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 60)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-70)];
         NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/1214369004": @"ca-app-pub-3940256099942544/2934735716";
         _bannerView.adUnitID = unitId;
         _bannerView.rootViewController = self;
