@@ -242,7 +242,7 @@
     if(!_passwordTipButton){
         
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 44)];
-        [button setTitle:@"密码提示" forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"Password tips", nil) forState:UIControlStateNormal];
         [button.titleLabel setFont:kFONT(kTitleName_PingFang_R, 12)];
         [button addTarget:self action:@selector(passwordTipButton:) forControlEvents:UIControlEventTouchUpInside];
         _passwordTipButton = [[UIBarButtonItem alloc] initWithCustomView:button];
