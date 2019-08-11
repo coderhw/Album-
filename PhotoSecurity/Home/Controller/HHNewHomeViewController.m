@@ -16,7 +16,7 @@
 #import <QuartzCore/CALayer.h>
 #import "HHNewSettingViewController.h"
 #import "HHEditAlbumViewController.h"
-
+#import "HHSetPasswordViewController.h"
 //
 #import "HHAlbumCollectionViewCell.h"
 #import "HHBlurAlertView.h"
@@ -35,9 +35,10 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
 /// 是否需要重新排序
 @property (nonatomic, assign, getter=isReSequence)BOOL reSequence;
 @property (nonatomic, strong) UICollectionView   *collectionView;
-@property (nonatomic, strong) NSMutableArray *datasource;
-@property (nonatomic, strong) UIBarButtonItem *settingButtton;
-@property (nonatomic, strong) UIBarButtonItem *editButton;
+@property (nonatomic, strong) NSMutableArray    *datasource;
+@property (nonatomic, strong) UIBarButtonItem   *settingButtton;
+@property (nonatomic, strong) UIBarButtonItem   *editButton;
+@property (nonatomic, strong) UIBarButtonItem   *addAlbumButton;
 @property (nonatomic, strong) UIButton *subEditButton;
 
 @property (weak, nonatomic) IBOutlet DragView *addButton;
@@ -60,7 +61,7 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
 
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     self.navigationItem.leftBarButtonItem = self.settingButtton;
-    self.navigationItem.rightBarButtonItems = @[self.editButton];
+    self.navigationItem.rightBarButtonItems = @[ self.editButton, self.addAlbumButton];
     self.view.backgroundColor = [UIColor colorWithHex:@"#f0f0f0"];
     self.navigationItem.title = NSLocalizedString(@"Album", nil);
     
@@ -79,9 +80,6 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
     self.collectionView.showsVerticalScrollIndicator = NO;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)];
-    self.collectionView.userInteractionEnabled = YES;
-    [self.collectionView addGestureRecognizer:tap];
 
     [self.view bringSubviewToFront:self.addButton];
     self.addBtnBottomPading.constant = 60;
@@ -89,6 +87,12 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     self.addButton.layer.shadowColor = [UIColor blackColor].CGColor;
     self.addButton.layer.shadowOpacity = 0.5;
     self.addButton.layer.shadowOffset = CGSizeMake(0.5, 0.5);
+    
+    //通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(beginShowAdsNotification:)
+                                                 name:HHFiveTimeLoginKey object:nil];
+    
     
     //广告
     [self.view addSubview:self.bannerView];
@@ -117,8 +121,7 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
             dispatch_once(&onceToken, ^{
                 @strongify(self);
                 UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                NSString *identifier = @"HHSetPasswordViewController";
-                UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:identifier];
+                HHSetPasswordViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HHSetPasswordViewController"];
                 [self presentViewController:vc animated:NO completion:nil];
                 
             });
@@ -240,6 +243,12 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
+    if(self.isEditing){
+        self.isEditing = NO;
+        self.subEditButton.selected = NO;
+    }
+    
+    
     HHAlbumModel *album = self.userAlbums[indexPath.row];
     UIStoryboard *mainBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     HHAlbumDetailViewController *detailVC = [mainBoard instantiateViewControllerWithIdentifier:@"HHAlbumDetailViewController"];
@@ -301,6 +310,8 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     [self addAlbumButtonPressed:nil];
 }
 
+
+#pragma mark - Ads
 - (GADInterstitial *)createAndLoadInterstitial {
     
     NSString *uintID = kEnvironment ? @"ca-app-pub-4714556776467699/1329687562" :@"ca-app-pub-3940256099942544/4411468910";
@@ -335,42 +346,19 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     [self showCreateAlbumAlert];
 }
 
-- (void)tapGesture:(UITapGestureRecognizer *)tap {
-    
-    if(self.isEditing) {
-        self.isEditing = NO;
-        self.subEditButton.selected = NO;
-        [self.collectionView reloadData];
-    }
-}
-
 #pragma mark - GAD Delegate
-- (void)adViewDidReceiveAd:(GADBannerView *)adView {
-    NSLog(@"adViewDidReceiveAd");
-}
-
-
+- (void)adViewDidReceiveAd:(GADBannerView *)adView {NSLog(@"adViewDidReceiveAd");}
 - (void)adView:(GADBannerView *)adView
 didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSLog(@"adView:didFailToReceiveAdWithError: %@", [error localizedDescription]);
-}
+    NSLog(@"adView:didFailToReceiveAdWithError: %@", [error localizedDescription]);}
+- (void)adViewWillPresentScreen:(GADBannerView *)adView {NSLog(@"adViewWillPresentScreen");}
+- (void)adViewWillDismissScreen:(GADBannerView *)adView {NSLog(@"adViewWillDismissScreen");}
+- (void)adViewDidDismissScreen:(GADBannerView *)adView {NSLog(@"adViewDidDismissScreen");}
+- (void)adViewWillLeaveApplication:(GADBannerView *)adView {NSLog(@"adViewWillLeaveApplication");}
 
-
-- (void)adViewWillPresentScreen:(GADBannerView *)adView {
-    NSLog(@"adViewWillPresentScreen");
-}
-
-- (void)adViewWillDismissScreen:(GADBannerView *)adView {
-    NSLog(@"adViewWillDismissScreen");
-}
-
-
-- (void)adViewDidDismissScreen:(GADBannerView *)adView {
-    NSLog(@"adViewDidDismissScreen");
-}
-
-- (void)adViewWillLeaveApplication:(GADBannerView *)adView {
-    NSLog(@"adViewWillLeaveApplication");
+#pragma mark - Notification
+- (void)beginShowAdsNotification:(NSNotification *)note {
+    [self showTheInterstitialAd];
 }
 
 #pragma mark - Private
@@ -444,7 +432,8 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
     if(!_editButton){
         
         _subEditButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 44)];
-        [_subEditButton setImage:[UIImage imageNamed:@"icon-edit"] forState:UIControlStateNormal];
+        [_subEditButton setImage:[UIImage imageNamed:@"icon-edit.png"] forState:UIControlStateNormal];
+        [_subEditButton setImage:[UIImage imageNamed:@"icon_ok.png"] forState:UIControlStateSelected];
         _subEditButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -5);
         [_subEditButton addTarget:self action:@selector(editButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         _editButton = [[UIBarButtonItem alloc] initWithCustomView:_subEditButton];
@@ -462,6 +451,18 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
         _settingButtton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
     }
     return _settingButtton;
+}
+
+- (UIBarButtonItem *)addAlbumButton {
+    
+    if(!_addAlbumButton){
+        UIButton *letButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+        [letButton setImage:[UIImage imageNamed:@"icon-add.png"] forState:UIControlStateNormal];
+        letButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        [letButton addTarget:self action:@selector(addAlbumButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        _addAlbumButton = [[UIBarButtonItem alloc] initWithCustomView:letButton];
+    }
+    return _addAlbumButton;
 }
 
 - (HHBlurAlertView *)blurAlertView {

@@ -348,8 +348,9 @@ static CGFloat const kCellBorderMargin = 1.0;
         }
         
         AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        if (status == AVAuthorizationStatusDenied || status == AVAuthorizationStatusRestricted) {
-            // 没有授权使用摄像头
+        if(status == AVAuthorizationStatusDenied || status == AVAuthorizationStatusRestricted) {
+            
+            //没有授权使用摄像头
             NSString *title = NSLocalizedString(@"Not authorized to use the camera", nil);
             NSString *message = NSLocalizedString(@"Please open in iPhone \"Settings - Privacy - Camera\"", nil);
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
@@ -379,13 +380,13 @@ static CGFloat const kCellBorderMargin = 1.0;
         popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
     }
     
-    
     [weakSelf presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)editButtonPressed:(UIButton *)sender {
-    _editing = !_editing;
-    if (_editing) {
+    
+    self.editing = !self.editing;
+    if (self.editing) {
         
         [sender setImage:[UIImage imageNamed:@"icon-done"] forState:UIControlStateNormal];
 
@@ -512,138 +513,280 @@ static CGFloat const kCellBorderMargin = 1.0;
      NSLog(@"cancel");
 }
 
-
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos
                  sourceAssets:(NSArray *)assets
         isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
                         infos:(NSArray<NSDictionary *> *)infos {
-
-        @weakify(self);
-        dispatch_group_t group = dispatch_group_create();
-        dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
-        __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
-        // 从系统中拷贝图片/视频到沙盒目录
-
-        for (PHAsset *asset in assets) {
-            if (asset.mediaType == PHAssetMediaTypeUnknown || asset.mediaType == PHAssetMediaTypeAudio) continue;
-            dispatch_group_enter(group);
-            dispatch_group_async(group, queue, ^{
-                @strongify(self);
-                if (asset.mediaType == PHAssetMediaTypeImage) {
-                    //图片
-                    [self fetchImageForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
-                        [imagePhotos addObject:photo];
-                        dispatch_group_leave(group);
-                    }];
-                }
-            });
-        }
     
-        // 所有图片/视频已拷贝完毕
-        dispatch_group_notify(group, queue, ^{
-            dispatch_async(dispatch_get_main_queue(), ^{
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
+    @weakify(self);
+    __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
+    
+    //从系统中拷贝图片/视频到沙盒目录
+    for(PHAsset *asset in assets) {
+        if (asset.mediaType == PHAssetMediaTypeUnknown || asset.mediaType == PHAssetMediaTypeAudio) continue;
+            @strongify(self);
+            if (asset.mediaType == PHAssetMediaTypeImage) {
                 
-                @strongify(self);
-                [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos];
-                
-                //将图片数据写入数据库
-                self.album.count += photos.count;
-                
-                //获取允许删除的图片资源
-                NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
-                for (PHAsset *asset in assets) {
-                    if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
-                        [deleteAssets addObject:asset];
-                    }
-                }
-                
-                if(deleteAssets.count) {
-                    // 提示用户是否删除系统图片
-                    UIAlertController *alert = [UIAlertController
-                                                alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil)
-                                                message:nil
-                                                preferredStyle:UIAlertControllerStyleAlert];
+                //图片
+                [self fetchImageForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
+                    [imagePhotos addObject:photo];
                     
-                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    if(imagePhotos.count == assets.count){
+                       
+                        [SVProgressHUD dismiss];
+
+                        [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos];
+
+                        //将图片数据写入数据库
+                        self.album.count += photos.count;
                         
-                        //展示广告
-                        [self showTheInterstitialAd];
-                        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                            
-                            [PHAssetChangeRequest deleteAssets:deleteAssets];
-                            
-                        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-
-                            if(success == NO) {
-                                NSString *message = NSLocalizedString(@"Delete fail.", nil);
+                        //获取允许删除的图片资源
+                        NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
+                        for (PHAsset *asset in assets) {
+                            if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
+                                [deleteAssets addObject:asset];
                             }
-                        }];
-                    }]];
-                    
-                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                        //展示广告
-                        [self showTheInterstitialAd];
-                    }]];
-                    [self presentViewController:alert animated:YES completion:nil];
-                }
-                
-                // 加载最新添加的图片信息并显示在最后
-                NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
-                if (nil == self.photos) {
-                    self.photos = [NSMutableArray array];
-                }
-                [self.photos addObjectsFromArray:latestPhotos];
-                [self.collectionView reloadData];
-            });
-        });
-    
+                        }
+                        
+                        if(deleteAssets.count) {
+                            //提示用户是否删除系统图片
+                            UIAlertController *alert = [UIAlertController
+                                                        alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil)
+                                                        message:nil
+                                                        preferredStyle:UIAlertControllerStyleAlert];
+                            
+                            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                                
+                                //展示广告
+                                [self showTheInterstitialAd];
+                                [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                                    
+                                    [PHAssetChangeRequest deleteAssets:deleteAssets];
+                                } completionHandler:^(BOOL success, NSError * _Nullable error) {
+                                    
+                                    NSString *message = NSLocalizedString(@"Delete fail.", nil);
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [SVProgressHUD showInfoWithStatus:message];
+                                    });
+
+                                }];
+                            }]];
+                            
+                            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                //展示广告
+                                [self showTheInterstitialAd];
+                            }]];
+                            [self presentViewController:alert animated:YES completion:nil];
+                        }
+                        
+                        // 加载最新添加的图片信息并显示在最后
+                        NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
+                        if (nil == self.photos) {
+                            self.photos = [NSMutableArray array];
+                        }
+                        [self.photos addObjectsFromArray:latestPhotos];
+                        [self.collectionView reloadData];
+                    }
+                }];
+            }
+    }
 }
 
+//- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos
+//                 sourceAssets:(NSArray *)assets
+//        isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
+//                        infos:(NSArray<NSDictionary *> *)infos {
+//
+//        @weakify(self);
+//        dispatch_group_t group = dispatch_group_create();
+//        dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
+//        __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
+//        // 从系统中拷贝图片/视频到沙盒目录
+//
+//        for (PHAsset *asset in assets) {
+//            if (asset.mediaType == PHAssetMediaTypeUnknown || asset.mediaType == PHAssetMediaTypeAudio) continue;
+//            dispatch_group_enter(group);
+//            dispatch_group_async(group, queue, ^{
+//                @strongify(self);
+//                if (asset.mediaType == PHAssetMediaTypeImage) {
+//                    //图片
+//                    [self fetchImageForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
+//                        [imagePhotos addObject:photo];
+//                        dispatch_group_leave(group);
+//                    }];
+//                }
+//            });
+//        }
+//
+//        // 所有图片/视频已拷贝完毕
+//        dispatch_group_notify(group, queue, ^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                @strongify(self);
+//                [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos];
+//
+//                //将图片数据写入数据库
+//                self.album.count += photos.count;
+//
+//                //获取允许删除的图片资源
+//                NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
+//                for (PHAsset *asset in assets) {
+//                    if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
+//                        [deleteAssets addObject:asset];
+//                    }
+//                }
+//
+//                if(deleteAssets.count) {
+//                    // 提示用户是否删除系统图片
+//                    UIAlertController *alert = [UIAlertController
+//                                                alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil)
+//                                                message:nil
+//                                                preferredStyle:UIAlertControllerStyleAlert];
+//
+//                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+//
+//                        //展示广告
+//                        [self showTheInterstitialAd];
+//                        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+//
+//                            [PHAssetChangeRequest deleteAssets:deleteAssets];
+//                        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+//                            if(success == NO) {
+//                                NSString *message = NSLocalizedString(@"Delete fail.", nil);
+//                            }
+//                        }];
+//                    }]];
+//
+//                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//                        //展示广告
+//                        [self showTheInterstitialAd];
+//                    }]];
+//                    [self presentViewController:alert animated:YES completion:nil];
+//                }
+//
+//                // 加载最新添加的图片信息并显示在最后
+//                NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
+//                if (nil == self.photos) {
+//                    self.photos = [NSMutableArray array];
+//                }
+//                [self.photos addObjectsFromArray:latestPhotos];
+//                [self.collectionView reloadData];
+//            });
+//        });
+//
+//}
 
+
+//- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(PHAsset *)asset {
+//
+//    NSLog(@"imagePickerController:%s %@", __func__, [NSThread currentThread]);
+//
+//    [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
+//
+//    dispatch_group_t group = dispatch_group_create();
+//    dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
+//
+//    __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
+//
+//    // 从系统中拷贝图片/视频到沙盒目录
+//    dispatch_group_enter(group);
+//        dispatch_group_async(group, queue, ^{
+//
+//            if (asset.mediaType == PHAssetMediaTypeVideo) { // 视频
+//                [self fetchVideoForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
+//                    [imagePhotos addObject:photo];
+//                    dispatch_group_leave(group);
+//                }];
+//            }
+//    });
+//
+//    // 所有图片/视频已拷贝完毕
+//    dispatch_group_notify(group, queue, ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//
+//            [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos]; // 将图片数据写入数据库
+//            self.album.count += 1;
+//            [SVProgressHUD dismiss];
+//            // 获取允许删除的图片资源
+//            NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
+//            if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
+//                [deleteAssets addObject:asset];
+//            }
+//
+//            if (deleteAssets.count) {
+//                // 提示用户是否删除系统图片
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+//                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+//                    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+//
+//                        [PHAssetChangeRequest deleteAssets:deleteAssets];
+//                    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+//                        if (success == NO) {
+//                            NSString *message = NSLocalizedString(@"Delete fail.", nil);
+//                            dispatch_async(dispatch_get_main_queue(), ^{
+//                                [SVProgressHUD showInfoWithStatus:message];
+//                            });
+//                        }
+//                    }];
+//                }]];
+//
+//                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+//                [self presentViewController:alert animated:YES completion:nil];
+//            }
+//            // 加载最新添加的图片信息并显示在最后
+//            NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
+//            if (nil == self.photos) {
+//                self.photos = [NSMutableArray array];
+//            }
+//            [self.photos addObjectsFromArray:latestPhotos];
+//            [self.collectionView reloadData];
+//        });
+//    });
+//
+//}
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(PHAsset *)asset {
     
-    NSLog(@"imagePickerController:%s %@", __func__, [NSThread currentThread]);
-    
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
-
-    dispatch_group_t group = dispatch_group_create();
-    dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
+    
     __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
-    // 从系统中拷贝图片/视频到沙盒目录
-
-    dispatch_group_enter(group);
-        dispatch_group_async(group, queue, ^{
-
-            if (asset.mediaType == PHAssetMediaTypeVideo) { // 视频
-                [self fetchVideoForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
-                    [imagePhotos addObject:photo];
-                    dispatch_group_leave(group);
-                }];
-            }
-    });
-    // 所有图片/视频已拷贝完毕
-    dispatch_group_notify(group, queue, ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
+    
+        [self fetchVideoForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
             
-
-            [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos]; // 将图片数据写入数据库
+            [imagePhotos addObject:photo];
+           
+            //将图片数据写入数据库
+            [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos];
             self.album.count += 1;
+            
             [SVProgressHUD dismiss];
-            // 获取允许删除的图片资源
+            //获取允许删除的图片资源
             NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
             if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
                 [deleteAssets addObject:asset];
             }
             
-            if (deleteAssets.count) {
+            if(deleteAssets.count){
+                
                 // 提示用户是否删除系统图片
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *alert =
+                [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil) message:nil
+                                             preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alert addAction:[UIAlertAction
+                                  actionWithTitle:NSLocalizedString(@"Delete", nil)
+                                  style:UIAlertActionStyleDestructive
+                                  handler:^(UIAlertAction * _Nonnull action) {
+                                      
                     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                         
                         [PHAssetChangeRequest deleteAssets:deleteAssets];
+                        
                     } completionHandler:^(BOOL success, NSError * _Nullable error) {
+                        
                         if (success == NO) {
                             NSString *message = NSLocalizedString(@"Delete fail.", nil);
                             dispatch_async(dispatch_get_main_queue(), ^{
@@ -652,19 +795,21 @@ static CGFloat const kCellBorderMargin = 1.0;
                         }
                     }];
                 }]];
+                
                 [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                
                 [self presentViewController:alert animated:YES completion:nil];
             }
-            // 加载最新添加的图片信息并显示在最后
+            
+            //加载最新添加的图片信息并显示在最后
             NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
             if (nil == self.photos) {
                 self.photos = [NSMutableArray array];
             }
             [self.photos addObjectsFromArray:latestPhotos];
             [self.collectionView reloadData];
-        });
-    });
-    
+        }];
+
 }
 
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingGifImage:(UIImage *)animatedImage sourceAssets:(PHAsset *)asset {

@@ -185,6 +185,7 @@
 		205E067C22EA091D00E060B3 /* HHSetPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HHSetPasswordViewController.h; sourceTree = "<group>"; };
 		205E067D22EA091D00E060B3 /* HHSetPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HHSetPasswordViewController.m; sourceTree = "<group>"; };
 		2087EFE77D97F50083653865 /* Pods-PhotoSecurity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoSecurity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoSecurity/Pods-PhotoSecurity.debug.xcconfig"; sourceTree = "<group>"; };
+		209D0A2E22FFD4ED00A23D83 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		209DDF6122EB6A54006A3D06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20A9688F22EB563000A3340F /* PPLockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLockView.h; sourceTree = "<group>"; };
 		20A9689022EB563000A3340F /* PPLockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLockView.m; sourceTree = "<group>"; };
@@ -883,6 +884,7 @@
 			children = (
 				12125A921E83BBEA00219A8E /* Base */,
 				12125A941E83BBEC00219A8E /* zh-Hans */,
+				209D0A2E22FFD4ED00A23D83 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

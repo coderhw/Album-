@@ -119,3 +119,11 @@ FOUNDATION_EXTERN NSString * const HHEmailKey;
 /// email
 FOUNDATION_EXTERN NSString * const HHLastUsedDateKey;
 
+/// Fice 登录广告通知
+FOUNDATION_EXTERN NSString * const HHFiveTimeLoginKey;
+
+/// 密码错误提示语
+FOUNDATION_EXTERN NSString * const HHPasswordTipKey;
+
+
+

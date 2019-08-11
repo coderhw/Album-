@@ -37,9 +37,9 @@
 
 - (void)deleteButtonPressed {
     
-    UIAlertController *sheetVC = [UIAlertController alertControllerWithTitle:@"确定要删除吗"
-                                                                     message:@"数据一旦被删除后将不可恢复" preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定"
+    UIAlertController *sheetVC = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Are you sure want to delete this photo", nil)
+                                                                     message:NSLocalizedString(@"Data can't recover if be bdeleted", nil) preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
                                                        style:UIAlertActionStyleDestructive
                                                      handler:^(UIAlertAction * _Nonnull action) {
         if(self.deleteImageBlock){
@@ -47,7 +47,7 @@
         }
     }];
     
-    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消"
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
     [sheetVC addAction:okAction];

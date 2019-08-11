@@ -2,8 +2,8 @@
 //  functions.m
 //  PhotoSecurity
 //
-//  Created by nhope on 2017/3/2.
-//  Copyright © 2017年 xiaopin. All rights reserved.
+//  Created by huwen on 2017/3/2.
+//  Copyright © 2017年 HW. All rights reserved.
 //
 
 #import "functions.h"
@@ -219,4 +219,10 @@ NSString * const HHEmailKey         = @"HHEmailKey";
 
 //应用上一次进入后台的时间
 NSString * const HHLastUsedDateKey = @"HHLastUsedDate";
+
+/// Fice 登录广告通知
+NSString * const HHFiveTimeLoginKey = @"HHFiveTimeLoginKey";
+
+/// 密码错误提示语
+NSString * const HHPasswordTipKey = @"HHPasswordTipKey";
 

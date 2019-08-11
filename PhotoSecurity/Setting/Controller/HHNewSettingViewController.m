@@ -196,10 +196,6 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
         case 6:
         {
             
-//            NSError*error;
-//            NSData*response = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://itunes.apple.com/cn/lookup?id=%@",@"1475634223"]]]returningResponse:nilerror:nil];
-//            NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-            
             NSURL *url = [NSURL URLWithString:@"http://itunes.apple.com/cn/lookup?id=1475634223"];
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
             NSURLSession *session = [NSURLSession sharedSession];
@@ -211,10 +207,9 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
 
                     
                     NSDictionary *appInfoDic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                    NSLog(@"可输出一下看看%@",appInfoDic);
                     NSArray *array = appInfoDic[@"results"];
                     if(array.count < 1) {
-                        NSLog(@"此APPID为未上架的APP或者查询不到");
+                        [SVProgressHUD showInfoWithStatus:@"此APPID为未上架的APP或者查询不到"];
                         return;
                     }
                     NSDictionary*dic = array[0];
@@ -230,7 +225,6 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
                     }
         
                     appStoreVersion = [appStoreVersion stringByReplacingOccurrencesOfString:@"."withString:@""];
-        
                     if(appStoreVersion.length == 2) {
                         appStoreVersion = [appStoreVersion stringByAppendingString:@"0"];
                     }else if(appStoreVersion.length ==1){
@@ -262,15 +256,6 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
         default:
             break;
     }
-}
-
-#pragma mark - MFMailDelegate
-- (void)mailComposeController:(MFMailComposeViewController *)controller
-          didFinishWithResult:(MFMailComposeResult)result
-                        error:(NSError *)error
-{
-    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Thanks for your feedback", nil)];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Private

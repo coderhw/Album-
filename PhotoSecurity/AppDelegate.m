@@ -9,11 +9,13 @@
 #import "AppDelegate.h"
 #import "GHPopupEditView.h"
 #import "HHSetPasswordViewController.h"
+#import "HHNewHomeViewController.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <UMCommon/UMCommon.h>
 #import <GoogleMobileAds/GoogleMobileAds.h>
 
 @interface AppDelegate ()
+
 @property (nonatomic, strong) LAContext *context;
 
 @end
@@ -36,6 +38,7 @@
     [[HHSQLiteManager sharedSQLiteManager] initializationDatabase];
     [UMConfigure initWithAppkey:@"5d4d35ef3fc195132b00044c" channel:@"App Store"];
     [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+    
     return YES;
 }
 
@@ -84,7 +87,6 @@
         }
     }
 }
-
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 }

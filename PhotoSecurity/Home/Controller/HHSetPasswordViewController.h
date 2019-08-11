@@ -10,9 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^HHUnlockBlock)(void);
 @interface HHSetPasswordViewController : HHBaseViewController
 
 @property (nonatomic, assign) BOOL isChangePsd;
+@property (nonatomic, copy) HHUnlockBlock unlockBlock;
+
 
 - (void)showTips;
 
