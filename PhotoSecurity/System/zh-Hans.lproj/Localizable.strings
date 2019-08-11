@@ -30,6 +30,14 @@
 "Please enter email address" = "请输入邮箱";
 "Quick unlock by this way" = "开启后，你可以通过Touch ID/Face ID快速解锁";
 "Setting or modify or delete password" = "设置、修改、删除密码";
+"Please set password first"= "您还未设置密码, 请先设置密码";
+"Please enter correct password for delete" = "请输入当前的密码以删除密码设置";
+"Not match, Please enter again"= "不匹配，请重新设置";
+"Password already deleted" = "密码已清除，请注意数据安全";
+"Delete password" = "删除密码";
+"Password tips"= "密码提示";
+"Remind you when forget password" = "忘记密码的时候提醒您";
+"Please enter tips" = "请输入提示";
 "FTP transfer service" = "FTP传输服务";
 "Quick transfer Date by this way" = "可以通过此服务快速的迁移数据";
 "Please set Password before use Touch ID/Face ID"  = "请先设置密码, 才能使用Touch ID/Face ID";
@@ -51,6 +59,7 @@
 "Album name can not be empty" = "相册名称不能为空";
 "You can only select up to 9 images." = "你最多只能选择9张图片";
 "Please set gesture password." = "请设置手势密码";
+"Please enter password" = "请输入密码";
 "No photo or video" = "无照片或视频";
 "Password is wrong, please try again." = "密码错误，请重新输入";
 "Password is set success." = "手势密码已设置";
@@ -63,6 +72,8 @@
 "Delete Album" = "删除相册";
 "Are you sure you want to delete the album? All the pictures under the album will be deleted." = "你确定要删除该相册吗？该相册下的所有图片将会被删除。";
 "The camera is not available" = "该设备没有摄像头";
+"Are you sure want to delete this photo"="确定要删除吗";
+"Data can't recover if be bdeleted" = "数据一旦被删除后将不可恢复";
 "Photo saved failed" = "图片保存失败";
 "Photo saved successfully" = "图片保存成功";
 "Not authorized to use the camera" = "未获得授权使用摄像头";

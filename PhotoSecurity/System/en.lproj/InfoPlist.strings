@@ -5,3 +5,9 @@
   Created by huwen on 2017/3/23.
   Copyright © 2019年 Hw. All rights reserved.
 */
+"CFBundleDisplayName" = "Photos Vault";
+"NSCameraUsageDescription" = "Use Camera to take photos or record a video";
+"NSMicrophoneUsageDescription" = "Use microphone to capture voice";
+"NSPhotoLibraryUsageDescription" = "browse system album and upload photos";
+"NSFaceIDUsageDescription" = "User FaceID unlock";
+
