@@ -172,13 +172,24 @@ static CGFloat const kCellBorderMargin = 1.0;
             previewController.dataSource = self;
             previewController.currentPreviewItemIndex = indexPath.row;
             previewController.deleteImageBlock = ^(HHPreviewViewController * _Nonnull previewVC) {
-              
-                HHPhotoModel *photo = self.photos[indexPath.row];
+                //防止删除相册时候数组越界
+                NSInteger index = indexPath.row;
+                if(index >= self.photos.count){
+                    index = self.photos.count - 1;
+                }
+                if(index < 0){
+                    index = 0;
+                }
+                HHPhotoModel *photo = self.photos[index];
                 HHSQLiteManager *manager = [HHSQLiteManager sharedSQLiteManager];
                 BOOL success = [manager deletePhotos:@[photo] fromAlbum:self.album];
                 if(success) {
                     [self.photos removeObject:photo];
+                    if(!self.photos.count){
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
                     [previewVC reloadData];
+                    [self.collectionView reloadData];
                 };
             };
             [self.navigationController pushViewController:previewController animated:YES];
@@ -807,7 +818,10 @@ static CGFloat const kCellBorderMargin = 1.0;
                 self.photos = [NSMutableArray array];
             }
             [self.photos addObjectsFromArray:latestPhotos];
-            [self.collectionView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView reloadData];
+            });
+            
         }];
 
 }
