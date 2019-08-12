@@ -51,7 +51,7 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
     HHRowsModel *row0Model = [[HHRowsModel alloc] init];
     row0Model.imageName = @"faceID.png";
     row0Model.title = @"Touch IDs/Face IDs";
-    row0Model.footerTips = NSLocalizedString(@"Quick unlock by this way", nil);
+    row0Model.footerTips = NSLocalizedString(@"Quick unlock by this way after set Password", nil);
     [self.dataSource addObject:row0Model];
    
     //修改密码
@@ -154,7 +154,7 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
             NSString *identifier =  @"HHSetPasswordViewController";
             HHSetPasswordViewController *vc = (HHSetPasswordViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:identifier];
             vc.isChangePsd = YES;
-            vc.navigationItem.title = NSLocalizedString(@"Change Password", nil);
+            vc.navigationItem.title = [HHPasswordTool isSetPassword] ? NSLocalizedString(@"Change Password", nil) : NSLocalizedString(@"Set Password", nil);
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
@@ -329,7 +329,7 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
                      localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil) reply:^(BOOL success, NSError * _Nullable error) {
                          
                          if (!success) {
-                             
+                             [sender setOn:NO];
                              [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                              return;
                          }else{
@@ -343,8 +343,6 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
                                  if (weakSelf.context.biometryType == LABiometryTypeFaceID){
                                      dispatch_async(dispatch_get_main_queue(), ^{
                                          [sender setOn:YES];
-
-                                         [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Face ID successed set", nil)];
                                      });
                                  }
                                  
@@ -354,22 +352,19 @@ MFMailComposeViewControllerDelegate,GADBannerViewDelegate>
                                  if(weakSelf.context.biometryType == LABiometryTypeTouchID){
                                      dispatch_async(dispatch_get_main_queue(), ^{
                                          [sender setOn:YES];
-                                         [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Touch ID successed set", nil)];
                                      });
                                  }
                              } else {
                                  // Fallback on earlier versions
-                             }
-                             
-                             
+                             }                             
                          }
                      }];
         }
     }else{
-
-        [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"Please set Password before use Touch ID/Face ID", nil)];
-        [sender setOn:NO];
-
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"Please set Password before use Touch ID/Face ID", nil)];
+            [sender setOn:NO];
+        });        
     }
     
 }

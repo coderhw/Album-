@@ -81,7 +81,9 @@
             //删除生物识别
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:XPTouchEnableStateKey];
             self.lockView.tipsLabel.text = NSLocalizedString(@"Password already deleted", nil);
-
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }else{
             [self.lockView shake];
             self.lockView.tipsLabel.text = NSLocalizedString(@"Please enter correct password for delete", nil);
@@ -133,7 +135,8 @@
         if([self.firstPsd isEqualToString:self.secondPsd]){
             [HHPasswordTool storagePassword:self.secondPsd];
                 if(self.isChangePsd){
-                    dispatch_async(dispatch_get_main_queue(), ^{
+                    self.lockView.tipsLabel.text = NSLocalizedString(@"Password set success", nil);
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [self.navigationController popViewControllerAnimated:YES];
                     });
                 }else{

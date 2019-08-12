@@ -32,8 +32,8 @@
         self.backgroundColor = [UIColor clearColor];
         self.tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, APP_WIDTH, 20)];
         self.tipsLabel.textAlignment = NSTextAlignmentCenter;
-        self.tipsLabel.font = [UIFont systemFontOfSize:14];
-        self.tipsLabel.textColor = [UIColor lightTextColor];
+        self.tipsLabel.font = kFONT(kTitleName_PingFang_M, 15);
+        self.tipsLabel.textColor = [UIColor colorWithHex:kWhiteColor];
         self.tipsLabel.text = NSLocalizedString(@"Please set gesture password.", nil);
         [self addSubview:self.tipsLabel];
         
