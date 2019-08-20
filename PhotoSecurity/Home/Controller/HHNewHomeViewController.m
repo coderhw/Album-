@@ -17,12 +17,14 @@
 #import "HHNewSettingViewController.h"
 #import "HHEditAlbumViewController.h"
 #import "HHSetPasswordViewController.h"
+#import <LocalAuthentication/LocalAuthentication.h>
+
 //
 #import "HHAlbumCollectionViewCell.h"
 #import "HHBlurAlertView.h"
 #import "DragView.h"
 #import <GoogleMobileAds/GoogleMobileAds.h>
-
+#import "NSDate+Category.h"
 
 
 static NSString *cellIdentifier = @"gridcellidentifier";
@@ -40,6 +42,8 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
 @property (nonatomic, strong) UIBarButtonItem   *editButton;
 @property (nonatomic, strong) UIBarButtonItem   *addAlbumButton;
 @property (nonatomic, strong) UIButton *subEditButton;
+@property (nonatomic, strong) LAContext *context;
+
 
 @property (weak, nonatomic) IBOutlet DragView *addButton;
 
@@ -52,6 +56,10 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
 @end
 
 @implementation HHNewHomeViewController
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HHFiveTimeLoginKey object:nil];
+}
 
 - (void)viewDidLoad {
     
@@ -82,7 +90,7 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     self.collectionView.showsVerticalScrollIndicator = NO;
 
     [self.view bringSubviewToFront:self.addButton];
-    self.addBtnBottomPading.constant = 60;
+    self.addBtnBottomPading.constant = 70;
     
     self.addButton.layer.shadowColor = [UIColor blackColor].CGColor;
     self.addButton.layer.shadowOpacity = 0.5;
@@ -114,19 +122,65 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if([HHPasswordTool isSetPassword] &&
-           [UIApplication sharedApplication].applicationState != UIApplicationStateActive){
+           [UIApplication sharedApplication].applicationState != UIApplicationStateActive && AppContext.isShowPassword == NO){
             //如果设置了密码则去密码页面
             static dispatch_once_t onceToken;
             @weakify(self);
             dispatch_once(&onceToken, ^{
                 @strongify(self);
                 UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                HHSetPasswordViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HHSetPasswordViewController"];
-                [self presentViewController:vc animated:NO completion:nil];
-                
+                HHSetPasswordViewController *unlockVc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HHSetPasswordViewController"];
+                [self presentViewController:unlockVc animated:NO completion:^{
+                    
+                    AppContext.isShowPassword = YES;
+                    if(touchIDTypeEnabled()){
+                        //如果设置了FaceID
+                        self.context = [[LAContext alloc] init];
+                        [self.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                     localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil)
+                                               reply:^(BOOL success, NSError * _Nullable error) {
+                                                   
+                                                   if (!success) {
+                                                       return;
+                                                   }else{
+                                                       [unlockVc dismissViewControllerAnimated:YES completion:^{
+                                                           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                               //处理解锁后的事情
+                                                               [self saveCurrentLoginTime];
+                                                           });
+                                                       }];
+                                                   }
+                                               }];
+                    }
+                    
+                }];
+
             });
         }
     });
+}
+
+- (void)saveCurrentLoginTime {
+    
+    NSString *today = [NSDate getCurrentDay];
+    NSInteger times = [[NSUserDefaults standardUserDefaults] integerForKey:@"kUnlockTimesKey"];
+    times++;
+    //保存锁屏次数
+    [[NSUserDefaults standardUserDefaults] setInteger:times forKey:@"kUnlockTimesKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *unlockTimesKey = [NSString stringWithFormat:@"%@_%ld", today, (long)times];
+    NSString *unlockFiveTimesKey = [NSString stringWithFormat:@"%@_%d", today, 3];
+    NSLog(@"unlockTimesKey:%@",unlockTimesKey);
+    NSLog(@"unlockFiveTimesKey:%@",unlockFiveTimesKey);
+    if([unlockTimesKey isEqualToString:unlockFiveTimesKey]){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self showTheInterstitialAd];
+        });
+        //清除登录次数
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kUnlockTimesKey"];
+    }
+    
 }
 
 
@@ -337,7 +391,6 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
             NSLog(@"Ad wasn't ready");
         }
     });
-    
 }
 
 #pragma mark - Actions

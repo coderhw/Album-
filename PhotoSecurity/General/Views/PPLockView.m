@@ -37,6 +37,15 @@
         self.tipsLabel.text = NSLocalizedString(@"Please set gesture password.", nil);
         [self addSubview:self.tipsLabel];
         
+        
+        self.tipButton = [[UIButton alloc] initWithFrame:CGRectMake(APP_WIDH-28-16, APP_HIGH-60, 28, 28)];
+        [self.tipButton setBackgroundImage:[UIImage imageNamed:@"icon_tip.png"] forState:UIControlStateNormal];
+        [self.tipButton addTarget:self action:@selector(tipButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.tipButton];
+        
+        NSString *tips = [[NSUserDefaults standardUserDefaults] valueForKey:HHPasswordTipKey];
+        self.tipButton.hidden = (tips.length > 0) ? NO :YES;
+        
 		_selectedPointArray = [[NSMutableArray alloc]init];
 		_passwd = [[NSMutableString alloc] init];
     
@@ -53,6 +62,12 @@
 	[_passwd release];
 	_passwd = nil;
 	[super dealloc];
+}
+
+- (void)tipButtonPressed:(UIButton *)sender {
+    if(self.tipBlock){
+        self.tipBlock();
+    }
 }
 
 - (CGPathRef)linePathStartAt:(CGPoint)startPoint End:(CGPoint)endPoint With:(CGFloat)lineWidth {

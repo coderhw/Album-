@@ -14,9 +14,7 @@
 @interface HHAPPContext : NSObject
 
 //登录状态
-@property (nonatomic) BOOL isLogin;
-@property (nonatomic, strong) NSString *password;
-@property (nonatomic, strong) NSString *pressRate;
+@property (nonatomic, assign) BOOL isShowPassword;
 
 + (instancetype)sharedAppContext;
 

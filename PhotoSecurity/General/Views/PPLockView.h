@@ -7,15 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @protocol PPLockViewDelegate;
-@interface PPLockView : UIView
-{
+
+typedef void(^HHTipBlock)(void);
+@interface PPLockView : UIView {
+    
 	NSMutableArray *_selectedPointArray;
 	CGPoint currentPoint;
 	NSMutableString *_passwd;
 }
+
 @property (nonatomic, assign) id <PPLockViewDelegate> delegate;
-@property (nonatomic, strong) UILabel *tipsLabel;
+@property (nonatomic, strong) UILabel   *tipsLabel;
+@property (nonatomic, strong) UIButton  *tipButton;
+@property (nonatomic, copy) HHTipBlock tipBlock;
+
 
 - (instancetype)initWithFrame:(CGRect)frame;
 

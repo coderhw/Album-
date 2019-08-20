@@ -17,7 +17,6 @@
  */
 + (BOOL)isSetPassword {
     NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:XPPasswordKey];
-    // 密码采用MD5加密,长度固定为32个字符
     return password.length;
 }
 

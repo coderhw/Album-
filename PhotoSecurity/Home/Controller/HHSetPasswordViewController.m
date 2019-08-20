@@ -189,7 +189,7 @@
     NSLog(@"unlockTimesKey:%@",unlockTimesKey);
     NSLog(@"unlockFiveTimesKey:%@",unlockFiveTimesKey);
     if([unlockTimesKey isEqualToString:unlockFiveTimesKey]){
-        //解锁5次展示广告
+        //解锁3次展示广告
         [[NSNotificationCenter defaultCenter] postNotificationName:HHFiveTimeLoginKey object:nil];
         //清除登录次数
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kUnlockTimesKey"];
@@ -235,6 +235,13 @@
     if(!_lockView){
         _lockView = [[PPLockView alloc] initWithFrame:CGRectMake(0, 0, APP_WIDTH, APP_HEIGTH)];
         _lockView.delegate = self;
+        _lockView.tipBlock = ^{
+            NSString *tips = [[NSUserDefaults standardUserDefaults] valueForKey:HHPasswordTipKey];
+            if(tips && tips.length){
+                [SVProgressHUD showInfoWithStatus:[NSString stringWithFormat:@"%@:%@", NSLocalizedString(@"Password tips", nil), tips]];
+            }
+
+        };
     }
     return _lockView;
 }
@@ -245,7 +252,7 @@
     if(!_passwordTipButton){
         
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 44)];
-        [button setTitle:NSLocalizedString(@"Password tips", nil) forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"Password Tips", nil) forState:UIControlStateNormal];
         [button.titleLabel setFont:kFONT(kTitleName_PingFang_R, 12)];
         [button addTarget:self action:@selector(passwordTipButton:) forControlEvents:UIControlEventTouchUpInside];
         _passwordTipButton = [[UIBarButtonItem alloc] initWithCustomView:button];

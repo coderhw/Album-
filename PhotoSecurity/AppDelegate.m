@@ -13,6 +13,7 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <UMCommon/UMCommon.h>
 #import <GoogleMobileAds/GoogleMobileAds.h>
+#import "NSDate+Category.h"
 
 @interface AppDelegate ()
 
@@ -46,14 +47,13 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    
+    AppContext.isShowPassword = NO;
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
     NSDate *date = [NSDate date];
     [[NSUserDefaults standardUserDefaults] setObject:date forKey:HHLastUsedDateKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
     
     if ([HHPasswordTool isSetPassword]) {
         for (UIView *subview in self.window.subviews) {
@@ -62,39 +62,70 @@
             }
         }
         
-        __weak typeof(self) weakSelf = self;
-        
         UIViewController *rootVc = [self.window rootViewController];
         if (nil == rootVc.presentedViewController || ![rootVc.presentedViewController isKindOfClass:[HHSetPasswordViewController class]]) {
+            
             [rootVc.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+            
             UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             HHSetPasswordViewController *unlockVc = [mainStoryboard instantiateViewControllerWithIdentifier:@"HHSetPasswordViewController"];
             [unlockVc showTips];
-            [rootVc presentViewController:unlockVc animated:NO completion:^{
+            AppContext.isShowPassword = YES;
+            [rootVc presentViewController:unlockVc animated:YES completion:^{
                 if(touchIDTypeEnabled()){
                     //如果设置了FaceID
                     self.context = [[LAContext alloc] init];
                     [self.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                                     localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil)
-                                               reply:^(BOOL success, NSError * _Nullable error) {
-                                                   
-                                                   if (!success) {
-                                                       return;
-                                                   }else{
-                                                       [unlockVc dismissViewControllerAnimated:YES completion:nil];
-                                                   }
-                                               }];
+                                 localizedReason:NSLocalizedString(@"You can use the Touch ID to verify the fingerprint quickly to complete the unlock application", nil)
+                                           reply:^(BOOL success, NSError * _Nullable error) {
+                                               
+                                               if (!success) {
+                                                   return;
+                                               }else{
+                                                   [unlockVc dismissViewControllerAnimated:YES completion:^{
+                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                           //处理解锁后的事情
+                                                           [self saveCurrentLoginTime];
+                                                       });
+                                                   }];
+                                               }
+                                           }];
                 }
-               
+                
             }];
         }
     }
 }
 
+- (void)saveCurrentLoginTime {
+    
+    NSString *today = [NSDate getCurrentDay];
+    NSInteger times = [[NSUserDefaults standardUserDefaults] integerForKey:@"kUnlockTimesKey"];
+    times++;
+    //保存锁屏次数
+    [[NSUserDefaults standardUserDefaults] setInteger:times forKey:@"kUnlockTimesKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *unlockTimesKey = [NSString stringWithFormat:@"%@_%ld", today, (long)times];
+    NSString *unlockFiveTimesKey = [NSString stringWithFormat:@"%@_%d", today, 3];
+    NSLog(@"unlockTimesKey:%@",unlockTimesKey);
+    NSLog(@"unlockFiveTimesKey:%@",unlockFiveTimesKey);
+    if([unlockTimesKey isEqualToString:unlockFiveTimesKey]){
+        //解锁3次展示广告
+        [[NSNotificationCenter defaultCenter] postNotificationName:HHFiveTimeLoginKey object:nil];
+        //清除登录次数
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"kUnlockTimesKey"];
+    }
+    
+}
+
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+   
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    
+    AppContext.isShowPassword = NO;
     NSDate *date = [NSDate date];
     [[NSUserDefaults standardUserDefaults] setObject:date forKey:HHLastUsedDateKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
