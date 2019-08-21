@@ -60,25 +60,24 @@ static CGFloat const kCellBorderMargin = 1.0;
     [super viewDidLoad];
     self.title = self.isChoseThumb ? @"选择封面" : self.album.name;
     
+    //广告
+    self.interstitial = [self createAndLoadInterstitial];
+    [self.view addSubview:self.bannerView];
+    
+    self.bannerView.delegate = self;
+    [self.bannerView loadRequest:[GADRequest request]];
+    [self.view bringSubviewToFront:self.bannerView];
+    
     
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
     self.collectionView.frame = CGRectMake(0, 1, APP_WIDH, APP_HIGH-1);
     
-//    // 加载相册所有图片数据
-//    [self configAlbumData];
     
     if(!self.isChoseThumb){
         self.navigationItem.rightBarButtonItems = @[self.editButton, self.addButton];
     }
-
-    //广告
-    self.interstitial = [self createAndLoadInterstitial];
-    [self.view addSubview:self.bannerView];
-    self.bannerView.delegate = self;
-    [self.bannerView loadRequest:[GADRequest request]];
-    [self.view bringSubviewToFront:self.bannerView];
-    
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -196,12 +195,12 @@ static CGFloat const kCellBorderMargin = 1.0;
         }
     }
     
-    
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     CGFloat width = CGRectGetWidth(collectionView.frame);
     int maxItemCount = ceil(width/XPThumbImageWidthAndHeightKey);
@@ -245,14 +244,16 @@ static CGFloat const kCellBorderMargin = 1.0;
     XPFileType filetype = XPFileTypeImage;
     NSString *mediaType = info[UIImagePickerControllerMediaType];
     CGSize size = CGSizeMake(XPThumbImageWidthAndHeightKey, XPThumbImageWidthAndHeightKey);
-    if ([mediaType isEqualToString:(NSString*)kUTTypeMovie]) { // 视频
+    if ([mediaType isEqualToString:(NSString*)kUTTypeMovie]) {
+        // 视频
         NSURL *mediaURL = info[UIImagePickerControllerMediaURL];
         data = [NSData dataWithContentsOfURL:mediaURL];
         filename = [NSString stringWithFormat:@"%@.%@", generateUniquelyIdentifier(),mediaURL.pathExtension];
         previewImage = [UIImage snapshotImageWithVideoURL:mediaURL];
         previewImage = [UIImage thumbnailImageFromSourceImage:previewImage destinationSize:size];
         filetype = XPFileTypeVideo;
-    } else { // 拍照
+    } else {
+        // 拍照
         UIImage *image = info[UIImagePickerControllerOriginalImage];
         data = UIImageJPEGRepresentation(image, 0.75);
         filename = [NSString stringWithFormat:@"%@.JPG", generateUniquelyIdentifier()];
@@ -300,6 +301,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 }
 
 - (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    
     NSString *text = NSLocalizedString(@"Please click the button below to add a picture.", nil);
     NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
@@ -341,16 +343,19 @@ static CGFloat const kCellBorderMargin = 1.0;
     __weak typeof(self) weakSelf = self;
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Photo Library", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { // 照片图库
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Photo Library", nil) style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                // 照片图库
     
-        
         TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:weakSelf];
         [self presentViewController:imagePickerVC animated:YES completion:nil];
         
     }]];
     
     
-    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Take Photo or Video", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) { // 拍照
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Take Photo or Video", nil)
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) { // 拍照
 
         if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             // 没有摄像头
@@ -364,8 +369,13 @@ static CGFloat const kCellBorderMargin = 1.0;
             //没有授权使用摄像头
             NSString *title = NSLocalizedString(@"Not authorized to use the camera", nil);
             NSString *message = NSLocalizedString(@"Please open in iPhone \"Settings - Privacy - Camera\"", nil);
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                                     message:message
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                                style:UIAlertActionStyleCancel
+                                                              handler:nil]];
             [weakSelf presentViewController:alertController animated:YES completion:nil];
             return;
         }
@@ -605,160 +615,6 @@ static CGFloat const kCellBorderMargin = 1.0;
     }
 }
 
-//- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray<UIImage *> *)photos
-//                 sourceAssets:(NSArray *)assets
-//        isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto
-//                        infos:(NSArray<NSDictionary *> *)infos {
-//
-//        @weakify(self);
-//        dispatch_group_t group = dispatch_group_create();
-//        dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
-//        __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
-//        // 从系统中拷贝图片/视频到沙盒目录
-//
-//        for (PHAsset *asset in assets) {
-//            if (asset.mediaType == PHAssetMediaTypeUnknown || asset.mediaType == PHAssetMediaTypeAudio) continue;
-//            dispatch_group_enter(group);
-//            dispatch_group_async(group, queue, ^{
-//                @strongify(self);
-//                if (asset.mediaType == PHAssetMediaTypeImage) {
-//                    //图片
-//                    [self fetchImageForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
-//                        [imagePhotos addObject:photo];
-//                        dispatch_group_leave(group);
-//                    }];
-//                }
-//            });
-//        }
-//
-//        // 所有图片/视频已拷贝完毕
-//        dispatch_group_notify(group, queue, ^{
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                @strongify(self);
-//                [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos];
-//
-//                //将图片数据写入数据库
-//                self.album.count += photos.count;
-//
-//                //获取允许删除的图片资源
-//                NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
-//                for (PHAsset *asset in assets) {
-//                    if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
-//                        [deleteAssets addObject:asset];
-//                    }
-//                }
-//
-//                if(deleteAssets.count) {
-//                    // 提示用户是否删除系统图片
-//                    UIAlertController *alert = [UIAlertController
-//                                                alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil)
-//                                                message:nil
-//                                                preferredStyle:UIAlertControllerStyleAlert];
-//
-//                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-//
-//                        //展示广告
-//                        [self showTheInterstitialAd];
-//                        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-//
-//                            [PHAssetChangeRequest deleteAssets:deleteAssets];
-//                        } completionHandler:^(BOOL success, NSError * _Nullable error) {
-//                            if(success == NO) {
-//                                NSString *message = NSLocalizedString(@"Delete fail.", nil);
-//                            }
-//                        }];
-//                    }]];
-//
-//                    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//                        //展示广告
-//                        [self showTheInterstitialAd];
-//                    }]];
-//                    [self presentViewController:alert animated:YES completion:nil];
-//                }
-//
-//                // 加载最新添加的图片信息并显示在最后
-//                NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
-//                if (nil == self.photos) {
-//                    self.photos = [NSMutableArray array];
-//                }
-//                [self.photos addObjectsFromArray:latestPhotos];
-//                [self.collectionView reloadData];
-//            });
-//        });
-//
-//}
-
-
-//- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(PHAsset *)asset {
-//
-//    NSLog(@"imagePickerController:%s %@", __func__, [NSThread currentThread]);
-//
-//    [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
-//
-//    dispatch_group_t group = dispatch_group_create();
-//    dispatch_queue_t queue = dispatch_queue_create("com.0daybug.globalqueue", DISPATCH_QUEUE_CONCURRENT);
-//
-//    __block NSMutableArray<HHPhotoModel *> *imagePhotos = [NSMutableArray array];
-//
-//    // 从系统中拷贝图片/视频到沙盒目录
-//    dispatch_group_enter(group);
-//        dispatch_group_async(group, queue, ^{
-//
-//            if (asset.mediaType == PHAssetMediaTypeVideo) { // 视频
-//                [self fetchVideoForPHAsset:asset completionHandler:^(HHPhotoModel *photo) {
-//                    [imagePhotos addObject:photo];
-//                    dispatch_group_leave(group);
-//                }];
-//            }
-//    });
-//
-//    // 所有图片/视频已拷贝完毕
-//    dispatch_group_notify(group, queue, ^{
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//
-//
-//            [[HHSQLiteManager sharedSQLiteManager] addPhotos:imagePhotos]; // 将图片数据写入数据库
-//            self.album.count += 1;
-//            [SVProgressHUD dismiss];
-//            // 获取允许删除的图片资源
-//            NSMutableArray<PHAsset *> *deleteAssets = [NSMutableArray array];
-//            if ([asset canPerformEditOperation:PHAssetEditOperationDelete]) {
-//                [deleteAssets addObject:asset];
-//            }
-//
-//            if (deleteAssets.count) {
-//                // 提示用户是否删除系统图片
-//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Whether to delete the selected image from the photo library?", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-//                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-//                    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-//
-//                        [PHAssetChangeRequest deleteAssets:deleteAssets];
-//                    } completionHandler:^(BOOL success, NSError * _Nullable error) {
-//                        if (success == NO) {
-//                            NSString *message = NSLocalizedString(@"Delete fail.", nil);
-//                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                [SVProgressHUD showInfoWithStatus:message];
-//                            });
-//                        }
-//                    }];
-//                }]];
-//
-//                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-//                [self presentViewController:alert animated:YES completion:nil];
-//            }
-//            // 加载最新添加的图片信息并显示在最后
-//            NSArray *latestPhotos = [[HHSQLiteManager sharedSQLiteManager] requestLatestPhotosWithAlbumid:self.album.albumid count:imagePhotos.count];
-//            if (nil == self.photos) {
-//                self.photos = [NSMutableArray array];
-//            }
-//            [self.photos addObjectsFromArray:latestPhotos];
-//            [self.collectionView reloadData];
-//        });
-//    });
-//
-//}
-
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(PHAsset *)asset {
     
     [SVProgressHUD showWithStatus:NSLocalizedString(@"Copying the pictures...", nil)];
@@ -837,7 +693,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 
 - (GADInterstitial *)createAndLoadInterstitial {
     
-    NSString *uintID = kEnvironment ? @"ca-app-pub-4714556776467699/6972896489" :@"ca-app-pub-3940256099942544/4411468910";
+    NSString *uintID = kEnvironment ? kGoogleAd_Detail_In :kGoogleAd_TEST_2;
 
     GADInterstitial *interstitial =
     [[GADInterstitial alloc] initWithAdUnitID:uintID];
@@ -853,7 +709,7 @@ static CGFloat const kCellBorderMargin = 1.0;
 
 - (void)showTheInterstitialAd {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (self.interstitial.isReady) {
             [self.interstitial presentFromRootViewController:self];
         } else {
@@ -1020,11 +876,13 @@ static CGFloat const kCellBorderMargin = 1.0;
     
     if(!_bannerView){
         _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 60)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-70)];
-        NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/7272279381": @"ca-app-pub-3940256099942544/2934735716";
+        NSString *unitId = kEnvironment ? kGoogleAd_Detail: kGoogleAd_TEST_1;
         _bannerView.adUnitID = unitId;
         _bannerView.rootViewController = self;
     }
     return _bannerView;
 }
+
+
 
 @end

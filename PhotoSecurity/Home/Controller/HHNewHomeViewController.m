@@ -368,7 +368,7 @@ UICollectionViewDataSource, UICollectionViewDelegate,GADBannerViewDelegate,GADIn
 #pragma mark - Ads
 - (GADInterstitial *)createAndLoadInterstitial {
     
-    NSString *uintID = kEnvironment ? @"ca-app-pub-4714556776467699/1329687562" :@"ca-app-pub-3940256099942544/4411468910";
+    NSString *uintID = kEnvironment ? kGoogleAd_Home_In :kGoogleAd_TEST_2;
     
     GADInterstitial *interstitial =
     [[GADInterstitial alloc] initWithAdUnitID:uintID];
@@ -534,8 +534,8 @@ didFailToReceiveAdWithError:(GADRequestError *)error {
 - (GADBannerView *)bannerView {
     
     if(!_bannerView){
-        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 60)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-70)];        
-        NSString *unitId = kEnvironment ? @"ca-app-pub-4714556776467699/7822943721": @"ca-app-pub-3940256099942544/2934735716";
+        _bannerView = [[GADBannerView alloc] initWithAdSize:GADAdSizeFromCGSize(CGSizeMake(APP_WIDH, 60)) origin:CGPointMake(0, APP_HEIGTH-Height_NavBar-70)];
+        NSString *unitId = kEnvironment ? kGoogleAd_Home: kGoogleAd_TEST_1;
         _bannerView.adUnitID = unitId;
         _bannerView.rootViewController = self;
     }

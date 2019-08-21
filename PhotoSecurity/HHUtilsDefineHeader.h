@@ -54,7 +54,19 @@
 #define SAFE_NUMBER(value) ([value isKindOfClass: [NSNumber class]] ? value : @(-1))
 
 
-#define kEnvironment 1
+#define kEnvironment 0
+
+//插入页
+#define kGoogleAd_Home_In @"ca-app-pub-8434387799797440/9128312187" //首页插入
+#define kGoogleAd_Detail_In @"ca-app-pub-8434387799797440/4833843959" //详情页插入
+//横幅
+#define kGoogleAd_Detail @"ca-app-pub-8434387799797440/1592796464" //详情
+#define kGoogleAd_Set @"ca-app-pub-8434387799797440/5216987334" //设置
+#define kGoogleAd_Home @"ca-app-pub-8434387799797440/5759272185" //首页
+
+//测试ID
+#define kGoogleAd_TEST_1 @"ca-app-pub-3940256099942544/2934735716" //横幅
+#define kGoogleAd_TEST_2 @"ca-app-pub-3940256099942544/4411468910" //插入
 
 // 日志输出
 #ifdef DEBUG // 开发阶段-DEBUG阶段:使用Log

@@ -425,12 +425,12 @@
 		122EE0431E67C13800FCAF98 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				122EE0451E67C13800FCAF98 /* Utils */,
 				2021A3E422ED3C6500F75CD5 /* Base */,
 				20A9688E22EB562200A3340F /* Views */,
 				122EE04D1E67F2D100FCAF98 /* Category */,
 				122EE0441E67C13800FCAF98 /* Controller */,
 				1224BB071E6E8FD000CCCD73 /* Library */,
-				122EE0451E67C13800FCAF98 /* Utils */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -586,12 +586,12 @@
 				20411EC522ED5C3500AD6DAE /* HHThemeHeader.h */,
 				64F081D222EF22DF005DF2E2 /* HHScreenDefineHeader.h */,
 				548055CB1E6701750040143A /* Main.storyboard */,
-				548055D91E6702D70040143A /* System */,
-				12147DAF1E6F929D009D5321 /* AlbumDetail */,
-				122EE0431E67C13800FCAF98 /* General */,
-				548055E31E6705BE0040143A /* Home */,
-				122E01211E71089900CE8E4C /* Photos */,
 				121470381E7FD04300FD5E51 /* Setting */,
+				122E01211E71089900CE8E4C /* Photos */,
+				548055E31E6705BE0040143A /* Home */,
+				12147DAF1E6F929D009D5321 /* AlbumDetail */,
+				548055D91E6702D70040143A /* System */,
+				122EE0431E67C13800FCAF98 /* General */,
 				548055C21E6701750040143A /* Supporting Files */,
 				121C11821E9DCDB7008AB02D /* Resources */,
 			);
@@ -1010,7 +1010,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = Z29237TAHW;
@@ -1041,7 +1041,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coder.album;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = albumDis;
+				PROVISIONING_PROFILE_SPECIFIER = ablumHoc;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
