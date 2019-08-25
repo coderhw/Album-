@@ -54,7 +54,7 @@
 #define SAFE_NUMBER(value) ([value isKindOfClass: [NSNumber class]] ? value : @(-1))
 
 
-#define kEnvironment 0
+#define kEnvironment 1
 
 //插入页
 #define kGoogleAd_Home_In @"ca-app-pub-8434387799797440/9128312187" //首页插入
